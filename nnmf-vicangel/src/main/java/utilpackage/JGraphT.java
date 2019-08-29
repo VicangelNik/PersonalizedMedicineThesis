@@ -1,7 +1,7 @@
 /*
  *
  */
-package utilpackage;
+/*package utilpackage;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -44,3 +44,4 @@ public class JGraphT<T> {
 		System.out.println(writer.toString());
 	}
 }
+*/

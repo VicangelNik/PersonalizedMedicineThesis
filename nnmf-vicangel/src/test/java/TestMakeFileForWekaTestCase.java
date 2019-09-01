@@ -36,9 +36,6 @@ public class TestMakeFileForWekaTestCase {
 	/** The matrix H. */
 	public static DoubleMatrix matrixH;
 
-	/** The num components. */
-	public static int num_components = 2;
-
 	/**
 	 * Clear resources.
 	 */

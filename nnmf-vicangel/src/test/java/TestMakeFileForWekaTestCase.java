@@ -5,6 +5,7 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.jblas.DoubleMatrix;
+import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,26 +28,26 @@ import utilpackage.WekaUtils;
 public class TestMakeFileForWekaTestCase {
 
 	/** The double array. */
-	public static double doubleArray[][];
+	private static double doubleArray[][];
 
 	/** The matrix X. */
-	public static DoubleMatrix matrixX;
+	private static DoubleMatrix matrixX;
 
-	/** The matrix W. */
-	public static DoubleMatrix matrixW;
+	private static final String wekaFilePath = Utils.SRC_TEST_RESOURCES_PATH + "wekaFile" + WekaUtils.WEKA_SUFFIX;
 
-	/** The matrix H. */
-	public static DoubleMatrix matrixH;
+	private static final String dummyDataFilePath = Utils.SRC_TEST_RESOURCES_PATH + "dummyData" + Utils.TXT_SUFFIX;
 
 	/**
 	 * Clear resources.
 	 */
-	// @AfterClass
+	@AfterClass
 	public static void clearResources() {
 		// remove all the contents of the directory
-		File file = new File(Utils.RELATIVE_PATH);
+		File wekaFile = new File(wekaFilePath);
+		File dummyDataFile = new File(dummyDataFilePath);
 		try {
-			FileUtils.cleanDirectory(file);
+			FileUtils.forceDelete(wekaFile);
+			FileUtils.forceDelete(dummyDataFile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +66,18 @@ public class TestMakeFileForWekaTestCase {
 		// initialize matrixX
 		matrixX = new DoubleMatrix(doubleArray);
 		// write data with the class attribute into file
-		Utils.writeMatrixToFile(Utils.FILE_DATA_PATH, matrixX);
+		Utils.writeMatrixToFile(dummyDataFilePath, matrixX);
+		// assert
+		File expected = new File(Utils.SRC_TEST_RESOURCES_PATH + "\\txtFiles\\dummyData" + Utils.TXT_SUFFIX);
+		File actual = new File(dummyDataFilePath);
+		try {
+			Assert.assertEquals("Files should be identical",
+					FileUtils.readLines(expected, StandardCharsets.UTF_8).toString().replaceAll("\\s+", ""),
+					FileUtils.readLines(actual, StandardCharsets.UTF_8).toString().replaceAll("\\s+", ""));
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	/**
@@ -88,19 +102,24 @@ public class TestMakeFileForWekaTestCase {
 	}
 
 	/**
-	 * Test test make file for weka.
+	 * Test for constructing the file for weka application.
 	 */
-// Test for constructing the file for weka application.
 	@Test
-	public void testTestMakeFileForWeka() {
-		File fileData = new File(Utils.FILE_DATA_PATH);
+	public void tesMakeDummyFileForWeka() {
+		File fileDataName = new File(dummyDataFilePath);
 		try {
 			// Prepare weka file.
-			WekaUtils.prepareWekaFile("nationality", makeAttributes(), fileData,
-					Utils.RELATIVE_PATH + "wekaFile" + WekaUtils.WEKA_SUFFIX);
+			WekaUtils.prepareWekaFile("nationality", makeAttributes(), fileDataName, wekaFilePath);
+			// asserts
+			File expectedFile = new File(
+					Utils.SRC_TEST_RESOURCES_PATH + "wekaFiles\\wekaFileFromDummyData" + WekaUtils.WEKA_SUFFIX);
+			File actual = new File(wekaFilePath);
+			Assert.assertEquals("Files should be identical",
+					FileUtils.readLines(expectedFile, StandardCharsets.UTF_8).toString().replaceAll("\\s+", ""),
+					FileUtils.readLines(actual, StandardCharsets.UTF_8).toString().replaceAll("\\s+", ""));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Assert.fail(e.getMessage());
 		}
 	}
 }

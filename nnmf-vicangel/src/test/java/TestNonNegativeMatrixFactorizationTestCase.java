@@ -48,9 +48,9 @@ public class TestNonNegativeMatrixFactorizationTestCase {
 	// @AfterClass
 	public static void clearResources() {
 		// remove all the contents of the directory
-		File file = new File(Utils.RELATIVE_PATH);
+		File file = new File(Utils.SRC_TEST_RESOURCES_PATH);
 		try {
-			FileUtils.cleanDirectory(file);
+			FileUtils.cleanDirectory(file); // should be removed
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,7 +92,7 @@ public class TestNonNegativeMatrixFactorizationTestCase {
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// write results to files
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, matrices, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, matrices, measureResult);
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class TestNonNegativeMatrixFactorizationTestCase {
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// write results to files
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, matrices, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, matrices, measureResult);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class TestNonNegativeMatrixFactorizationTestCase {
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// write results to files
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, matrices, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, matrices, measureResult);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class TestNonNegativeMatrixFactorizationTestCase {
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// write results to files
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, matrices, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, matrices, measureResult);
 	}
 
 }

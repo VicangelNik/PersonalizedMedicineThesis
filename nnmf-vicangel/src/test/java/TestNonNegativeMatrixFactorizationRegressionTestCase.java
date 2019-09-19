@@ -54,9 +54,9 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 	// @AfterClass
 	public static void clearResources() {
 		// remove all the contents of the directory
-		File file = new File(Utils.RELATIVE_PATH);
+		File file = new File(Utils.SRC_TEST_RESOURCES_PATH);
 		try {
-			FileUtils.cleanDirectory(file);
+			FileUtils.cleanDirectory(file); // should be removed
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,12 +104,12 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 		matrices[3] = matrixRegressionH;
 		// write results to files
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, matrices, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, matrices, measureResult);
 		// Calculate new measure after regression
 		measureResult = measure.get(matrixX, matrixW, matrixRegressionH);
 		// write new measure after regression
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, null, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, null, measureResult);
 	}
 
 	/**
@@ -139,12 +139,12 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 		matrices[3] = matrixRegressionH;
 		// write results to files
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, matrices, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, matrices, measureResult);
 		// Calculate new measure after regression
 		measureResult = measure.get(matrixX, matrixW, matrixRegressionH);
 		// write new measure after regression
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, null, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, null, measureResult);
 	}
 
 	/**
@@ -173,12 +173,12 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 		matrices[3] = matrixRegressionH;
 		// write results to files
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, matrices, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, matrices, measureResult);
 		// Calculate new measure after regression
 		measureResult = measure.get(matrixX, matrixW, matrixRegressionH);
 		// write new measure after regression
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, null, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, null, measureResult);
 	}
 
 	/**
@@ -207,11 +207,11 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 		matrices[3] = matrixRegressionH;
 		// write results to files
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, matrices, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, matrices, measureResult);
 		// Calculate new measure after regression
 		measureResult = measure.get(matrixX, matrixW, matrixRegressionH);
 		// write new measure after regression
 		Utils.writeResults(new Object() {
-		}.getClass().getEnclosingMethod().getName(), Utils.FILE_SUFFIX, null, measureResult);
+		}.getClass().getEnclosingMethod().getName(), Utils.TXT_SUFFIX, null, measureResult);
 	}
 }

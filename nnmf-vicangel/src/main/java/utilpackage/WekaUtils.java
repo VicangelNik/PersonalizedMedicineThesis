@@ -15,8 +15,17 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.apache.commons.lang3.math.NumberUtils;
+
+import com.google.common.base.Strings;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,6 +35,12 @@ public class WekaUtils {
 
 	/** The Constant WEKA_SUFFIX. */
 	public static final String WEKA_SUFFIX = ".arff";
+
+	public static final String NUMERIC_ATTRIBUTE = "NUMERIC";
+
+	public static final String NOT_AVAILABLE = "NA";
+
+	private static final Logger LOGGER = Logger.getLogger(WekaUtils.class.getName());
 
 	/**
 	 * Prepare attributes for weka file.
@@ -63,13 +78,13 @@ public class WekaUtils {
 	 * Prepare weka file. Make the file with the data that will be as input in the
 	 * weka
 	 *
-	 * @param relation   the relation
-	 * @param attributes the attributes
-	 * @param data       the data
-	 * @param fileName   the file name
+	 * @param relation     the relation
+	 * @param attributes   the attributes
+	 * @param fileDataName the data file name to read.
+	 * @param fileName     the file name to write
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void prepareWekaFile(String relation, Map<String, List<String>> attributes, File data,
+	public static void prepareWekaFile(String relation, Map<String, List<String>> attributes, File fileDataName,
 			String fileName) throws IOException {
 		// make the relation tag line
 		String relationline = "@relation " + relation + System.lineSeparator();
@@ -77,8 +92,7 @@ public class WekaUtils {
 		String attributeLines = prepareAttributesForWekaFile(attributes);
 		String readLine;
 		// read from data file
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new FileReader(Utils.RELATIVE_PATH + "data" + Utils.FILE_SUFFIX));
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileDataName));
 				Writer writer = new BufferedWriter(
 						new OutputStreamWriter(new FileOutputStream(fileName), StandardCharsets.UTF_8))) {
 			// write the relation tag line
@@ -99,9 +113,158 @@ public class WekaUtils {
 	}
 
 	/**
-	 * Instantiates a new weka utils.
+	 * Checks it the feature is numeric
+	 * 
+	 * @param featureDataList A list with all data of the dimension.
+	 * @return
 	 */
-	public WekaUtils() {
-		// nothing to do
+	private static boolean dimensionIsNumeric(List<String> featureDataList) {
+		for (String datum : featureDataList) {
+			if (NumberUtils.isCreatable(datum)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if the feature is not Numeric. It can be nominal, string or date.
+	 * 
+	 * @param featureDataList A list with all data of the dimension.
+	 * @return
+	 */
+	private static List<String> dimensionNotNumeric(List<String> featureDataList) {
+		List<String> notNumeric = new ArrayList<>();
+		for (int i = 1; i < featureDataList.size(); i++) {
+			String datum = featureDataList.get(i);
+			if (!notNumeric.contains(datum) && !WekaUtils.NOT_AVAILABLE.equals(datum)
+					&& !Strings.isNullOrEmpty(datum)) {
+				notNumeric.add(datum);
+			}
+		}
+		return notNumeric;
+	}
+
+	/**
+	 * Checks if the feature has only NA data.
+	 * 
+	 * @param featureDataList
+	 * @return
+	 */
+	// it will be used in the future dont remove it!!!!
+	@SuppressWarnings("unused")
+	private static boolean dimensionIsNA(List<String> featureDataList) {
+		for (String datum : featureDataList) {
+			if (!WekaUtils.NOT_AVAILABLE.equals(datum)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static List<String> getDimensions(List<List<String>> allData) {
+		String notFeatureWord = "DATA";
+		// get the dimension names from the file
+		List<String> dimensions = new ArrayList<>(Arrays.asList(allData.get(0).get(0).split("\t")));
+		if (dimensions.contains(notFeatureWord)) {
+			boolean isRemoved = dimensions.remove(notFeatureWord);
+			LOGGER.log(Level.INFO, "data word was contained in feature list: {0}", Boolean.toString(isRemoved));
+		}
+		// LOGGER.log(Level.INFO, "All dimensions: {0}", dimensions);
+		LOGGER.log(Level.INFO, "Number of features is: {0}", dimensions.size());
+		return dimensions;
+	}
+
+	/**
+	 * Filtes the data and keeps only valid columns. Returns the attributes with
+	 * their types.
+	 * 
+	 * @param allDataColumnWise every list the data contains its a feuture with the
+	 *                          data.
+	 * @return the feature mapped with the data.
+	 */
+	public static Map<String, List<String>> filterValidFeaturesAndData(List<List<String>> allDataColumnWise) {
+		Map<String, List<String>> attributeMap = new LinkedHashMap<>();
+		// we start from one to avoid the first line that contains the list of the
+		// cases.
+		for (int j = 1; j < allDataColumnWise.size(); j++) {
+			List<String> featureDataList = allDataColumnWise.get(j);
+			// we take features that all their data are available.
+			if (!featureDataList.contains(WekaUtils.NOT_AVAILABLE)) {
+				List<String> attributeTypeList = new ArrayList<>();
+				if (dimensionIsNumeric(featureDataList)) {
+					attributeTypeList.add(WekaUtils.NUMERIC_ATTRIBUTE);
+				} else {
+					// we take features that are not numeric. They can be String, nominal or date.
+					attributeTypeList = dimensionNotNumeric(featureDataList);
+				}
+				if (attributeTypeList.isEmpty()) {
+					LOGGER.log(Level.SEVERE, "The type of the feature {0} could not be determined ",
+							featureDataList.get(0));
+				}
+				// in the first position of each list, there is always the feature name.
+				attributeMap.put(featureDataList.get(0), attributeTypeList);
+
+			} else {
+				LOGGER.log(Level.INFO, " Feature {0} is invalid and is removed", featureDataList.get(0));
+				allDataColumnWise.remove(j);
+			}
+
+		}
+		return attributeMap;
+	}
+
+	/**
+	 * Creates the weka file.
+	 * 
+	 * @param relation          the relation of weka data.
+	 * @param attributes        the attribute names with their types.
+	 * @param allDataColumnWise the data of the attributes.
+	 * @param fileName          the file path of the weka file to be created.
+	 * @throws IOException
+	 */
+	public static void createWekaFile(String relation, Map<String, List<String>> attributes,
+			List<List<String>> allDataColumnWise, String fileName) throws IOException {
+		// make the relation tag line
+		String relationline = "@relation " + relation + System.lineSeparator();
+		// make the attribute tag lines
+		String attributeLines = prepareAttributesForWekaFile(attributes);
+		// read from data file
+		try (Writer writer = new BufferedWriter(
+				new OutputStreamWriter(new FileOutputStream(fileName), StandardCharsets.UTF_8))) {
+			// write the relation tag line
+			writer.write(relationline);
+			writer.write(System.lineSeparator());
+			// write the attribute tag lines
+			writer.write(attributeLines);
+			writer.write(System.lineSeparator());
+			writer.write("@data");
+			writer.write(System.lineSeparator());
+			List<List<String>> patientWiseData = convertFeatureWiseToPatientWise(allDataColumnWise);
+			// read from data line by line
+			for (List<String> lineDataList : patientWiseData) {
+				writer.write(lineDataList.toString().replaceAll("[|]", ""));
+				// write line to weka file
+				writer.write(System.lineSeparator());
+			}
+		}
+	}
+
+	/**
+	 * Takes a list of lists that each list has the feature and its data and returns
+	 * a list of lists that for each list the data of the case are contained by.
+	 * 
+	 * @param allDataColumnWise
+	 * @return
+	 */
+	private static List<List<String>> convertFeatureWiseToPatientWise(List<List<String>> allDataColumnWise) {
+		int lineNumber = allDataColumnWise.get(0).size();
+		List<List<String>> records = Utils.instantiateListOfStringLists(lineNumber);
+		for (List<String> list : allDataColumnWise) {
+			for (int i = 1; i < lineNumber; i++) {
+				records.get(i - 1).add(list.get(i));
+			}
+		}
+		return records;
 	}
 }

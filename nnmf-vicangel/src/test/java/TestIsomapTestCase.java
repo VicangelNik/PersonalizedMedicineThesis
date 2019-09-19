@@ -8,7 +8,7 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.jblas.DoubleMatrix;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import dimensionality_reduction_methods.IsoMapVic;
@@ -36,9 +36,9 @@ public class TestIsomapTestCase {
 	// @AfterClass
 	public static void clearResources() {
 		// remove all the contents of the directory
-		File file = new File(Utils.RELATIVE_PATH);
+		File file = new File(Utils.SRC_TEST_RESOURCES_PATH);
 		try {
-			FileUtils.cleanDirectory(file);
+			FileUtils.cleanDirectory(file); // should be removed
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class TestIsomapTestCase {
 	/**
 	 * Initialize matrix.
 	 */
-	@Before
+	//@Before
 	public void initializeMatrix() {
 		// initialize array
 		data = new double[400][4];
@@ -65,6 +65,7 @@ public class TestIsomapTestCase {
 	 *
 	 * @throws IOException
 	 */
+	@Ignore
 	@Test
 	public void TestIsomapTetCase() throws IOException {
 		IsoMapVic myIsomap = new IsoMapVic(data, dimension, kNearest, false);
@@ -80,6 +81,7 @@ public class TestIsomapTestCase {
 	/**
 	 * Test C isomap tet case.
 	 */
+	@Ignore
 	@Test
 	public void TestCIsomapTetCase() {
 		IsoMapVic myIsomap = new IsoMapVic(data, dimension, kNearest, true);

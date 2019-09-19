@@ -10,6 +10,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.jblas.DoubleMatrix;
@@ -26,13 +28,13 @@ public class Utils {
 	public static final Random rand = new Random();
 
 	/** The Constant RELATIVE_PATH. */
-	public static final String RELATIVE_PATH = "src\\test\\resources\\";
+	public static final String SRC_TEST_RESOURCES_PATH = "src\\test\\resources\\";
 
 	/** The Constant FILE_SUFFIX. */
-	public static final String FILE_SUFFIX = ".txt";
+	public static final String TXT_SUFFIX = ".txt";
 
 	/** The file data path. */
-	public static final String FILE_DATA_PATH = Utils.RELATIVE_PATH + "data" + FILE_SUFFIX;
+	public static final String FILE_DATA_PATH = Utils.SRC_TEST_RESOURCES_PATH + "data" + TXT_SUFFIX;
 
 	/**
 	 * Feed double array with random numbers.
@@ -78,7 +80,7 @@ public class Utils {
 
 	private static String makeFilePath(String matrixName, String nameOfMethod, String suffix) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(Utils.RELATIVE_PATH);
+		sb.append(Utils.SRC_TEST_RESOURCES_PATH);
 		sb.append(nameOfMethod);
 		sb.append(matrixName);
 		sb.append(suffix);
@@ -132,13 +134,12 @@ public class Utils {
 	public static void writeMatrixToFile(String filename, DoubleMatrix matrix) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
 			for (int i = 0; i < matrix.rows; i++) {
-				// write the line number
-				// bw.write(i + "\t");
+				// write the line number bw.write(i + "\t");
 				for (int j = 0; j < matrix.getRow(i).columns; j++) {
 					// write the data
 					bw.write(Double.toString(matrix.get(i, j)) + "\t");
 					// write the class in the end of the row
-					if ((filename.contains("MATRIXX") || filename.contains("data"))
+					if ((filename.contains("MATRIXX") || filename.contains("data") || filename.contains("Data"))
 							&& j == matrix.getRow(i).columns - 1) {
 						if (i < 200) {
 							bw.write("chinese");
@@ -216,4 +217,18 @@ public class Utils {
 		// do nothing
 	}
 
+	/**
+	 * Instantiate the list of lists. THe lists will be as much as the listSize
+	 * parameter indicates.
+	 * 
+	 * @param listSize
+	 * @return
+	 */
+	public static List<List<String>> instantiateListOfStringLists(int listSize) {
+		List<List<String>> records = new ArrayList<>();
+		for (int i = 0; i < listSize; i++) {
+			records.add(new ArrayList<>());
+		}
+		return records;
+	}
 }

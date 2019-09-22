@@ -42,16 +42,8 @@ public class TestMakeFileForWekaTestCase {
 	 */
 	@AfterClass
 	public static void clearResources() {
-		// remove all the contents of the directory
-		File wekaFile = new File(wekaFilePath);
-		File dummyDataFile = new File(dummyDataFilePath);
-		try {
-			FileUtils.forceDelete(wekaFile);
-			FileUtils.forceDelete(dummyDataFile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// remove all the files of the directory but not the files in subdirectories
+		Utils.removeFiles(Utils.SRC_TEST_RESOURCES_PATH);
 	}
 
 	/**

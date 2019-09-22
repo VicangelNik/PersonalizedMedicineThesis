@@ -2,11 +2,10 @@
 /*
  *
  */
-import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
 import org.jblas.DoubleMatrix;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -33,22 +32,16 @@ public class TestIsomapTestCase {
 	/**
 	 * Clear resources.
 	 */
-	// @AfterClass
+	@AfterClass
 	public static void clearResources() {
-		// remove all the contents of the directory
-		File file = new File(Utils.SRC_TEST_RESOURCES_PATH);
-		try {
-			FileUtils.cleanDirectory(file); // should be removed
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// remove all the files of the directory but not the files in subdirectories
+		Utils.removeFiles(Utils.SRC_TEST_RESOURCES_PATH);
 	}
 
 	/**
 	 * Initialize matrix.
 	 */
-	//@Before
+	// @Before
 	public void initializeMatrix() {
 		// initialize array
 		data = new double[400][4];

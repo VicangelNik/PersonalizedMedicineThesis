@@ -2,10 +2,6 @@
 /*
  *
  */
-import java.io.File;
-import java.io.IOException;
-
-import org.apache.commons.io.FileUtils;
 import org.dulab.javanmf.measures.EuclideanDistance;
 import org.dulab.javanmf.measures.KLDivergence;
 import org.dulab.javanmf.measures.Measure;
@@ -15,6 +11,7 @@ import org.dulab.javanmf.updaterules.MKLUpdateRule;
 import org.dulab.javanmf.updaterules.MUpdateRule;
 import org.dulab.javanmf.updaterules.UpdateRule;
 import org.jblas.DoubleMatrix;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,16 +48,10 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 	/**
 	 * Clear resources.
 	 */
-	// @AfterClass
+	 @AfterClass
 	public static void clearResources() {
-		// remove all the contents of the directory
-		File file = new File(Utils.SRC_TEST_RESOURCES_PATH);
-		try {
-			FileUtils.cleanDirectory(file); // should be removed
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// remove all the files of the directory but not the files in subdirectories
+		Utils.removeFiles(Utils.SRC_TEST_RESOURCES_PATH);
 	}
 
 	/**

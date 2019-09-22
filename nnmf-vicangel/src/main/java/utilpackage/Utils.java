@@ -7,12 +7,16 @@ package utilpackage;
  *
  */
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jblas.DoubleMatrix;
 
@@ -35,6 +39,8 @@ public class Utils {
 
 	/** The file data path. */
 	public static final String FILE_DATA_PATH = Utils.SRC_TEST_RESOURCES_PATH + "data" + TXT_SUFFIX;
+
+	private static final Logger LOGGER = Logger.getLogger(Utils.class.getName());
 
 	/**
 	 * Feed double array with random numbers.
@@ -95,20 +101,13 @@ public class Utils {
 	public static void setParametersToArray(double doubleArray[][]) {
 		// chinese
 		Utils.feedDoubleArray(4, 0, 200, 0, 1.6f, 0.6f, doubleArray, true); // height
-		Utils.feedDoubleArray(4, 0, 200, 1, 90f, 5, doubleArray, true); // average
-																		// Age
-																		// Death
-		Utils.feedDoubleArray(4, 0, 200, 2, 50f, 10, doubleArray, true); // average
-																			// age
+		Utils.feedDoubleArray(4, 0, 200, 1, 90f, 5, doubleArray, true); // death estimation
+		Utils.feedDoubleArray(4, 0, 200, 2, 50f, 10, doubleArray, true); // age
 		Utils.feedDoubleArray(4, 0, 200, 3, 55f, 15, doubleArray, true); // weight
-
 		// greek
 		Utils.feedDoubleArray(4, 200, 400, 0, 1.8f, 0.6f, doubleArray, true); // height
-		Utils.feedDoubleArray(4, 200, 400, 1, 80f, 5, doubleArray, true); // average
-																			// Age
-																			// Death
-		Utils.feedDoubleArray(4, 200, 400, 2, 55f, 10, doubleArray, true); // average
-																			// age
+		Utils.feedDoubleArray(4, 200, 400, 1, 80f, 5, doubleArray, true); // death estimation
+		Utils.feedDoubleArray(4, 200, 400, 2, 55f, 10, doubleArray, true); // age
 		Utils.feedDoubleArray(4, 200, 400, 3, 60f, 30, doubleArray, true); // weight
 	}
 
@@ -230,5 +229,25 @@ public class Utils {
 			records.add(new ArrayList<>());
 		}
 		return records;
+	}
+
+	/**
+	 * Removes all files in a directory but no subdirectories and the files in them.
+	 * 
+	 * @param pathOfFiles
+	 */
+	public static void removeFiles(String pathOfFiles) {
+		final File folder = new File(pathOfFiles);
+		// get the files but not the files in subdirectories
+		for (final File file : folder.listFiles()) {
+			try {
+				if (!file.isDirectory()) {
+					Files.delete(file.toPath());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				LOGGER.log(Level.INFO, e.getMessage());
+			}
+		}
 	}
 }

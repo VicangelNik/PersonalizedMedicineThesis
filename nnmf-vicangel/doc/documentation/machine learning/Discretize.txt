@@ -1,0 +1,1 @@
+Discretization is when you group your data values into intervals(διαστήματα).

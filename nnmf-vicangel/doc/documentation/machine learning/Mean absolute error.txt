@@ -1,0 +1,15 @@
+Mean absolute error – quantity used to measure how close forecasts or predictions are to the
+eventual outcomes.
+The mean absolute error is given by
+As the name suggests, the mean absolute error is an average of the absolute
+errors , where is the prediction and the true value. Note that
+alternative formulations may include relative frequencies as weight factors.
+From https://en.wikipedia.org/wiki/Mean_absolute_error
+The mean absolute error is like the variance, but rather than square the difference, use its
+absolute value. (If the scores are spread closely around the mean, the variance will be smaller
+than the mean absolute error. If the scores are not spread closely, squaring the distance will lead
+to larger variances. Taking the absolute value assigns equal weight to the spread of data whereas
+squaring emphasizes the extremes. Squaring, however, makes the algebra easier to work with
+and relates to Pythagorean Theorem.) 
+
+https://katie.mtech.edu/classes/csci347/Resources/Weka_error_measurements.pdf

@@ -1,0 +1,13 @@
+Kappa statistic – chance-corrected measure of agreement between the classifications and the
+true classes. Calculate by taking the agreement expected by change away from the observed
+agreement and dividing by the maximum possible agreement. A value greater than 0 means that
+your classifier is doing better than chance.
+The equation for κ is:
+where po is the relative observed agreement among raters, and pe is the hypothetical
+probability of chance agreement, using the observed data to calculate the probabilities of
+each observer randomly saying each category. If the raters are in complete agreement
+then κ = 1. If there is no agreement among the raters other than what would be expected by
+chance (as given by pe), κ ≤ 0.
+A kappa value of 0 means that the result is the same as would be expected by chance.
+
+https://katie.mtech.edu/classes/csci347/Resources/Weka_error_measurements.pdf

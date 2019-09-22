@@ -1,0 +1,14 @@
+Root mean square error - measure of the differences between values (sample and population
+values) predicted by a model or an estimator and the values actually observed. It represents
+the sample standard deviation of the differences between predicted values and observed values. It
+aggregates the magnitudes of the errors in predictions for various times into a single measure of
+predictive power. It is a good measure of accuracy, but only to compare forecasting errors of
+different models for a particular variable and not between variables, as it is scale-dependent. It is
+also called the root-mean square deviation, RMSD
+The RMSD of predicted values for times t of a regression's dependent variable is computed
+for n different predictions as the square root of the mean of the squares of the deviations
+From httpsen.wikipedia.orgwikiRoot-mean-square_deviation
+Difference between relative and absolute - Absolute error is how much your result deviates from
+the real value. Relative error is a measure in percent compared to the real value.
+
+https://katie.mtech.edu/classes/csci347/Resources/Weka_error_measurements.pdf

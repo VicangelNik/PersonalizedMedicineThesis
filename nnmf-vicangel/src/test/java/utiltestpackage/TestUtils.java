@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 /**
  * The Class Utils.
  */
-public class Utils {
+public class TestUtils {
 
 	/**
 	 * Read index for isomap test.

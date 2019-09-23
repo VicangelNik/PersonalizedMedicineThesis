@@ -68,6 +68,25 @@ public class TestHandlingCSVTestCase {
 
 	@Ignore
 	@Test
+	public void testDataAndFeaturesHaveTheSameNumberTestCase() {
+		try {
+			// get all data
+			List<List<String>> allDataList = CsvUtils.readCSVFile(christinaWorkCsvFile);
+			// get dimension number through getDimensions
+			int dimensionsSize = WekaUtils.getDimensions(allDataList).size();
+			// get all data column - wised.
+			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(christinaWorkCsvFile, dimensionsSize);
+			WekaUtils.checkNumberFeatureData(dimensionWIseData);
+			// assert
+			Assert.assertTrue("The features' number should be the same with the data",
+					WekaUtils.checkNumberFeatureData(dimensionWIseData));
+		} catch (IOException e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Ignore
+	@Test
 	public void testFilterDataTestCase() {
 		try {
 			// get all data
@@ -85,7 +104,7 @@ public class TestHandlingCSVTestCase {
 	}
 
 	@Test
-	public void testCreateWekaFileTestCase() {
+	public void testValidateWekaFileCase() {
 		try {
 			// get all data
 			List<List<String>> allDataList = CsvUtils.readCSVFile(christinaWorkCsvFile);
@@ -95,8 +114,11 @@ public class TestHandlingCSVTestCase {
 			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(christinaWorkCsvFile, dimensionsSize);
 			Map<String, List<String>> attributes = WekaUtils.filterValidFeaturesAndData(dimensionWIseData);
 			// Prepare weka file.
-			WekaUtils.createWekaFile("nationality", attributes, dimensionWIseData,
+			WekaUtils.createWekaFile("patient", attributes, dimensionWIseData,
 					Utils.SRC_TEST_RESOURCES_PATH + "wekaFileFromChristinasWork" + WekaUtils.WEKA_SUFFIX);
+			// ASSERTS
+			
+			Assert.assertEquals("The attributes must be 69990", 69990, attributes.size());
 		} catch (IOException e) {
 			Assert.fail(e.getMessage());
 		}

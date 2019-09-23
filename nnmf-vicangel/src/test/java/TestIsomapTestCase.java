@@ -63,7 +63,7 @@ public class TestIsomapTestCase {
 	public void TestIsomapTetCase() throws IOException {
 		IsoMapVic myIsomap = new IsoMapVic(data, dimension, kNearest, false);
 		double[][] coordinates = myIsomap.getCoordinates();
-		int[] index = utiltestpackage.Utils.readIndexForIsomapTest("src\\test\\resources\\isomapTests\\index.txt");
+		int[] index = utiltestpackage.TestUtils.readIndexForIsomapTest("src\\test\\resources\\isomapTests\\index.txt");
 		Graph graph = myIsomap.getNearestNeighborGraph();
 		Assert.assertArrayEquals(index, myIsomap.getIndex());
 		Assert.assertArrayEquals("The dataset should be the same ", data, myIsomap.getDataset());

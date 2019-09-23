@@ -162,6 +162,11 @@ public class WekaUtils {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param allData
+	 * @return the actual dimension size list.
+	 */
 	public static List<String> getDimensions(List<List<String>> allData) {
 		String notFeatureWord = "DATA";
 		// get the dimension names from the file
@@ -266,5 +271,24 @@ public class WekaUtils {
 			}
 		}
 		return records;
+	}
+
+	/**
+	 * Checks the number of features that are the same with the number of data.
+	 * 
+	 * @param data
+	 */
+	public static boolean checkNumberFeatureData(List<List<String>> data) {
+		boolean isValid = true;
+		int featureSize = data.get(0).size();
+		for (int i = 1; i < data.size(); i++) {
+			int lineSize = data.get(i).size();
+			if (lineSize != featureSize) {
+				isValid = false;
+				Object[] information = { data.get(i).get(0), lineSize };
+				LOGGER.log(Level.INFO, "The feature {0} has {1} number of values.", information);
+			}
+		}
+		return isValid;
 	}
 }

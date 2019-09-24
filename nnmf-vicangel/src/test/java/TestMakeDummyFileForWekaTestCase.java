@@ -25,7 +25,7 @@ import utilpackage.WekaUtils;
 /**
  * The Class TestMakeFileForWekaTestCase.
  */
-public class TestMakeFileForWekaTestCase {
+public class TestMakeDummyFileForWekaTestCase {
 
 	/** The double array. */
 	private static double doubleArray[][];

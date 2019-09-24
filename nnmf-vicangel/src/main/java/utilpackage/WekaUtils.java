@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package utilpackage;
 
@@ -31,7 +31,11 @@ import com.google.common.base.Strings;
 /**
  * The Class WekaUtils.
  */
-public class WekaUtils {
+public final class WekaUtils {
+
+	private WekaUtils() {
+		// nothing to do
+	}
 
 	/** The Constant WEKA_SUFFIX. */
 	public static final String WEKA_SUFFIX = ".arff";
@@ -114,7 +118,7 @@ public class WekaUtils {
 
 	/**
 	 * Checks it the feature is numeric
-	 * 
+	 *
 	 * @param featureDataList A list with all data of the dimension.
 	 * @return
 	 */
@@ -129,7 +133,7 @@ public class WekaUtils {
 
 	/**
 	 * Checks if the feature is not Numeric. It can be nominal, string or date.
-	 * 
+	 *
 	 * @param featureDataList A list with all data of the dimension.
 	 * @return
 	 */
@@ -147,7 +151,7 @@ public class WekaUtils {
 
 	/**
 	 * Checks if the feature has only NA data.
-	 * 
+	 *
 	 * @param featureDataList
 	 * @return
 	 */
@@ -163,7 +167,7 @@ public class WekaUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param allData
 	 * @return the actual dimension size list.
 	 */
@@ -183,7 +187,7 @@ public class WekaUtils {
 	/**
 	 * Filtes the data and keeps only valid columns. Returns the attributes with
 	 * their types.
-	 * 
+	 *
 	 * @param allDataColumnWise every list the data contains its a feuture with the
 	 *                          data.
 	 * @return the feature mapped with the data.
@@ -221,7 +225,7 @@ public class WekaUtils {
 
 	/**
 	 * Creates the weka file.
-	 * 
+	 *
 	 * @param relation          the relation of weka data.
 	 * @param attributes        the attribute names with their types.
 	 * @param allDataColumnWise the data of the attributes.
@@ -258,7 +262,7 @@ public class WekaUtils {
 	/**
 	 * Takes a list of lists that each list has the feature and its data and returns
 	 * a list of lists that for each list the data of the case are contained by.
-	 * 
+	 *
 	 * @param allDataColumnWise
 	 * @return
 	 */
@@ -275,7 +279,7 @@ public class WekaUtils {
 
 	/**
 	 * Checks the number of features that are the same with the number of data.
-	 * 
+	 *
 	 * @param data
 	 */
 	public static boolean checkNumberFeatureData(List<List<String>> data) {

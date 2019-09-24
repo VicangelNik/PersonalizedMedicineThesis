@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package utilpackage;
 
 import java.io.FileNotFoundException;
@@ -13,10 +16,12 @@ public class CsvUtils {
 
 	public static final String CSV_SEPERATOR = "\t";
 
+	public static final String christinaWorkCsvFile = "src\\main\\resources\\allTogether.csv";
+
 	/**
 	 * Reads the CSV file and returns list of lists. Each list contains the data of
 	 * each case.
-	 * 
+	 *
 	 * @param fileName the file path.
 	 * @return
 	 * @throws FileNotFoundException
@@ -36,7 +41,7 @@ public class CsvUtils {
 	/**
 	 * Reads the csv file and returns the list of lists. Each list contains the
 	 * feature with its data.
-	 * 
+	 *
 	 * @param fileName
 	 * @param dimensionsSize
 	 * @return

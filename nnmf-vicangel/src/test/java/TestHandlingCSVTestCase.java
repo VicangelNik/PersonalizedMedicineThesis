@@ -8,7 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import utilpackage.CsvUtils;
@@ -21,7 +20,6 @@ public class TestHandlingCSVTestCase {
 	/**
 	 * Test read csv file.
 	 */
-	@Ignore
 	@Test
 	public void testReadCSVTestCase() {
 		try {
@@ -32,7 +30,7 @@ public class TestHandlingCSVTestCase {
 		}
 	}
 
-	@Ignore
+
 	@Test
 	public void testReadCSVColumnWIseTestCase() {
 		try {

@@ -7,14 +7,10 @@ public class MultiKey {
 	private List<String> featureType;
 	private String featureName;
 
-	public MultiKey(List<String> featureType, String featureName, String caseId) {
+	public MultiKey(String featureName, List<String> featureType) {
 		super();
 		this.featureType = featureType;
 		this.featureName = featureName;
-	}
-
-	public MultiKey() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public List<String> getFeatureType() {

@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import helpful_classes.MultiKey;
 import utilpackage.CsvUtils;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
@@ -61,7 +62,7 @@ public class testMakeFileForWekaTestCase {
 			// get all data column - wised
 			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(CsvUtils.christinaWorkCsvFile,
 					dimensionsSize);
-			Map<String, List<String>> attributes = WekaUtils.filterValidFeaturesAndData(dimensionWIseData);
+			Map<MultiKey, List<String>> attributes = WekaUtils.filterValidFeaturesAndData(dimensionWIseData);
 			// assert
 			Assert.assertEquals("The size of map should be", 69990, attributes.size());
 		} catch (IOException e) {
@@ -81,7 +82,7 @@ public class testMakeFileForWekaTestCase {
 			// get all data column - wised
 			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(CsvUtils.christinaWorkCsvFile,
 					dimensionsSize);
-			Map<String, List<String>> attributes = WekaUtils.filterValidFeaturesAndData(dimensionWIseData);
+			Map<MultiKey, List<String>> attributes = WekaUtils.filterValidFeaturesAndData(dimensionWIseData);
 			// Prepare weka file.
 			WekaUtils.createWekaFile("patient", attributes, dimensionWIseData, wekaFile);
 			// ASSERTS

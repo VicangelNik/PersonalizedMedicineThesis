@@ -17,15 +17,20 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.google.common.base.Strings;
+
+import helpful_classes.MultiKey;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -188,12 +193,12 @@ public final class WekaUtils {
 	 * Filtes the data and keeps only valid columns. Returns the attributes with
 	 * their types.
 	 *
-	 * @param allDataColumnWise every list the data contains its a feuture with the
+	 * @param allDataColumnWise every list the data contains its a feature with the
 	 *                          data.
 	 * @return the feature mapped with the data.
 	 */
-	public static Map<String, List<String>> filterValidFeaturesAndData(List<List<String>> allDataColumnWise) {
-		Map<String, List<String>> attributeMap = new LinkedHashMap<>();
+	public static Map<MultiKey, List<String>> filterValidFeaturesAndData(List<List<String>> allDataColumnWise) {
+		LinkedHashMap<MultiKey, List<String>> attributeMap = new LinkedHashMap<>();
 		// we start from one to avoid the first line that contains the list of the
 		// cases.
 		for (int j = 1; j < allDataColumnWise.size(); j++) {
@@ -210,15 +215,16 @@ public final class WekaUtils {
 				if (attributeTypeList.isEmpty()) {
 					LOGGER.log(Level.SEVERE, "The type of the feature {0} could not be determined ",
 							featureDataList.get(0));
+					allDataColumnWise.remove(j);
+				} else {
+					// in the first position of each list, there is always the feature name.
+					MultiKey multiKey = new MultiKey(featureDataList.get(0), attributeTypeList);
+					attributeMap.put(multiKey, featureDataList);
 				}
-				// in the first position of each list, there is always the feature name.
-				attributeMap.put(featureDataList.get(0), attributeTypeList);
-
 			} else {
 				LOGGER.log(Level.INFO, " Feature {0} is invalid and is removed", featureDataList.get(0));
 				allDataColumnWise.remove(j);
 			}
-
 		}
 		return attributeMap;
 	}
@@ -232,12 +238,12 @@ public final class WekaUtils {
 	 * @param fileName          the file path of the weka file to be created.
 	 * @throws IOException
 	 */
-	public static void createWekaFile(String relation, Map<String, List<String>> attributes,
+	public static void createWekaFile(String relation, Map<MultiKey, List<String>> attributes,
 			List<List<String>> allDataColumnWise, String fileName) throws IOException {
 		// make the relation tag line
 		String relationline = "@relation " + relation + System.lineSeparator();
 		// make the attribute tag lines
-		String attributeLines = prepareAttributesForWekaFile(attributes);
+		String attributeLines = prepareAttributesForWekaFile(getMultikeyAsMap(attributes.keySet()));
 		// read from data file
 		try (Writer writer = new BufferedWriter(
 				new OutputStreamWriter(new FileOutputStream(fileName), StandardCharsets.UTF_8))) {
@@ -249,7 +255,7 @@ public final class WekaUtils {
 			writer.write(System.lineSeparator());
 			writer.write("@data");
 			writer.write(System.lineSeparator());
-			List<List<String>> patientWiseData = convertFeatureWiseToPatientWise(allDataColumnWise);
+			List<List<String>> patientWiseData = convertFeatureWiseToPatientWise(attributes.values());
 			// read from data line by line
 			for (List<String> lineDataList : patientWiseData) {
 				writer.write(lineDataList.toString().replaceAll("[|]", ""));
@@ -266,12 +272,14 @@ public final class WekaUtils {
 	 * @param allDataColumnWise
 	 * @return
 	 */
-	private static List<List<String>> convertFeatureWiseToPatientWise(List<List<String>> allDataColumnWise) {
-		int lineNumber = allDataColumnWise.get(0).size();
+	private static List<List<String>> convertFeatureWiseToPatientWise(Collection<List<String>> values) {
+		Iterator<List<String>> iterator = values.iterator();
+		int lineNumber = iterator.next().size();
 		List<List<String>> records = Utils.instantiateListOfStringLists(lineNumber);
-		for (List<String> list : allDataColumnWise) {
+		while (iterator.hasNext()) {
+			List<String> featureDataList = iterator.next();
 			for (int i = 1; i < lineNumber; i++) {
-				records.get(i - 1).add(list.get(i));
+				records.get(i - 1).add(featureDataList.get(i));
 			}
 		}
 		return records;
@@ -294,5 +302,15 @@ public final class WekaUtils {
 			}
 		}
 		return isValid;
+	}
+
+	private static Map<String, List<String>> getMultikeyAsMap(Set<MultiKey> multiKeySet) {
+
+		Map<String, List<String>> attributeForWeka = new LinkedHashMap<>();
+		for (MultiKey key : multiKeySet) {
+			attributeForWeka.put(key.getFeatureName(), key.getFeatureType());
+		}
+		return attributeForWeka;
+
 	}
 }

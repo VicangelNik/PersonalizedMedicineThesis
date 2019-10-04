@@ -16,7 +16,7 @@ public class CsvUtils {
 
 	public static final String CSV_SEPERATOR = "\t";
 
-	public static final String christinaWorkCsvFile = "src\\main\\resources\\allTogether.csv";
+	public static final String C_WORK_CSV_FILE = "src\\main\\resources\\allTogether.csv";
 
 	/**
 	 * Reads the CSV file and returns list of lists. Each list contains the data of

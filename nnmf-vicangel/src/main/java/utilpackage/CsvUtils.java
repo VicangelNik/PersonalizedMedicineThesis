@@ -12,11 +12,13 @@ import java.util.List;
 
 import com.opencsv.CSVReader;
 
+import helpful_classes.Constants;
+
 public class CsvUtils {
 
 	public static final String CSV_SEPERATOR = "\t";
 
-	public static final String C_WORK_CSV_FILE = "src\\main\\resources\\allTogether.csv";
+	public static final String C_WORK_CSV_FILE = Constants.SRC_MAIN_RESOURCES_PATH + "allTogether.csv";
 
 	/**
 	 * Reads the CSV file and returns list of lists. Each list contains the data of

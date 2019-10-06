@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 
 import org.jblas.DoubleMatrix;
 
+import helpful_classes.Constants;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Utils.
@@ -31,14 +33,11 @@ public class Utils {
 	/** The Constant rand. */
 	public static final Random rand = new Random();
 
-	/** The Constant RELATIVE_PATH. */
-	public static final String SRC_TEST_RESOURCES_PATH = "src\\test\\resources\\";
-
 	/** The Constant FILE_SUFFIX. */
 	public static final String TXT_SUFFIX = ".txt";
 
 	/** The file data path. */
-	public static final String FILE_DATA_PATH = Utils.SRC_TEST_RESOURCES_PATH + "data" + TXT_SUFFIX;
+	public static final String FILE_DATA_PATH = Constants.SRC_TEST_RESOURCES_PATH + "data" + TXT_SUFFIX;
 
 	private static final Logger LOGGER = Logger.getLogger(Utils.class.getName());
 
@@ -86,7 +85,7 @@ public class Utils {
 
 	private static String makeFilePath(String matrixName, String nameOfMethod, String suffix) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(Utils.SRC_TEST_RESOURCES_PATH);
+		sb.append(Constants.SRC_TEST_RESOURCES_PATH);
 		sb.append(nameOfMethod);
 		sb.append(matrixName);
 		sb.append(suffix);

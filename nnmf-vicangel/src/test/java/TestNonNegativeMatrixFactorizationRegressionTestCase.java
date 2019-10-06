@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dimensionality_reduction_methods.NonNenagativeMatrixFactorization;
+import helpful_classes.Constants;
 import utilpackage.Utils;
 
 // TODO: Auto-generated Javadoc
@@ -48,10 +49,10 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 	/**
 	 * Clear resources.
 	 */
-	 @AfterClass
+	@AfterClass
 	public static void clearResources() {
 		// remove all the files of the directory but not the files in subdirectories
-		Utils.removeFiles(Utils.SRC_TEST_RESOURCES_PATH);
+		Utils.removeFiles(Constants.SRC_TEST_RESOURCES_PATH);
 	}
 
 	/**

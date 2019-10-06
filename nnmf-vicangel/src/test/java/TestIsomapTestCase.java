@@ -11,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import dimensionality_reduction_methods.IsoMapVic;
+import helpful_classes.Constants;
 import smile.graph.Graph;
 import utilpackage.Utils;
 
@@ -35,7 +36,7 @@ public class TestIsomapTestCase {
 	@AfterClass
 	public static void clearResources() {
 		// remove all the files of the directory but not the files in subdirectories
-		Utils.removeFiles(Utils.SRC_TEST_RESOURCES_PATH);
+		Utils.removeFiles(Constants.SRC_TEST_RESOURCES_PATH);
 	}
 
 	/**

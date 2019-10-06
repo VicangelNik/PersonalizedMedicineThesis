@@ -10,9 +10,9 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import helpful_classes.Constants;
 import helpful_classes.MultiKey;
 import utilpackage.CsvUtils;
-import utilpackage.Utils;
 import utilpackage.WekaUtils;
 import validation.WekaValidation;
 
@@ -73,7 +73,7 @@ public class testMakeFileForWekaTestCase {
 	@Test
 	public void testValidateWekaFileCase() {
 		try {
-			final String wekaFile = Utils.SRC_TEST_RESOURCES_PATH + "wekaFileFromChristinasWork"
+			final String wekaFile = Constants.SRC_TEST_RESOURCES_PATH + "wekaFileFromChristinasWork"
 					+ WekaUtils.WEKA_SUFFIX;
 			// get all data
 			List<List<String>> allDataList = CsvUtils.readCSVFile(CsvUtils.C_WORK_CSV_FILE);

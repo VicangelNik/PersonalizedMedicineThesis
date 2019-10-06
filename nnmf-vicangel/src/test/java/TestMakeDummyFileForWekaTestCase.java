@@ -18,6 +18,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import helpful_classes.Constants;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
 
@@ -33,9 +34,9 @@ public class TestMakeDummyFileForWekaTestCase {
 	/** The matrix X. */
 	private static DoubleMatrix matrixX;
 
-	private static final String wekaFilePath = Utils.SRC_TEST_RESOURCES_PATH + "wekaFile" + WekaUtils.WEKA_SUFFIX;
+	private static final String wekaFilePath = Constants.SRC_TEST_RESOURCES_PATH + "wekaFile" + WekaUtils.WEKA_SUFFIX;
 
-	private static final String dummyDataFilePath = Utils.SRC_TEST_RESOURCES_PATH + "dummyData" + Utils.TXT_SUFFIX;
+	private static final String dummyDataFilePath = Constants.SRC_TEST_RESOURCES_PATH + "dummyData" + Utils.TXT_SUFFIX;
 
 	/**
 	 * Clear resources.
@@ -43,7 +44,7 @@ public class TestMakeDummyFileForWekaTestCase {
 	@AfterClass
 	public static void clearResources() {
 		// remove all the files of the directory but not the files in subdirectories
-		Utils.removeFiles(Utils.SRC_TEST_RESOURCES_PATH);
+		Utils.removeFiles(Constants.SRC_TEST_RESOURCES_PATH);
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class TestMakeDummyFileForWekaTestCase {
 		// write data with the class attribute into file
 		Utils.writeMatrixToFile(dummyDataFilePath, matrixX);
 		// assert
-		File expected = new File(Utils.SRC_TEST_RESOURCES_PATH + "\\txtFiles\\dummyData" + Utils.TXT_SUFFIX);
+		File expected = new File(Constants.SRC_TEST_RESOURCES_PATH + "\\txtFiles\\dummyData" + Utils.TXT_SUFFIX);
 		File actual = new File(dummyDataFilePath);
 		try {
 			Assert.assertEquals("Files should be identical",
@@ -104,7 +105,7 @@ public class TestMakeDummyFileForWekaTestCase {
 			WekaUtils.prepareWekaFile("nationality", makeAttributes(), fileDataName, wekaFilePath);
 			// asserts
 			File expectedFile = new File(
-					Utils.SRC_TEST_RESOURCES_PATH + "wekaFiles\\wekaFileFromDummyData" + WekaUtils.WEKA_SUFFIX);
+					Constants.SRC_TEST_RESOURCES_PATH + "wekaFiles\\wekaFileFromDummyData" + WekaUtils.WEKA_SUFFIX);
 			File actual = new File(wekaFilePath);
 			Assert.assertEquals("Files should be identical",
 					FileUtils.readLines(expectedFile, StandardCharsets.UTF_8).toString().replaceAll("\\s+", ""),

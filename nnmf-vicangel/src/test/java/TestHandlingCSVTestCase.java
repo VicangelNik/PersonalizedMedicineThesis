@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
+import helpful_classes.Constants;
 import utilpackage.CsvUtils;
 import utilpackage.WekaUtils;
 
@@ -23,24 +24,23 @@ public class TestHandlingCSVTestCase {
 	@Test
 	public void testReadCSVTestCase() {
 		try {
-			List<List<String>> allDataList = CsvUtils.readCSVFile(CsvUtils.C_WORK_CSV_FILE);
+			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.C_WORK_CSV_FILE);
 			Assert.assertEquals("The lines of the file should be 413", 413, allDataList.size());
 		} catch (IOException e) {
 			Assert.fail(e.getMessage());
 		}
 	}
 
-
 	@Test
 	public void testReadCSVColumnWIseTestCase() {
 		try {
 			// get all data
-			List<List<String>> allDataList = CsvUtils.readCSVFile(CsvUtils.C_WORK_CSV_FILE);
+			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.C_WORK_CSV_FILE);
 			// get dimension number through getDimensions
-			int dimensionsSize = WekaUtils.getDimensions(allDataList).size();
+			int dimensionsSize = WekaUtils.getDimensions(allDataList, "/t").size();
 			// get all data column - wised.
 			long startTime = System.nanoTime();
-			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(CsvUtils.C_WORK_CSV_FILE,
+			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(Constants.C_WORK_CSV_FILE,
 					dimensionsSize);
 			long endTime = System.nanoTime();
 			LOGGER.log(Level.INFO, "readCSVFileColumnWise execution time in seconds is {0}",

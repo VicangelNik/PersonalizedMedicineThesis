@@ -176,10 +176,10 @@ public final class WekaUtils {
 	 * @param allData
 	 * @return the actual dimension size list.
 	 */
-	public static List<String> getDimensions(List<List<String>> allData) {
+	public static List<String> getDimensions(List<List<String>> allData, String seperator) {
 		String notFeatureWord = "DATA";
 		// get the dimension names from the file
-		List<String> dimensions = new ArrayList<>(Arrays.asList(allData.get(0).get(0).split("\t")));
+		List<String> dimensions = new ArrayList<>(Arrays.asList(allData.get(0).get(0).split(seperator)));
 		if (dimensions.contains(notFeatureWord)) {
 			boolean isRemoved = dimensions.remove(notFeatureWord);
 			LOGGER.log(Level.INFO, "data word was contained in feature list: {0}", Boolean.toString(isRemoved));

@@ -18,13 +18,13 @@ import validation.WekaValidation;
 
 public class testMakeFileForWekaTestCase {
 
-	@Ignore
+	
 	@Test
 	public void testReadCSVAndGetDimensionsTestCase() {
 		try {
-			List<List<String>> allDataList = CsvUtils.readCSVFile(CsvUtils.C_WORK_CSV_FILE);
+			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.SRC_TEST_RESOURCES_PATH + "csv//" + "testCsv.csv");
 			// get featues
-			List<String> dimensions = WekaUtils.getDimensions(allDataList);
+			List<String> dimensions = WekaUtils.getDimensions(allDataList, ",");
 			Assert.assertEquals("All the features should be 73663", 73663, dimensions.size());
 		} catch (IOException e) {
 			Assert.fail(e.getMessage());
@@ -36,11 +36,11 @@ public class testMakeFileForWekaTestCase {
 	public void testDataAndFeaturesHaveTheSameNumberTestCase() {
 		try {
 			// get all data
-			List<List<String>> allDataList = CsvUtils.readCSVFile(CsvUtils.C_WORK_CSV_FILE);
+			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.C_WORK_CSV_FILE);
 			// get dimension number through getDimensions
-			int dimensionsSize = WekaUtils.getDimensions(allDataList).size();
+			int dimensionsSize = WekaUtils.getDimensions(allDataList, "/t").size();
 			// get all data column - wised.
-			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(CsvUtils.C_WORK_CSV_FILE,
+			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(Constants.C_WORK_CSV_FILE,
 					dimensionsSize);
 			WekaUtils.checkNumberFeatureData(dimensionWIseData);
 			// assert
@@ -56,11 +56,11 @@ public class testMakeFileForWekaTestCase {
 	public void testFilterDataTestCase() {
 		try {
 			// get all data
-			List<List<String>> allDataList = CsvUtils.readCSVFile(CsvUtils.C_WORK_CSV_FILE);
+			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.C_WORK_CSV_FILE);
 			// get dimension number through getDimensions
-			int dimensionsSize = WekaUtils.getDimensions(allDataList).size();
+			int dimensionsSize = WekaUtils.getDimensions(allDataList, "/t").size();
 			// get all data column - wised
-			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(CsvUtils.C_WORK_CSV_FILE,
+			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(Constants.C_WORK_CSV_FILE,
 					dimensionsSize);
 			Map<MultiKey, List<String>> attributes = WekaUtils.filterValidFeaturesAndData(dimensionWIseData);
 			// assert
@@ -70,17 +70,18 @@ public class testMakeFileForWekaTestCase {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testValidateWekaFileCase() {
 		try {
 			final String wekaFile = Constants.SRC_TEST_RESOURCES_PATH + "wekaFileFromChristinasWork"
 					+ WekaUtils.WEKA_SUFFIX;
 			// get all data
-			List<List<String>> allDataList = CsvUtils.readCSVFile(CsvUtils.C_WORK_CSV_FILE);
+			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.C_WORK_CSV_FILE);
 			// get dimension number through getDimensions
-			int dimensionsSize = WekaUtils.getDimensions(allDataList).size();
+			int dimensionsSize = WekaUtils.getDimensions(allDataList, "/t").size();
 			// get all data column - wised
-			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(CsvUtils.C_WORK_CSV_FILE,
+			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(Constants.C_WORK_CSV_FILE,
 					dimensionsSize);
 			Map<MultiKey, List<String>> attributes = WekaUtils.filterValidFeaturesAndData(dimensionWIseData);
 			// Prepare weka file.

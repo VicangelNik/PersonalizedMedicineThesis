@@ -10,4 +10,6 @@ public class Constants {
 	public static final String SRC_TEST_RESOURCES_PATH = "src\\test\\resources\\";
 
 	public static final String SRC_MAIN_RESOURCES_PATH = "src\\main\\resources\\";
+	
+	public static final String C_WORK_CSV_FILE = Constants.SRC_MAIN_RESOURCES_PATH + "allTogether.csv";
 }

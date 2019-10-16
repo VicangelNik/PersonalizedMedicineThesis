@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.opencsv.CSVReader;
 
 import helpful_classes.Constants;
+import utilpackage.CsvUtils;
 import weka.api.library.LoadCsv;
 
 // TODO: Auto-generated Javadoc
@@ -44,7 +45,7 @@ public class TestLoadCsvTestCase {
 	public void testLoadCsv() {
 		final File csvFile = new File(Constants.C_WORK_CSV_FILE);
 		try {
-			LoadCsv loadCsv = new LoadCsv(csvFile, "\t");
+			LoadCsv loadCsv = new LoadCsv(csvFile, CsvUtils.TAB_SEPARATOR);
 			Assert.assertEquals(csvFile, loadCsv.getFile());
 			Assert.fail("test fails");
 		} catch (IOException e) {
@@ -66,7 +67,7 @@ public class TestLoadCsvTestCase {
 				while ((values = csvReader.readNext()) != null) {
 					// the csv file had unnecessary commas, spaces, tabs and brackets and we make it
 					// to be seperated only by tabs.
-					String line = Arrays.toString(values).replace(" ", "\t").replace(",", "").replaceAll("[\\t]{1}(])+",
+					String line = Arrays.toString(values).replace(" ", CsvUtils.TAB_SEPARATOR).replace(",", "").replaceAll("[\\t]{1}(])+",
 							"");
 					bw.write(line);
 					bw.write("\n");
@@ -87,10 +88,10 @@ public class TestLoadCsvTestCase {
 	 * Test load csv 2.
 	 */
 	@Test
-	public void testLoadCsv2() {
+	public void testLoadValidCsv() {
 		final File csvFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "bladderCancer.csv");
 		try {
-			LoadCsv loadCsv = new LoadCsv(csvFile, "\t");
+			LoadCsv loadCsv = new LoadCsv(csvFile, CsvUtils.TAB_SEPARATOR);
 			Assert.assertEquals(csvFile, loadCsv.getFile());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

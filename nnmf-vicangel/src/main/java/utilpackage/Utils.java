@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import org.jblas.DoubleMatrix;
 
 import helpful_classes.Constants;
+import helpful_classes.EnumSeparators;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -135,7 +136,7 @@ public class Utils {
 				// write the line number bw.write(i + "\t");
 				for (int j = 0; j < matrix.getRow(i).columns; j++) {
 					// write the data
-					bw.write(Double.toString(matrix.get(i, j)) + CsvUtils.TAB_SEPARATOR);
+					bw.write(Double.toString(matrix.get(i, j)) + EnumSeparators.TAB.getSeparator());
 					// write the class in the end of the row
 					if ((filename.contains("MATRIXX") || filename.contains("data") || filename.contains("Data"))
 							&& j == matrix.getRow(i).columns - 1) {

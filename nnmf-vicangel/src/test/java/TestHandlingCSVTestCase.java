@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import helpful_classes.Constants;
+import helpful_classes.EnumSeparators;
 import utilpackage.CsvUtils;
 import utilpackage.WekaUtils;
 
@@ -37,7 +38,7 @@ public class TestHandlingCSVTestCase {
 			// get all data
 			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.C_WORK_CSV_FILE);
 			// get dimension number through getDimensions
-			int dimensionsSize = WekaUtils.getDimensions(allDataList, CsvUtils.TAB_SEPARATOR).size();
+			int dimensionsSize = WekaUtils.getDimensions(allDataList, EnumSeparators.TAB.getSeparator()).size();
 			// get all data column - wised.
 			long startTime = System.nanoTime();
 			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(Constants.C_WORK_CSV_FILE,

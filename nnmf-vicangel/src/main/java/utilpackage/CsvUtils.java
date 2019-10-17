@@ -12,13 +12,13 @@ import java.util.List;
 
 import com.opencsv.CSVReader;
 
+import helpful_classes.EnumSeparators;
+
 public final class CsvUtils {
 
 	private CsvUtils() {
 		throw new IllegalArgumentException("utillity class");
 	}
-
-	public static final String TAB_SEPARATOR = "\t";
 
 	/**
 	 * Reads the CSV file and returns list of lists. Each list contains the data of
@@ -54,7 +54,7 @@ public final class CsvUtils {
 		try (CSVReader csvReader = new CSVReader(new FileReader(fileName));) {
 			String[] values = null;
 			while ((values = csvReader.readNext()) != null) {
-				String[] lineString = Arrays.toString(values).split(TAB_SEPARATOR);
+				String[] lineString = Arrays.toString(values).split(EnumSeparators.TAB.getSeparator());
 				for (int i = 0; i < dimensionsSize; i++) {
 					// we ignore the first cell of its line because it contains the case ids. In the
 					// line of dimensions contains the data keyword.

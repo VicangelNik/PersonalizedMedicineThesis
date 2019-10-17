@@ -11,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import helpful_classes.Constants;
+import helpful_classes.EnumSeparators;
 import helpful_classes.MultiKey;
 import utilpackage.CsvUtils;
 import utilpackage.WekaUtils;
@@ -18,11 +19,11 @@ import validation.WekaValidation;
 
 public class testMakeFileForWekaTestCase {
 
-	
 	@Test
 	public void testReadCSVAndGetDimensionsTestCase() {
 		try {
-			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.SRC_TEST_RESOURCES_PATH + "csv//" + "testCsv.csv");
+			List<List<String>> allDataList = CsvUtils
+					.readCSVFile(Constants.SRC_TEST_RESOURCES_PATH + "csv//" + "testCsv.csv");
 			// get featues
 			List<String> dimensions = WekaUtils.getDimensions(allDataList, ",");
 			Assert.assertEquals("All the features should be 73663", 73663, dimensions.size());
@@ -38,7 +39,7 @@ public class testMakeFileForWekaTestCase {
 			// get all data
 			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.C_WORK_CSV_FILE);
 			// get dimension number through getDimensions
-			int dimensionsSize = WekaUtils.getDimensions(allDataList, CsvUtils.TAB_SEPARATOR).size();
+			int dimensionsSize = WekaUtils.getDimensions(allDataList, EnumSeparators.TAB.getSeparator()).size();
 			// get all data column - wised.
 			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(Constants.C_WORK_CSV_FILE,
 					dimensionsSize);
@@ -58,7 +59,7 @@ public class testMakeFileForWekaTestCase {
 			// get all data
 			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.C_WORK_CSV_FILE);
 			// get dimension number through getDimensions
-			int dimensionsSize = WekaUtils.getDimensions(allDataList, CsvUtils.TAB_SEPARATOR).size();
+			int dimensionsSize = WekaUtils.getDimensions(allDataList, EnumSeparators.TAB.getSeparator()).size();
 			// get all data column - wised
 			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(Constants.C_WORK_CSV_FILE,
 					dimensionsSize);
@@ -79,7 +80,7 @@ public class testMakeFileForWekaTestCase {
 			// get all data
 			List<List<String>> allDataList = CsvUtils.readCSVFile(Constants.C_WORK_CSV_FILE);
 			// get dimension number through getDimensions
-			int dimensionsSize = WekaUtils.getDimensions(allDataList, CsvUtils.TAB_SEPARATOR).size();
+			int dimensionsSize = WekaUtils.getDimensions(allDataList, EnumSeparators.TAB.getSeparator()).size();
 			// get all data column - wised
 			List<List<String>> dimensionWIseData = CsvUtils.readCSVFileColumnWise(Constants.C_WORK_CSV_FILE,
 					dimensionsSize);

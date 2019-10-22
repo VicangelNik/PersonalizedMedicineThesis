@@ -7,8 +7,10 @@ import weka.core.Instances;
 public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 
 	@Override
-	public AbstractClassifier selectClassifier(String selection, Instances instances) {
+	public AbstractClassifier selectClassifier(String selection, Instances instances) throws Exception {
 		AbstractClassifier abstractClassifier = null;
+		
+		
 		switch (selection) {
 		case Constants.NAIVE_BAYES: {
 			abstractClassifier = new NaiveBayes();
@@ -18,6 +20,10 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 			throw new IllegalArgumentException("Select a classifier");
 		}
 		}
+		
+		
+		// initializes the classifier with the training data
+		abstractClassifier.buildClassifier(instances);
 		return abstractClassifier;
 	}
 }

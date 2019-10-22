@@ -14,6 +14,6 @@ public interface ClassifierSelection {
 	 * 
 	 * @return
 	 */
-	public AbstractClassifier selectClassifier(String selection, Instances instances);
+	public AbstractClassifier selectClassifier(String selection, Instances instances) throws Exception;
 
 }

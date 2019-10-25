@@ -1,3 +1,6 @@
+/*
+ *
+ */
 package weka.api.library;
 
 import java.io.File;
@@ -18,6 +21,7 @@ public class LoadArff extends ArffLoader {
 	/** The file. */
 	private File file;
 
+	/** The class index. */
 	private int classIndex;
 
 	/**
@@ -42,6 +46,11 @@ public class LoadArff extends ArffLoader {
 		return file;
 	}
 
+	/*
+	 * (non-Javadoc) Method is overrided for setting the class index
+	 *
+	 * @see weka.core.converters.ArffLoader#getStructure()
+	 */
 	@Override
 	public Instances getStructure() throws IOException {
 
@@ -51,14 +60,16 @@ public class LoadArff extends ArffLoader {
 			}
 
 			try {
-				m_ArffReader = new ArffReader(m_sourceReader, 1, (getRetrieval() == BATCH));
+				m_ArffReader = new ArffReader(m_sourceReader, 1, getRetrieval() == BATCH);
 				m_ArffReader.setRetainStringValues(getRetainStringVals());
 				m_structure = m_ArffReader.getStructure();
 			} catch (Exception ex) {
 				throw new IOException("Unable to determine structure as arff (Reason: " + ex.toString() + ").");
 			}
 		}
-		m_structure.setClassIndex(this.classIndex);
+		// set the class index. The structure knows which is the feature for
+		// classification.
+		m_structure.setClassIndex(classIndex);
 		return new Instances(m_structure, 0);
 	}
 }

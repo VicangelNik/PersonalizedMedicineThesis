@@ -1,36 +1,34 @@
+/*
+ *
+ */
 package weka.api.library;
 
 import java.io.File;
 import java.io.IOException;
 
-import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class LoadCsv.
  */
-public class LoadCsv {
+public class LoadCsv extends CSVLoader {
 
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1655811640781388320L;
 	/** The file. */
 	private File file;
-
-	/** The csv data. */
-	private Instances csvData;
 
 	/**
 	 * Instantiates a new load csv.
 	 *
-	 * @param file      the file
-	 * @param separator the separator
+	 * @param file       the file
+	 * @param classIndex the class index
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public LoadCsv(File file, String separator) throws IOException {
+	public LoadCsv(File file, int classIndex) throws IOException {
+		this.file = file;
 		this.setFile(file);
-		// load file
-		CSVLoader loader = new CSVLoader();
-		loader.setFieldSeparator(separator);
-		loader.setSource(this.file);
-		this.setCsvData(loader.getDataSet());
 	}
 
 	/**
@@ -40,32 +38,5 @@ public class LoadCsv {
 	 */
 	public File getFile() {
 		return file;
-	}
-
-	/**
-	 * Sets the file.
-	 *
-	 * @param file the new file
-	 */
-	public void setFile(File file) {
-		this.file = file;
-	}
-
-	/**
-	 * Gets the csv data.
-	 *
-	 * @return the csv data
-	 */
-	public Instances getCsvData() {
-		return csvData;
-	}
-
-	/**
-	 * Sets the csv data.
-	 *
-	 * @param csvData the new csv data
-	 */
-	public void setCsvData(Instances csvData) {
-		this.csvData = csvData;
 	}
 }

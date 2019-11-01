@@ -20,7 +20,7 @@ public class Constants {
 	public static final String SRC_MAIN_RESOURCES_PATH = "src\\main\\resources\\";
 
 	/** The Constant C_WORK_CSV_FILE. */
-	public static final String C_WORK_CSV_FILE = Constants.SRC_MAIN_RESOURCES_PATH + "allTogether.csv";
+	public static final String C_WORK_CSV_FILE = Constants.SRC_MAIN_RESOURCES_PATH + "patientAndControlData.csv";
 	
 	/** The Constant WEKA_FILES. */
 	public static final String WEKA_FILES = "src\\test\\resources\\wekaFiles\\";

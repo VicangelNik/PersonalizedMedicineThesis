@@ -19,7 +19,6 @@ import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
 import interfaces.ClassifierSelection;
 import weka.api.library.LoadArff;
-import weka.api.library.LoadCsv;
 import weka.classifiers.AbstractClassifier;
 
 // TODO: Auto-generated Javadoc
@@ -55,13 +54,14 @@ public class TestClassificationTestCase {
 	 */
 	@Test
 	public void testNaiveBayesClassificationCsv() throws IOException {
-		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.csv");
+		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCÎ¿ntrolProcessed.arff");
+		Assert.assertTrue("The file should exists", arffFile.exists());
+		Assert.assertTrue("The file should be readable.", arffFile.canRead());
 		try {
-			LoadCsv loader = new LoadCsv(file, 73664, EnumSeparators.TAB.getSeparator());
-			Assert.assertEquals("The excpected class should be: ", 73664, loader.getStructure().classIndex());
+			LoadArff arffLoader = new LoadArff(arffFile, 73664);		
+			Assert.assertEquals("The excpected class should be: ", 73664, arffLoader.getStructure().classIndex());
 			ClassifierSelection classifierSelection = new ClassifierSelectionImpl();
-			AbstractClassifier classifier = classifierSelection.selectClassifier(Constants.NAIVE_BAYES, loader);
-			System.out.println(classifier.getCapabilities());
+			AbstractClassifier classifier = classifierSelection.selectClassifier(Constants.NAIVE_BAYES, arffLoader);
 			System.out.println(classifier);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,7 +74,7 @@ public class TestClassificationTestCase {
 	 */
 	@Test
 	public void findIndex() {
-		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.csv");
+		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCï¿½ntrolProcessed.csv");
 		List<String> records = new ArrayList<>();
 		try (CSVReader csvReader = new CSVReader(new FileReader(file));) {
 			String[] values = null;

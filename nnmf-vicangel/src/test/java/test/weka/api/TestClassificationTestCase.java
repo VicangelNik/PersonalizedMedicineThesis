@@ -54,7 +54,7 @@ public class TestClassificationTestCase {
 	 */
 	@Test
 	public void testNaiveBayesClassificationCsv() throws IOException {
-		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCÎ¿ntrolProcessed.arff");
+		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessed.arff");
 		Assert.assertTrue("The file should exists", arffFile.exists());
 		Assert.assertTrue("The file should be readable.", arffFile.canRead());
 		try {
@@ -74,7 +74,7 @@ public class TestClassificationTestCase {
 	 */
 	@Test
 	public void findIndex() {
-		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCï¿½ntrolProcessed.csv");
+		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.csv");
 		List<String> records = new ArrayList<>();
 		try (CSVReader csvReader = new CSVReader(new FileReader(file));) {
 			String[] values = null;

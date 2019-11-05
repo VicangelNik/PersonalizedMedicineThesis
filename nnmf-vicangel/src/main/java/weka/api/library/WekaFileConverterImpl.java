@@ -14,6 +14,7 @@ public class WekaFileConverterImpl implements WekaFileConverter {
 		ArffSaver saver = new ArffSaver();
 		saver.setInstances(data);
 		saver.setFile(new File(filePathName));
+		saver.setMaxDecimalPlaces(20);
 		saver.writeBatch();
 	}
 

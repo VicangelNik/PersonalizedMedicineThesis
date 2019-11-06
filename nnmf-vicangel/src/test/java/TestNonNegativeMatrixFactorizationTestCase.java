@@ -79,7 +79,7 @@ public class TestNonNegativeMatrixFactorizationTestCase {
 		UpdateRule rule = new FGDMUpdateRule(1.0, 1.0);
 		Object[] matrices = nnmf.nonNegativeMatrixFactorizationImp(rule);
 		// Calculates the distance between matrices X and WH using the euclidean
-		// distance || X − WH || ^2
+		// distance || X - WH || ^2
 		Measure measure = new EuclideanDistance();
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// write results to files
@@ -100,7 +100,7 @@ public class TestNonNegativeMatrixFactorizationTestCase {
 		UpdateRule rule = new MUpdateRule(1.0, 1.0);
 		Object[] matrices = nnmf.nonNegativeMatrixFactorizationImp(rule);
 		// Calculates the distance between matrices X and WH using the euclidean
-		// distance || X − WH || ^2
+		// distance || X - WH || ^2
 		Measure measure = new EuclideanDistance();
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// write results to files
@@ -121,7 +121,7 @@ public class TestNonNegativeMatrixFactorizationTestCase {
 		UpdateRule rule = new FGDKLUpdateRule(1.0, 1.0);
 		Object[] matrices = nnmf.nonNegativeMatrixFactorizationImp(rule);
 		// Calculates the distance between matrices X and WH using the generalized
-		// Kullback-Leibler divergence ∑ ( X log ( X / WH ) − X + WH )
+		// Kullback-Leibler divergence Σ ( X log ( X / WH ) - X + WH )
 		Measure measure = new KLDivergence();
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// write results to files
@@ -142,7 +142,7 @@ public class TestNonNegativeMatrixFactorizationTestCase {
 		UpdateRule rule = new MKLUpdateRule(1.0, 1.0);
 		Object[] matrices = nnmf.nonNegativeMatrixFactorizationImp(rule);
 		// Calculates the distance between matrices X and WH using the generalized
-		// Kullback-Leibler divergence ∑ ( X log ( X / WH ) − X + WH )
+		// Kullback-Leibler divergence Σ ( X log ( X / WH ) - X + WH )
 		Measure measure = new KLDivergence();
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// write results to files

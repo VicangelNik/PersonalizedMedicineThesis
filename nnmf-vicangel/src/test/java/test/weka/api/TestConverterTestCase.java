@@ -16,7 +16,7 @@ import weka.api.library.WekaFileConverterImpl;
  * The Class TestConverterTestCase.
  */
 public class TestConverterTestCase {
-	
+
 	/**
 	 * Test convert csv to arff test case.
 	 */
@@ -26,7 +26,7 @@ public class TestConverterTestCase {
 		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.arff");
 		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
 		try {
-			LoadCsv loader = new LoadCsv(file, 73664, EnumSeparators.TAB.getSeparator());
+			LoadCsv loader = new LoadCsv(file, 73664, EnumSeparators.TAB.getSeparator(), "NA");
 			Assert.assertEquals("The excpected class should be: ", 73664, loader.getStructure().classIndex());
 			wekaFileConverterImpl.convertCsvToArff(loader.getDataSet(), arffFile.getAbsolutePath());
 			// ASSERTS

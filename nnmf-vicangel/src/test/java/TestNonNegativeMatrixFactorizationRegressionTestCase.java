@@ -87,7 +87,7 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 		DoubleMatrix[] matrices = new DoubleMatrix[4];
 		System.arraycopy(returnedMatrices, 0, matrices, 0, 3);
 		// Calculates the distance between matrices X and WH using the euclidean
-		// distance || X − WH || ^2
+		// distance || X - WH || ^2
 		Measure measure = new EuclideanDistance();
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// Do regression
@@ -122,7 +122,7 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 		DoubleMatrix[] matrices = new DoubleMatrix[4];
 		System.arraycopy(returnedMatrices, 0, matrices, 0, 3);
 		// Calculates the distance between matrices X and WH using the euclidean
-		// distance || X − WH || ^2
+		// distance || X - WH || ^2
 		Measure measure = new EuclideanDistance();
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// Do regression
@@ -156,7 +156,7 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 		DoubleMatrix[] matrices = new DoubleMatrix[4];
 		System.arraycopy(returnedMatrices, 0, matrices, 0, 3);
 		// Calculates the distance between matrices X and WH using the generalized
-		// Kullback-Leibler divergence ∑ ( X log ( X / WH ) − X + WH )
+		// Kullback-Leibler divergence Σ ( X log ( X / WH ) - X + WH )
 		Measure measure = new KLDivergence();
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// Do regression
@@ -190,7 +190,7 @@ public class TestNonNegativeMatrixFactorizationRegressionTestCase {
 		DoubleMatrix[] matrices = new DoubleMatrix[4];
 		System.arraycopy(returnedMatrices, 0, matrices, 0, 3);
 		// Calculates the distance between matrices X and WH using the generalized
-		// Kullback-Leibler divergence ∑ ( X log ( X / WH ) − X + WH )
+		// Kullback-Leibler divergence Σ ( X log ( X / WH ) - X + WH )
 		Measure measure = new KLDivergence();
 		double measureResult = measure.get(matrixX, matrixW, matrixH);
 		// Do regression

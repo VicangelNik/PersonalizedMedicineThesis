@@ -41,16 +41,18 @@ public class LoadCsv extends CSVLoader {
 	/**
 	 * Instantiates a new load csv.
 	 *
-	 * @param file       the file
-	 * @param classIndex the class index
-	 * @param separator  the separator
+	 * @param file         the file
+	 * @param classIndex   the class index
+	 * @param separator    the separator
+	 * @param missingValue the missing value
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public LoadCsv(File file, int classIndex, String separator) throws IOException {
+	public LoadCsv(File file, int classIndex, String separator, String missingValue) throws IOException {
 		this.file = file;
 		this.setFieldSeparator(separator);
 		this.setFile(file);
 		this.classIndex = classIndex;
+		this.setMissingValue(missingValue);
 		setStructure();
 	}
 

@@ -28,7 +28,7 @@ public class TestConverterTestCase {
 		try {
 			LoadCsv loader = new LoadCsv(file, 73664, EnumSeparators.TAB.getSeparator(), "NA");
 			Assert.assertEquals("The excpected class should be: ", 73664, loader.getStructure().classIndex());
-			wekaFileConverterImpl.convertCsvToArff(loader.getDataSet(), arffFile.getAbsolutePath());
+			wekaFileConverterImpl.arffSaver(loader.getDataSet(), arffFile.getAbsolutePath());
 			// ASSERTS
 			Assert.assertTrue("The file should exists", arffFile.exists());
 			Assert.assertTrue("The file should be readable.", arffFile.canRead());

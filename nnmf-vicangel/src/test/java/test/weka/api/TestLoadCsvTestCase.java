@@ -84,7 +84,7 @@ public class TestLoadCsvTestCase {
 				while ((values = csvReader.readNext()) != null) {
 					// the csv file had unnecessary commas, spaces, tabs and brackets and we make it
 					// to be seperated only by tabs.
-					String line = Arrays.toString(values).replaceAll("[\\[\\]]", "").replaceAll("na", "NA");
+					String line = Arrays.toString(values).replaceAll("[\\[\\]]", "").replaceAll("na", "NA").replaceAll("--", "NA");
 					List<String> list = new ArrayList<>(Arrays.asList(line.split(EnumSeparators.TAB.getSeparator())));
 					bw.write(modifyValues(list));
 					bw.write(System.lineSeparator());
@@ -123,6 +123,10 @@ public class TestLoadCsvTestCase {
 		for (int i = 0; i < list.size() - 1; i++) {
 			String value = list.get(i);
 			builder.append(value.trim() + EnumSeparators.TAB.getSeparator());
+//			if (i==38193)
+//			{
+//				System.out.println(value.trim());
+//			}
 		}
 		String lastValue = list.get(list.size() - 1);
 		builder.append(lastValue.trim());

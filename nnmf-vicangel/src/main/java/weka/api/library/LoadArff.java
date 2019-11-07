@@ -38,12 +38,34 @@ public class LoadArff extends ArffLoader {
 	}
 
 	/**
+	 * Instantiates a new load arff.
+	 *
+	 * @param file the file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public LoadArff(File file) throws IOException {
+		this.file = file;
+		this.setFile(file);
+		this.classIndex = 0;
+	}
+
+	/**
 	 * Gets the file.
 	 *
 	 * @return the file
 	 */
 	public File getFile() {
 		return file;
+	}
+	
+	/**
+	 * Sets the class index.
+	 *
+	 * @param classIndex the new class index
+	 */
+	public void setClassIndex(int classIndex)
+	{
+		this.classIndex = classIndex;
 	}
 
 	/*

@@ -7,10 +7,16 @@ import interfaces.WekaFileConverter;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 
+/**
+ * The Class WekaFileConverterImpl.
+ */
 public class WekaFileConverterImpl implements WekaFileConverter {
 
+	/* (non-Javadoc)
+	 * @see interfaces.WekaFileConverter#arffSaver(weka.core.Instances, java.lang.String)
+	 */
 	@Override
-	public void convertCsvToArff(Instances data, String filePathName) throws IOException {
+	public void arffSaver(Instances data, String filePathName) throws IOException {
 		ArffSaver saver = new ArffSaver();
 		saver.setInstances(data);
 		saver.setFile(new File(filePathName));
@@ -18,8 +24,11 @@ public class WekaFileConverterImpl implements WekaFileConverter {
 		saver.writeBatch();
 	}
 
+	/* (non-Javadoc)
+	 * @see interfaces.WekaFileConverter#convertArffToCsv(weka.core.Instances, java.lang.String)
+	 */
 	@Override
-	public void convertArffToCsv(Instances data, String filePathName) {
+	public void csvSaver(Instances data, String filePathName) {
 		// TODO Auto-generated method stub
 
 	}

@@ -1,6 +1,9 @@
+/*
+ * 
+ */
 package weka.api.library;
 
-import helpful_classes.PreprocessData;
+import interfaces.PreprocessData;
 import weka.core.Instances;
 import weka.core.SelectedTag;
 import weka.filters.Filter;
@@ -10,9 +13,11 @@ import weka.filters.unsupervised.attribute.RemoveType;
 /**
  * The Class PreprocessDataImpl.
  */
-public class PreprocessDataImpl implements PreprocessData{
+public class PreprocessDataImpl implements PreprocessData {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see helpful_classes.PreprocessData#removeType(weka.core.Instances, int)
 	 */
 	@Override

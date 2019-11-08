@@ -16,7 +16,7 @@ public interface PreprocessData {
 	 * @return the instances
 	 * @throws Exception the exception
 	 */
-	public Instances removeType(Instances data, int tagId) throws Exception;
+	public Instances removeFeaturesByType(Instances data, int tagId) throws Exception;
 	
 	/**
 	 * Removes the feature.

@@ -69,7 +69,7 @@ public class TestClassificationTestCase {
 			if (arffLoader.getStructure().checkForStringAttributes()) {
 				File newFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedNew.arff");
 				PreprocessDataImpl preprocessData = new PreprocessDataImpl();
-				Instances data = preprocessData.removeType(arffLoader.getDataSet(), Attribute.STRING);
+				Instances data = preprocessData.removeFeaturesByType(arffLoader.getDataSet(), Attribute.STRING);
 				WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
 				wekaFileConverterImpl.arffSaver(data, newFile.getAbsolutePath());
 				arffLoader = new LoadArff(newFile);

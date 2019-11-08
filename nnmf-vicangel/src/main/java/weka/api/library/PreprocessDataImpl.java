@@ -19,7 +19,7 @@ public class PreprocessDataImpl implements PreprocessData{
 	 * @see helpful_classes.PreprocessData#removeType(weka.core.Instances, int)
 	 */
 	@Override
-	public Instances removeType(Instances data, int tagId) throws Exception {
+	public Instances removeFeaturesByType(Instances data, int tagId) throws Exception {
 		RemoveType removeType = new RemoveType();
 		removeType.setInputFormat(data);
 		SelectedTag tag = new SelectedTag(tagId, RemoveType.TAGS_ATTRIBUTETYPE);

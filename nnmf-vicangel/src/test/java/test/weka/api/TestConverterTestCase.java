@@ -22,8 +22,8 @@ public class TestConverterTestCase {
 	 */
 	@Test
 	public void testConvertCsvToArffTestCase() {
-		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.csv");
-		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.arff");
+		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelOne.csv");
+		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelOne.arff");
 		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
 		try {
 			LoadCsv loader = new LoadCsv(file, 73664, EnumSeparators.TAB.getSeparator(), "NA");

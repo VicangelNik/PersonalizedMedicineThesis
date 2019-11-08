@@ -19,11 +19,7 @@ import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
 import interfaces.ClassifierSelection;
 import weka.api.library.LoadArff;
-import weka.api.library.PreprocessDataImpl;
-import weka.api.library.WekaFileConverterImpl;
 import weka.classifiers.AbstractClassifier;
-import weka.core.Attribute;
-import weka.core.Instances;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -52,33 +48,21 @@ public class TestClassificationTestCase {
 	}
 
 	/**
-	 * Test naive bayes classification csv.
+	 * Test naive bayes classification arff real data.
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void testNaiveBayesClassificationCsv() throws IOException {
-		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.arff");
-		Assert.assertTrue("The file should exists", arffFile.exists());
-		Assert.assertTrue("The file should be readable.", arffFile.canRead());
-		LoadArff arffLoader;
+	public void testNaiveBayesClassificationArffRealData() throws IOException {
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
+		Assert.assertTrue("The file should exists", level2File.exists());
+		Assert.assertTrue("The file should be readable.", level2File.canRead());
+		LoadArff arffLoader = new LoadArff(level2File);
+		arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
+		Assert.assertEquals("The excpected class should be: ",
+				arffLoader.getStructure().attribute("SampleStatus").index(), arffLoader.getStructure().classIndex());
 		try {
-			arffLoader = new LoadArff(arffFile, 73664);
-			Assert.assertEquals("The excpected class should be: ", 73664, arffLoader.getStructure().classIndex());
-
-			if (arffLoader.getStructure().checkForStringAttributes()) {
-				File newFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedNew.arff");
-				PreprocessDataImpl preprocessData = new PreprocessDataImpl();
-				Instances data = preprocessData.removeFeaturesByType(arffLoader.getDataSet(), Attribute.STRING);
-				WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
-				wekaFileConverterImpl.arffSaver(data, newFile.getAbsolutePath());
-				arffLoader = new LoadArff(newFile);
-				arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
-				
-			}
-
 			ClassifierSelection classifierSelection = new ClassifierSelectionImpl();
-
 			AbstractClassifier classifier = classifierSelection.selectClassifier(Constants.NAIVE_BAYES, arffLoader);
 			System.out.println(classifier);
 		} catch (Exception e) {

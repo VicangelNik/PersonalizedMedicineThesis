@@ -9,7 +9,7 @@ import weka.core.Instances;
 public interface PreprocessData {
 
 	/**
-	 * Removes the type.
+	 * Removes the features by type.
 	 *
 	 * @param data  the data
 	 * @param tagId the tag id

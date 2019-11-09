@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Assert;
@@ -63,8 +64,33 @@ public class TestClassificationTestCase {
 				arffLoader.getStructure().attribute("SampleStatus").index(), arffLoader.getStructure().classIndex());
 		try {
 			ClassifierSelection classifierSelection = new ClassifierSelectionImpl();
-			AbstractClassifier classifier = classifierSelection.selectClassifier(Constants.NAIVE_BAYES, arffLoader);
-			System.out.println(classifier);
+			AbstractClassifier abstractClassifier = classifierSelection.selectClassifier(Constants.NAIVE_BAYES,
+					arffLoader);
+			classifierSelection.classify(abstractClassifier, arffLoader);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	/**
+	 * Test naive bayes cross validation evaluation arff real data.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void testNaiveBayesCrossValidationEvaluationArffRealData() throws IOException {
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
+		LoadArff arffLoader = new LoadArff(level2File);
+		arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
+		Assert.assertEquals("The excpected class should be: ",
+				arffLoader.getStructure().attribute("SampleStatus").index(), arffLoader.getStructure().classIndex());
+		try {
+			ClassifierSelection classifierSelection = new ClassifierSelectionImpl();
+			AbstractClassifier abstractClassifier = classifierSelection.selectClassifier(Constants.NAIVE_BAYES,
+					arffLoader);
+			classifierSelection.crossValidationEvaluation(abstractClassifier, arffLoader.getDataSet(), 10,
+					new Random(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -74,6 +100,7 @@ public class TestClassificationTestCase {
 	/**
 	 * Find index.
 	 */
+	@Deprecated
 	@Test
 	public void findIndex() {
 		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.csv");
@@ -105,6 +132,7 @@ public class TestClassificationTestCase {
 	 *
 	 * @param record the record
 	 */
+	@Deprecated
 	private static void printNonNumericValues(String record) {
 		if (!NumberUtils.isCreatable(record)) {
 			System.out.println(record);

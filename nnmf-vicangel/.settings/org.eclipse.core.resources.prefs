@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java=cp1253
+encoding//src/test/java=cp1253
 encoding//src/test/java/TestNonNegativeMatrixFactorizationRegressionTestCase.java=UTF-8
 encoding//src/test/java/TestNonNegativeMatrixFactorizationTestCase.java=UTF-8

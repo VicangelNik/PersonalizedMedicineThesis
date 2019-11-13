@@ -71,8 +71,10 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 			Random random) throws Exception {
 		Evaluation eval = new Evaluation(data);
 		eval.crossValidateModel(abstractClassifier, data, numFolds, random);
-		// System.out.println(eval.toSummaryString("Evaluation results:\n", true));
-		printCrossValidationResults(eval, data.classIndex());
+		System.out.println(eval.toSummaryString("Evaluation results:\n", true));
+		System.out.println(eval.toClassDetailsString());
+		System.out.println(eval.toMatrixString());
+		// printCrossValidationResults(eval, data.classIndex());
 	}
 
 	/**
@@ -82,6 +84,7 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 	 * @param classIndex the class index
 	 * @throws Exception the exception
 	 */
+	@SuppressWarnings("unused")
 	private void printCrossValidationResults(Evaluation eval, int classIndex) throws Exception {
 		System.out.println(eval.correct());
 		// System.out.println(eval.correlationCoefficient());

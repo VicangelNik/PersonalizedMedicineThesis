@@ -9,13 +9,11 @@ import weka.core.Instances;
 public interface DimensionalityReductionInterface {
 
 	/**
-	 * Pca.
+	 * Dim reduction method.
 	 *
-	 * @param maxAttributeNames the max attribute names
-	 * @param maxAttributes     the max attributes
-	 * @param varianceCovered   the variance covered
+	 * @param options the options
 	 * @return the instances
 	 * @throws Exception the exception
 	 */
-	public Instances PCA(int maxAttributeNames, int maxAttributes, int varianceCovered) throws Exception;
+	public Instances dimReductionMethod(String[] options) throws Exception;
 }

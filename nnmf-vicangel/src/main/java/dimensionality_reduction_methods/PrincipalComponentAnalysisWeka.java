@@ -14,27 +14,43 @@ public class PrincipalComponentAnalysisWeka extends DimensionalityReduction
 		implements DimensionalityReductionInterface {
 
 	/** The max attribute names. */
-	int maxAttributeNames;
+	private int maxAttributeNames;
 
 	/** The max attributes. */
-	int maxAttributes;
+	private int maxAttributes;
 
 	/** The variance covered. */
-	int varianceCovered;
+	private int varianceCovered;
 
-	/*
-	 * (non-Javadoc)
+	/** The center data. */
+	private boolean centerData;
+	
+	/**
+	 * Instantiates a new principal component analysis weka.
 	 *
-	 * @see interfaces.DimensionalityReductionInterface#PCA(int, int, int)
+	 * @param maxAttributeNames the max attribute names
+	 * @param maxAttributes the max attributes
+	 * @param varianceCovered the variance covered
+	 * @param centerData the center data
+	 */
+	public PrincipalComponentAnalysisWeka(int maxAttributeNames, int maxAttributes, int varianceCovered,
+			boolean centerData) {
+		super();
+		this.maxAttributeNames = maxAttributeNames;
+		this.maxAttributes = maxAttributes;
+		this.varianceCovered = varianceCovered;
+		this.centerData = centerData;
+	}
+	
+	/* (non-Javadoc)
+	 * @see interfaces.DimensionalityReductionInterface#dimReductionMethod(java.lang.String[])
 	 */
 	@Override
-	public Instances PCA(int maxAttributeNames, int maxAttributes, int varianceCovered) throws Exception {
+	public Instances dimReductionMethod(String[] options) throws Exception {
 		PrincipalComponents principalComponents = new PrincipalComponents();
+		principalComponents.setOptions(options);
 		principalComponents.setInputFormat(this.getDataset());
 		principalComponents.setDebug(this.isDebug());
-		principalComponents.setMaximumAttributeNames(maxAttributeNames);
-		principalComponents.setVarianceCovered(varianceCovered);
-		principalComponents.setMaximumAttributes(maxAttributes);
 		return Filter.useFilter(this.getDataset(), principalComponents);
 	}
 
@@ -90,5 +106,23 @@ public class PrincipalComponentAnalysisWeka extends DimensionalityReduction
 	 */
 	public void setVarianceCovered(int varianceCovered) {
 		this.varianceCovered = varianceCovered;
+	}
+
+	/**
+	 * Checks if is center data.
+	 *
+	 * @return true, if is center data
+	 */
+	public boolean isCenterData() {
+		return centerData;
+	}
+
+	/**
+	 * Sets the center data.
+	 *
+	 * @param centerData the new center data
+	 */
+	public void setCenterData(boolean centerData) {
+		this.centerData = centerData;
 	}
 }

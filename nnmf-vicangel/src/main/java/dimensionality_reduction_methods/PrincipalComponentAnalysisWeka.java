@@ -27,11 +27,18 @@ public class PrincipalComponentAnalysisWeka extends DimensionalityReduction
 	
 	/**
 	 * Instantiates a new principal component analysis weka.
+	 */
+	public PrincipalComponentAnalysisWeka() {
+		super();
+	}
+	
+	/**
+	 * Instantiates a new principal component analysis weka.
 	 *
 	 * @param maxAttributeNames the max attribute names
-	 * @param maxAttributes the max attributes
-	 * @param varianceCovered the variance covered
-	 * @param centerData the center data
+	 * @param maxAttributes     the max attributes
+	 * @param varianceCovered   the variance covered
+	 * @param centerData        the center data
 	 */
 	public PrincipalComponentAnalysisWeka(int maxAttributeNames, int maxAttributes, int varianceCovered,
 			boolean centerData) {

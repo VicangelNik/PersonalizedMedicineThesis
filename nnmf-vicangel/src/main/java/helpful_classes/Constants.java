@@ -32,4 +32,7 @@ public class Constants {
 	/** The Constant PCA. */
 	// DIMENSIONALITY REDUCTION METHODS
 	public static final String PCA = "pca";
+
+	/** The Constant loggerPath. */
+	public static final String loggerPath = "C:\\applications\\thesis\\";
 }

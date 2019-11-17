@@ -7,6 +7,7 @@ import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.PrincipalComponents;
 
 // TODO: Auto-generated Javadoc
+// http://weka.sourceforge.net/doc.dev/weka/filters/unsupervised/attribute/PrincipalComponents.html
 /**
  * The Class PrincipalComponentAnalysisWeka.
  */
@@ -20,18 +21,18 @@ public class PrincipalComponentAnalysisWeka extends DimensionalityReduction
 	private int maxAttributes;
 
 	/** The variance covered. */
-	private int varianceCovered;
+	private double varianceCovered;
 
 	/** The center data. */
 	private boolean centerData;
-	
+
 	/**
 	 * Instantiates a new principal component analysis weka.
 	 */
 	public PrincipalComponentAnalysisWeka() {
 		super();
 	}
-	
+
 	/**
 	 * Instantiates a new principal component analysis weka.
 	 *
@@ -40,7 +41,7 @@ public class PrincipalComponentAnalysisWeka extends DimensionalityReduction
 	 * @param varianceCovered   the variance covered
 	 * @param centerData        the center data
 	 */
-	public PrincipalComponentAnalysisWeka(int maxAttributeNames, int maxAttributes, int varianceCovered,
+	public PrincipalComponentAnalysisWeka(int maxAttributeNames, int maxAttributes, double varianceCovered,
 			boolean centerData) {
 		super();
 		this.maxAttributeNames = maxAttributeNames;
@@ -48,9 +49,13 @@ public class PrincipalComponentAnalysisWeka extends DimensionalityReduction
 		this.varianceCovered = varianceCovered;
 		this.centerData = centerData;
 	}
-	
-	/* (non-Javadoc)
-	 * @see interfaces.DimensionalityReductionInterface#dimReductionMethod(java.lang.String[])
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * interfaces.DimensionalityReductionInterface#dimReductionMethod(java.lang.
+	 * String[])
 	 */
 	@Override
 	public Instances dimReductionMethod(String[] options) throws Exception {
@@ -102,7 +107,7 @@ public class PrincipalComponentAnalysisWeka extends DimensionalityReduction
 	 *
 	 * @return the variance covered
 	 */
-	public int getVarianceCovered() {
+	public double getVarianceCovered() {
 		return varianceCovered;
 	}
 

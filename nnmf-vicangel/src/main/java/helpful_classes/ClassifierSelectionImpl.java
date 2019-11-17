@@ -1,6 +1,7 @@
 package helpful_classes;
 
 import java.util.Random;
+import java.util.logging.Level;
 
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.bayes.NaiveBayes;
@@ -15,6 +16,8 @@ import weka.core.converters.AbstractFileLoader;
  * The Class ClassifierSelectionImpl.
  */
 public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
+
+	AppLogger logger = new AppLogger("classifier log", "classifiers.log");
 
 	/*
 	 * (non-Javadoc)
@@ -35,7 +38,7 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 		}
 		}
 		System.out.println(abstractClassifier.getCapabilities());
-
+		logger.getLogger().log(Level.INFO, "{0}", abstractClassifier.getCapabilities());
 		return abstractClassifier;
 	}
 
@@ -56,6 +59,7 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 			((NaiveBayes) abstractClassifier).updateClassifier(current);
 		}
 		System.out.println(abstractClassifier);
+		logger.getLogger().log(Level.INFO, "{0}", abstractClassifier);
 		return abstractClassifier;
 	}
 
@@ -74,6 +78,9 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 		System.out.println(eval.toSummaryString("Evaluation results:\n", true));
 		System.out.println(eval.toClassDetailsString());
 		System.out.println(eval.toMatrixString());
+		logger.getLogger().log(Level.INFO, "{0}", eval.toSummaryString("Evaluation results:\n", true));
+		logger.getLogger().log(Level.INFO, "{0}", eval.toClassDetailsString());
+		logger.getLogger().log(Level.INFO, "{0}", eval.toMatrixString());
 		// printCrossValidationResults(eval, data.classIndex());
 	}
 

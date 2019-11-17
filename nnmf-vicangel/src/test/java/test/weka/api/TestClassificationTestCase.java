@@ -15,12 +15,14 @@ import org.junit.Test;
 
 import com.opencsv.CSVReader;
 
+import dimensionality_reduction_methods.DimensionalityReductionSelection;
 import helpful_classes.ClassifierSelectionImpl;
 import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
 import interfaces.ClassifierSelection;
 import weka.api.library.LoadArff;
 import weka.classifiers.AbstractClassifier;
+import weka.core.Instances;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -91,6 +93,35 @@ public class TestClassificationTestCase {
 					arffLoader);
 			classifierSelection.crossValidationEvaluation(abstractClassifier, arffLoader.getDataSet(), 10,
 					new Random(1));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	/**
+	 * Test naive bayes cross validation evaluation arff real data with
+	 * dimensionality reduction.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void testNaiveBayesCrossValidationEvaluationArffRealDataWithDimensionalityReduction() throws IOException {
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
+		LoadArff arffLoader = new LoadArff(level2File);
+		arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
+		// DIMENSIONALITY REDUCTION
+		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
+		try {
+			// http://weka.sourceforge.net/doc.dev/weka/filters/unsupervised/attribute/PrincipalComponents.html
+			String[] options = weka.core.Utils.splitOptions("-C -R 0.95 -A 5 -M -1");
+			Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector("pca",
+					arffLoader.getDataSet(), true, options);
+			// CROSS VALIDATION
+			ClassifierSelection classifierSelection = new ClassifierSelectionImpl();
+			AbstractClassifier abstractClassifier = classifierSelection.selectClassifier(Constants.NAIVE_BAYES,
+					arffLoader);
+			classifierSelection.crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());

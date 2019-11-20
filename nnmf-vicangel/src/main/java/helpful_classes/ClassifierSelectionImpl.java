@@ -17,7 +17,7 @@ import weka.core.converters.AbstractFileLoader;
  */
 public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 
-	AppLogger logger = new AppLogger("classifier log", "classifiers.log");
+	AppLogger logger = new AppLogger("classifier log", "classifiers\\classifiers.log");
 
 	/*
 	 * (non-Javadoc)

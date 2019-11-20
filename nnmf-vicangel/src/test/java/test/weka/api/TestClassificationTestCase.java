@@ -105,6 +105,7 @@ public class TestClassificationTestCase {
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
+	@Ignore
 	@Test
 	public void testNaiveBayesCrossValidationEvaluationArffRealDataWithDimensionalityReduction() throws IOException {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
@@ -132,6 +133,7 @@ public class TestClassificationTestCase {
 	 * Find index.
 	 */
 	@Deprecated
+	@Ignore
 	@Test
 	public void findIndex() {
 		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.csv");

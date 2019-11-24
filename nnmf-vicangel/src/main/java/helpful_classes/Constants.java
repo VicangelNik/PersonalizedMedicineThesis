@@ -35,4 +35,7 @@ public class Constants {
 
 	/** The Constant loggerPath. */
 	public static final String loggerPath = "C:\\applications\\thesis\\";
+
+	/** The Constant ZeroR. */
+	public static final String ZERO_R = "zeroR";
 }

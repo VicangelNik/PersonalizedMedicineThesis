@@ -30,7 +30,11 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import com.google.common.base.Strings;
 
+import helpful_classes.ClassifierSelectionImpl;
 import helpful_classes.MultiKey;
+import interfaces.ClassifierSelection;
+import weka.classifiers.AbstractClassifier;
+import weka.core.converters.AbstractFileLoader;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,6 +42,9 @@ import helpful_classes.MultiKey;
  */
 public final class WekaUtils {
 
+	/**
+	 * Instantiates a new weka utils.
+	 */
 	private WekaUtils() {
 		// nothing to do
 	}
@@ -45,10 +52,13 @@ public final class WekaUtils {
 	/** The Constant WEKA_SUFFIX. */
 	public static final String WEKA_SUFFIX = ".arff";
 
+	/** The Constant NUMERIC_ATTRIBUTE. */
 	public static final String NUMERIC_ATTRIBUTE = "NUMERIC";
 
+	/** The Constant NOT_AVAILABLE. */
 	public static final String NOT_AVAILABLE = "NA";
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(WekaUtils.class.getName());
 
 	/**
@@ -84,13 +94,12 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * Prepare weka file. Make the file with the data that will be as input in the
-	 * weka
+	 * Prepare weka file.
 	 *
 	 * @param relation     the relation
 	 * @param attributes   the attributes
-	 * @param fileDataName the data file name to read.
-	 * @param fileName     the file name to write
+	 * @param fileDataName the file data name
+	 * @param fileName     the file name
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void prepareWekaFile(String relation, Map<String, List<String>> attributes, File fileDataName,
@@ -122,10 +131,10 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * Checks it the feature is numeric
+	 * Dimension is numeric.
 	 *
-	 * @param featureDataList A list with all data of the dimension.
-	 * @return
+	 * @param featureDataList the feature data list
+	 * @return true, if successful
 	 */
 	private static boolean dimensionIsNumeric(List<String> featureDataList) {
 		for (String datum : featureDataList) {
@@ -137,10 +146,10 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * Checks if the feature is not Numeric. It can be nominal, string or date.
+	 * Dimension not numeric.
 	 *
-	 * @param featureDataList A list with all data of the dimension.
-	 * @return
+	 * @param featureDataList the feature data list
+	 * @return the list
 	 */
 	private static List<String> dimensionNotNumeric(List<String> featureDataList) {
 		List<String> notNumeric = new ArrayList<>();
@@ -155,10 +164,10 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * Checks if the feature has only NA data.
+	 * Dimension is NA.
 	 *
-	 * @param featureDataList
-	 * @return
+	 * @param featureDataList the feature data list
+	 * @return true, if successful
 	 */
 	// it will be used in the future dont remove it!!!!
 	@SuppressWarnings("unused")
@@ -172,9 +181,11 @@ public final class WekaUtils {
 	}
 
 	/**
+	 * Gets the dimensions.
 	 *
-	 * @param allData
-	 * @return the actual dimension size list.
+	 * @param allData   the all data
+	 * @param seperator the seperator
+	 * @return the dimensions
 	 */
 	public static List<String> getDimensions(List<List<String>> allData, String seperator) {
 		String notFeatureWord = "DATA";
@@ -190,12 +201,10 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * Filtes the data and keeps only valid columns. Returns the attributes with
-	 * their types.
+	 * Filter valid features and data.
 	 *
-	 * @param allDataColumnWise every list the data contains its a feature with the
-	 *                          data.
-	 * @return the feature mapped with the data.
+	 * @param allDataColumnWise the all data column wise
+	 * @return the map
 	 */
 	public static Map<MultiKey, List<String>> filterValidFeaturesAndData(List<List<String>> allDataColumnWise) {
 		LinkedHashMap<MultiKey, List<String>> attributeMap = new LinkedHashMap<>();
@@ -232,11 +241,11 @@ public final class WekaUtils {
 	/**
 	 * Creates the weka file.
 	 *
-	 * @param relation          the relation of weka data.
-	 * @param attributes        the attribute names with their types.
-	 * @param allDataColumnWise the data of the attributes.
-	 * @param fileName          the file path of the weka file to be created.
-	 * @throws IOException
+	 * @param relation          the relation
+	 * @param attributes        the attributes
+	 * @param allDataColumnWise the all data column wise
+	 * @param fileName          the file name
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void createWekaFile(String relation, Map<MultiKey, List<String>> attributes,
 			List<List<String>> allDataColumnWise, String fileName) throws IOException {
@@ -266,11 +275,10 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * Takes a list of lists that each list has the feature and its data and returns
-	 * a list of lists that for each list the data of the case are contained by.
+	 * Convert feature wise to patient wise.
 	 *
-	 * @param allDataColumnWise
-	 * @return
+	 * @param values the values
+	 * @return the list
 	 */
 	private static List<List<String>> convertFeatureWiseToPatientWise(Collection<List<String>> values) {
 		Iterator<List<String>> iterator = values.iterator();
@@ -286,9 +294,10 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * Checks the number of features that are the same with the number of data.
+	 * Check number feature data.
 	 *
-	 * @param data
+	 * @param data the data
+	 * @return true, if successful
 	 */
 	public static boolean checkNumberFeatureData(List<List<String>> data) {
 		boolean isValid = true;
@@ -304,6 +313,12 @@ public final class WekaUtils {
 		return isValid;
 	}
 
+	/**
+	 * Gets the multikey as map.
+	 *
+	 * @param multiKeySet the multi key set
+	 * @return the multikey as map
+	 */
 	private static Map<String, List<String>> getMultikeyAsMap(Set<MultiKey> multiKeySet) {
 
 		Map<String, List<String>> attributeForWeka = new LinkedHashMap<>();
@@ -311,6 +326,18 @@ public final class WekaUtils {
 			attributeForWeka.put(key.getFeatureName(), key.getFeatureType());
 		}
 		return attributeForWeka;
-
 	}
+
+	/**
+	 * Gets the classifier.
+	 *
+	 * @param classifierName the classifier name
+	 * @param loader         the loader
+	 * @return the classifier
+	 */
+	public static AbstractClassifier getClassifier(String classifierName, AbstractFileLoader loader) {
+		ClassifierSelection classifierSelection = new ClassifierSelectionImpl();
+		return classifierSelection.selectClassifier(classifierName, loader);
+	}
+
 }

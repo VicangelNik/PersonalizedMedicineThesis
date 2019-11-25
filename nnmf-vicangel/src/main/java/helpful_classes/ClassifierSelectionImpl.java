@@ -49,9 +49,12 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 		abstractClassifier.setDebug(true);
+		
 		System.out.println(abstractClassifier.getCapabilities());
 		logger.getLogger().log(Level.INFO, "{0}", abstractClassifier.getCapabilities());
-		logger.getLogger().log(Level.INFO, abstractClassifier.getRevision());
+		//logger.getLogger().log(Level.INFO, abstractClassifier.getRevision());
+		logger.getLogger().log(Level.INFO,"Is in debug mode: {0}", abstractClassifier.getDebug());
+		logger.getLogger().log(Level.INFO,"Current settings of the classifier: {0}", abstractClassifier.getOptions());
 		return abstractClassifier;
 	}
 

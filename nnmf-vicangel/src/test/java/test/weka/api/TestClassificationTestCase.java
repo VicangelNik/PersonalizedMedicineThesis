@@ -1,14 +1,15 @@
 package test.weka.api;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,7 +19,6 @@ import com.opencsv.CSVReader;
 import dimensionality_reduction_methods.DimensionalityReductionSelection;
 import helpful_classes.ClassifierSelectionImpl;
 import helpful_classes.Constants;
-import helpful_classes.EnumSeparators;
 import helpful_classes.NaiveBayesImplementation;
 import helpful_classes.ZeroRImplementation;
 import interfaces.ClassifierSelection;
@@ -91,21 +91,27 @@ public class TestClassificationTestCase {
 	}
 
 	/**
-	 * Test naive bayes cross validation evaluation arff real data with
-	 * dimensionality reduction.
+	 * Test zero R.
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-
+	@Ignore
 	@Test
 	public void testZeroR() throws IOException {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
 		LoadArff arffLoader = new LoadArff(level2File);
 		arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.ZERO_R, arffLoader);
-		new ZeroRImplementation().crossValidationEvaluation(abstractClassifier, arffLoader.getDataSet(), 10, new Random(1));
+		new ZeroRImplementation().crossValidationEvaluation(abstractClassifier, arffLoader.getDataSet(), 10,
+				new Random(1));
 	}
 
+	/**
+	 * Test naive bayes cross validation evaluation arff real data with
+	 * dimensionality reduction.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Ignore
 	@Test
 	public void testNaiveBayesCrossValidationEvaluationArffRealDataWithDimensionalityReduction() throws IOException {
@@ -127,47 +133,19 @@ public class TestClassificationTestCase {
 			Assert.fail(e.getMessage());
 		}
 	}
-
-	/**
-	 * Find index.
-	 */
-	@Deprecated
-	@Ignore
+	
 	@Test
-	public void findIndex() {
-		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessed.csv");
-		List<String> records = new ArrayList<>();
-		try (CSVReader csvReader = new CSVReader(new FileReader(file));) {
-			String[] values = null;
-			values = csvReader.readNext();
-			System.out.println(Arrays.toString(values).split(EnumSeparators.TAB.getSeparator()).length);
-			// values = csvReader.readNext();
-			// values = csvReader.readNext();
-			values = Arrays.toString(values).replace("[", "").replace("]", "").split(EnumSeparators.TAB.getSeparator());
-			records = Arrays.asList(values);
-			System.out.println(records.get(73664));
-			for (String record : records) {
-				printNonNumericValues(record);
-				if (record.equalsIgnoreCase("PrimaryTumor")) {
-					int index = records.indexOf("PrimaryTumor");
-					Assert.assertEquals(73664, index);
-				}
+	public void testReadCSVTestCase() throws IOException {
+		String fileName1 = "C:\\Users\\vic\\Documents\\Bioscience\\patientAndControlData.csv";
+		String fileName2 = "C:\\Users\\vic\\Documents\\Bioscience\\Christina's work\\allTogether.csv";
+		try (CSVReader csvReader = new CSVReader(new FileReader(fileName1));) {
+			csvReader.readNext();
+			try (Writer writer = new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream("C:\\Users\\vic\\Documents\\Bioscience\\results"), StandardCharsets.UTF_8))) {
+				
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
+	}
+		
 
-	/**
-	 * Prints the non numeric values.
-	 *
-	 * @param record the record
-	 */
-	@Deprecated
-	private static void printNonNumericValues(String record) {
-		if (!NumberUtils.isCreatable(record)) {
-			System.out.println(record);
-		}
-	}
 }

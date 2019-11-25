@@ -1,20 +1,12 @@
 package test.weka.api;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import com.opencsv.CSVReader;
 
 import dimensionality_reduction_methods.DimensionalityReductionSelection;
 import helpful_classes.ClassifierSelectionImpl;
@@ -133,19 +125,4 @@ public class TestClassificationTestCase {
 			Assert.fail(e.getMessage());
 		}
 	}
-	
-	@Test
-	public void testReadCSVTestCase() throws IOException {
-		String fileName1 = "C:\\Users\\vic\\Documents\\Bioscience\\patientAndControlData.csv";
-		String fileName2 = "C:\\Users\\vic\\Documents\\Bioscience\\Christina's work\\allTogether.csv";
-		try (CSVReader csvReader = new CSVReader(new FileReader(fileName1));) {
-			csvReader.readNext();
-			try (Writer writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream("C:\\Users\\vic\\Documents\\Bioscience\\results"), StandardCharsets.UTF_8))) {
-				
-			}
-	}
-	}
-		
-
 }

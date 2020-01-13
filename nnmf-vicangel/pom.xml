@@ -55,17 +55,6 @@
 			<version>2.0.0-alpha0</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- jGraphT library for graph visualization -->
-		<dependency>
-			<groupId>org.jgrapht</groupId>
-			<artifactId>jgrapht-core</artifactId>
-			<version>1.3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jgrapht</groupId>
-			<artifactId>jgrapht-io</artifactId>
-			<version>1.3.1</version>
-		</dependency>
 		<dependency>
 			<!-- OpenCSV library site: https://mvnrepository.com/artifact/com.opencsv/opencsv/4.6 -->
 			<groupId>com.opencsv</groupId>

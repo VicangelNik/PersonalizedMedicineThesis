@@ -5,7 +5,6 @@ import java.util.Enumeration;
 import java.util.List;
 
 import org.junit.Test;
-import org.scify.EMPCA.EMPCA;
 
 import helpful_classes.Constants;
 import scala.Tuple2;
@@ -15,9 +14,9 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 /*
- * The standard Scala backend is a Java VM. Scala classes are Java classes, and vice versa. 
- * You can call the methods of either language from methods in the other one. 
- * You can extend Java classes in Scala, and vice versa. 
+ * The standard Scala backend is a Java VM. Scala classes are Java classes, and vice versa.
+ * You can call the methods of either language from methods in the other one.
+ * You can extend Java classes in Scala, and vice versa.
  * The main limitation is that some Scala features do not have equivalents in Java, for example traits.
  */
 
@@ -25,15 +24,15 @@ public class TestEMPCA {
 	@Test
 	public void test() throws IOException {
 
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		LoadArff arffLoader = new LoadArff(level2File);
 		arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
 		Instances data = arffLoader.getDataSet();
 		@SuppressWarnings("unchecked")
 		List<Tuple2<Integer, Double>>[] javaList = new ArrayList[data.numInstances()];
-		for (int i = 0; i < data.numInstances(); i++) { 
-			javaList[i] = new ArrayList<Tuple2<Integer, Double>>(); 
-        } 
+		for (int i = 0; i < data.numInstances(); i++) {
+			javaList[i] = new ArrayList<Tuple2<Integer, Double>>();
+		}
 		int insCount = 0;
 		Enumeration<Instance> instEnumeration = data.enumerateInstances();
 		Enumeration<Attribute> attEnumeration = data.enumerateAttributes();
@@ -49,7 +48,7 @@ public class TestEMPCA {
 		@SuppressWarnings("unchecked")
 		scala.collection.immutable.List<Tuple2<Object, Object>>[] scalaList = (scala.collection.immutable.List<Tuple2<Object, Object>>[]) javaList;
 
-		EMPCA empca = new EMPCA(scalaList, 50);
+		// EMPCA empca = new EMPCA(scalaList, 50);
 	}
 
 }

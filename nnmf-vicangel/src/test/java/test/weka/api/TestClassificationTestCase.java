@@ -53,7 +53,7 @@ public class TestClassificationTestCase {
 	@Ignore
 	@Test
 	public void testNaiveBayesClassificationArffRealData() throws IOException {
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Assert.assertTrue("The file should exists", level2File.exists());
 		Assert.assertTrue("The file should be readable.", level2File.canRead());
 		LoadArff arffLoader = new LoadArff(level2File);
@@ -72,7 +72,7 @@ public class TestClassificationTestCase {
 	@Ignore
 	@Test
 	public void testNaiveBayesCrossValidationEvaluationArffRealData() throws IOException {
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		LoadArff arffLoader = new LoadArff(level2File);
 		arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
 		Assert.assertEquals("The excpected class should be: ",
@@ -90,7 +90,7 @@ public class TestClassificationTestCase {
 	@Ignore
 	@Test
 	public void testZeroR() throws IOException {
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		LoadArff arffLoader = new LoadArff(level2File);
 		arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.ZERO_R, arffLoader);
@@ -107,7 +107,7 @@ public class TestClassificationTestCase {
 	@Ignore
 	@Test
 	public void testNaiveBayesCrossValidationEvaluationArffRealDataWithDimensionalityReduction() throws IOException {
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		LoadArff arffLoader = new LoadArff(level2File);
 		arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
 		// DIMENSIONALITY REDUCTION

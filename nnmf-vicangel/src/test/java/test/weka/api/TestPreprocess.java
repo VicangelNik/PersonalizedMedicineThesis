@@ -34,7 +34,7 @@ public class TestPreprocess {
 	@Test
 	public void testPreprocessLevelOne() {
 		// MAKE CSV VALID
-		String newCsvName = Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelOne.csv";
+		String newCsvName = Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelOne.csv";
 		try (CSVReader csvReader = new CSVReader(new FileReader(Constants.C_WORK_CSV_FILE));) {
 			String[] values = null;
 			try (BufferedWriter bw = new BufferedWriter(new FileWriter(newCsvName))) {
@@ -70,8 +70,8 @@ public class TestPreprocess {
 	public void testPreprocessLevel2() throws Exception {
 		// TEST CONVERTER TEST CASE MUST BE RAN BEFORE THIS TO RUN.
 		// REMOVE INVALID ATTRIBUTES
-		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelOne.arff");
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndCïntrolProcessedLevelTwo.arff");
+		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelOne.arff");
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Assert.assertTrue("The file should exists", arffFile.exists());
 		Assert.assertTrue("The file should be readable.", arffFile.canRead());
 		LoadArff arffLoader = new LoadArff(arffFile, 73664);

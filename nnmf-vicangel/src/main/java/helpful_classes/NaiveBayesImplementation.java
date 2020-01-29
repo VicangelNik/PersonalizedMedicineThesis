@@ -1,5 +1,6 @@
 package helpful_classes;
 
+import java.util.Enumeration;
 import java.util.Random;
 import java.util.logging.Level;
 
@@ -9,9 +10,7 @@ import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.evaluation.Evaluation;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.converters.AbstractFileLoader;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class NaiveBayesImplementation.
  */
@@ -28,12 +27,12 @@ public class NaiveBayesImplementation implements AppClassifier {
 	 * weka.core.converters.AbstractFileLoader)
 	 */
 	@Override
-	public AbstractClassifier classify(AbstractClassifier abstractClassifier, AbstractFileLoader loader) {
+	public AbstractClassifier classify(AbstractClassifier abstractClassifier, Instances data) {
 		// train NaiveBayes
 		try {
-			Instance current;
-			while ((current = loader.getNextInstance(loader.getStructure())) != null) {
-				((NaiveBayes) abstractClassifier).updateClassifier(current);
+			Enumeration<Instance> instances = data.enumerateInstances();
+			while (instances.hasMoreElements()) {
+				((NaiveBayes) abstractClassifier).updateClassifier(instances.nextElement());
 			}
 			System.out.println(abstractClassifier);
 			logger.getLogger().log(Level.INFO, "{0}", abstractClassifier);

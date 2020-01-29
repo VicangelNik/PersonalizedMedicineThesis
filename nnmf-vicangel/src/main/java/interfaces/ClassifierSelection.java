@@ -1,9 +1,8 @@
 package interfaces;
 
 import weka.classifiers.AbstractClassifier;
-import weka.core.converters.AbstractFileLoader;
+import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface ClassifierSelection.
  */
@@ -16,5 +15,5 @@ public interface ClassifierSelection {
 	 * @param loader    the loader
 	 * @return the abstract classifier
 	 */
-	public AbstractClassifier selectClassifier(String selection, AbstractFileLoader loader);
+	public AbstractClassifier selectClassifier(String selection, Instances instances);
 }

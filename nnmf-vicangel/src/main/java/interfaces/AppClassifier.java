@@ -4,18 +4,21 @@ import java.util.Random;
 
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
-import weka.core.converters.AbstractFileLoader;
 
-public interface AppClassifier{
+// TODO: Auto-generated Javadoc
+/**
+ * The Interface AppClassifier.
+ */
+public interface AppClassifier {
 
 	/**
 	 * Classify.
 	 *
 	 * @param abstractClassifier the abstract classifier
-	 * @param loader             the loader
+	 * @param data               the data
 	 * @return the abstract classifier
 	 */
-	public AbstractClassifier classify(AbstractClassifier abstractClassifier, AbstractFileLoader loader);
+	public AbstractClassifier classify(AbstractClassifier abstractClassifier, Instances data);
 
 	/**
 	 * Cross validation evaluation.

@@ -34,7 +34,9 @@ import helpful_classes.ClassifierSelectionImpl;
 import helpful_classes.MultiKey;
 import interfaces.ClassifierSelection;
 import weka.classifiers.AbstractClassifier;
+import weka.core.Instances;
 import weka.core.converters.AbstractFileLoader;
+import weka.core.converters.ArffLoader;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -335,9 +337,17 @@ public final class WekaUtils {
 	 * @param loader         the loader
 	 * @return the classifier
 	 */
-	public static AbstractClassifier getClassifier(String classifierName, AbstractFileLoader loader) {
+	public static AbstractClassifier getClassifier(String classifierName, Instances instances) {
 		ClassifierSelection classifierSelection = new ClassifierSelectionImpl();
-		return classifierSelection.selectClassifier(classifierName, loader);
+		return classifierSelection.selectClassifier(classifierName, instances);
+	}
+
+	public static Instances getOriginalData(File file, String featureClassName) throws IOException {
+		AbstractFileLoader arffLoader = new ArffLoader();
+		arffLoader.setFile(file);
+		Instances originalData = arffLoader.getDataSet();
+		originalData.setClass(originalData.attribute(featureClassName));
+		return originalData;
 	}
 
 }

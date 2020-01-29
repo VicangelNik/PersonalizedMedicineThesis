@@ -2,17 +2,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 
 import org.junit.Test;
+import org.scify.EMPCA.EMPCA;
+import org.scify.EMPCA.Feature;
+import org.scify.EMPCA.JavaPCAInputToScala;
 
+import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import helpful_classes.Constants;
 import scala.Tuple2;
-import weka.api.library.LoadArff;
+import utilpackage.WekaUtils;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
+// TODO: Auto-generated Javadoc
 /*
  * The standard Scala backend is a Java VM. Scala classes are Java classes, and vice versa.
  * You can call the methods of either language from methods in the other one.
@@ -20,35 +24,65 @@ import weka.core.Instances;
  * The main limitation is that some Scala features do not have equivalents in Java, for example traits.
  */
 
+/**
+ * The Class TestEMPCA.
+ */
 public class TestEMPCA {
+
+	/**
+	 * Test.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void test() throws IOException {
 
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
-		LoadArff arffLoader = new LoadArff(level2File);
-		arffLoader.setClassIndex(arffLoader.getStructure().attribute("SampleStatus").index());
-		Instances data = arffLoader.getDataSet();
-		@SuppressWarnings("unchecked")
-		List<Tuple2<Integer, Double>>[] javaList = new ArrayList[data.numInstances()];
-		for (int i = 0; i < data.numInstances(); i++) {
-			javaList[i] = new ArrayList<Tuple2<Integer, Double>>();
-		}
-		int insCount = 0;
-		Enumeration<Instance> instEnumeration = data.enumerateInstances();
-		Enumeration<Attribute> attEnumeration = data.enumerateAttributes();
+		ArrayList<ArrayList<Feature>> empcaInput = convertWekaForEMPCAInput("PatientAndControlProcessedLevelTwo.arff",
+				"SampleStatus");
+		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert(empcaInput), 50);
+		DoubleMatrix2D c = empca.performEM(20);
+		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
+
+	}
+
+	/**
+	 * Convert weka for EMPCA input.
+	 *
+	 * @param fileName  the file name
+	 * @param className the class name
+	 * @return the array list
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private ArrayList<ArrayList<Feature>> convertWekaForEMPCAInput(String fileName, String className)
+			throws IOException {
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + fileName);
+		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+		ArrayList<ArrayList<Feature>> empcaInput = new ArrayList<>();
+		Enumeration<Instance> instEnumeration = originalDataset.enumerateInstances();
 		while (instEnumeration.hasMoreElements()) {
 			Instance current = instEnumeration.nextElement();
+			ArrayList<Feature> features = new ArrayList<>();
+			Enumeration<Attribute> attEnumeration = current.enumerateAttributes();
 			while (attEnumeration.hasMoreElements()) {
 				Attribute attribute = attEnumeration.nextElement();
 				int attIndex = attribute.index();
-				javaList[insCount].add(new Tuple2<Integer, Double>(attIndex, current.value(attIndex)));
+				features.add(new Feature(attIndex, current.value(attIndex)));
 			}
-			insCount++;
+			empcaInput.add(features);
 		}
-		@SuppressWarnings("unchecked")
-		scala.collection.immutable.List<Tuple2<Object, Object>>[] scalaList = (scala.collection.immutable.List<Tuple2<Object, Object>>[]) javaList;
+		return empcaInput;
+	}
 
-		// EMPCA empca = new EMPCA(scalaList, 50);
+	/**
+	 * Check is nominal.
+	 *
+	 * @param attribute the attribute
+	 */
+	@SuppressWarnings("unused")
+	private void checkIsNominal(Attribute attribute) {
+		if (attribute.isNominal()) {
+			System.out.println(attribute.name());
+		}
 	}
 
 }

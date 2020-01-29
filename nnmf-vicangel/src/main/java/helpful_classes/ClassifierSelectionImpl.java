@@ -6,7 +6,7 @@ import weka.classifiers.AbstractClassifier;
 import weka.classifiers.bayes.NaiveBayesUpdateable;
 import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.rules.ZeroR;
-import weka.core.converters.AbstractFileLoader;
+import weka.core.Instances;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,7 +24,7 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 	 * weka.core.converters.AbstractFileLoader)
 	 */
 	@Override
-	public AbstractClassifier selectClassifier(String selection, AbstractFileLoader loader) {
+	public AbstractClassifier selectClassifier(String selection, Instances instances) {
 		AbstractClassifier abstractClassifier = null;
 		switch (selection) {
 		case Constants.NAIVE_BAYES: {
@@ -43,18 +43,18 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 			// if (abstractClassifier instanceof ZeroR) {
 			// abstractClassifier.buildClassifier(loader.getDataSet());
 			// } else {
-			abstractClassifier.buildClassifier(loader.getStructure());
+			abstractClassifier.buildClassifier(instances);
 			// }
 		} catch (Exception e) {
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 		abstractClassifier.setDebug(true);
-		
+
 		System.out.println(abstractClassifier.getCapabilities());
 		logger.getLogger().log(Level.INFO, "{0}", abstractClassifier.getCapabilities());
-		//logger.getLogger().log(Level.INFO, abstractClassifier.getRevision());
-		logger.getLogger().log(Level.INFO,"Is in debug mode: {0}", abstractClassifier.getDebug());
-		logger.getLogger().log(Level.INFO,"Current settings of the classifier: {0}", abstractClassifier.getOptions());
+		// logger.getLogger().log(Level.INFO, abstractClassifier.getRevision());
+		logger.getLogger().log(Level.INFO, "Is in debug mode: {0}", abstractClassifier.getDebug());
+		logger.getLogger().log(Level.INFO, "Current settings of the classifier: {0}", abstractClassifier.getOptions());
 		return abstractClassifier;
 	}
 

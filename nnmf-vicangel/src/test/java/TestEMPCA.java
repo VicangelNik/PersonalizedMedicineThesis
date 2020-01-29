@@ -1,7 +1,9 @@
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Random;
 
 import org.junit.Test;
 import org.scify.EMPCA.EMPCA;
@@ -16,7 +18,6 @@ import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /*
  * The standard Scala backend is a Java VM. Scala classes are Java classes, and vice versa.
  * You can call the methods of either language from methods in the other one.
@@ -37,12 +38,13 @@ public class TestEMPCA {
 	@Test
 	public void test() throws IOException {
 
-		ArrayList<ArrayList<Feature>> empcaInput = convertWekaForEMPCAInput("PatientAndControlProcessedLevelTwo.arff",
-				"SampleStatus");
-		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert(empcaInput), 50);
+//		ArrayList<ArrayList<Feature>> empcaInput = convertWekaForEMPCAInput("PatientAndControlProcessedLevelTwo.arff",
+//				"SampleStatus");
+		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert(testData()), 50);
 		DoubleMatrix2D c = empca.performEM(20);
+		System.out.println("finish perform em");
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
-
+		System.out.println("finish");
 	}
 
 	/**
@@ -71,6 +73,55 @@ public class TestEMPCA {
 			empcaInput.add(features);
 		}
 		return empcaInput;
+	}
+
+	/**
+	 * Test data.
+	 *
+	 * @return the array list
+	 */
+	private static ArrayList<ArrayList<Feature>> testData() {
+		Random rand = new Random();
+		DecimalFormat df = new DecimalFormat("#.###");
+		ArrayList<ArrayList<Feature>> empcaInput = new ArrayList<>();
+		for (int i = 0; i < 450; i++) {
+			ArrayList<Feature> features = new ArrayList<>();
+			for (int j = 0; j < 75000; j++) {
+				double random = rand.nextDouble();
+				features.add(new Feature(j, Double.parseDouble(df.format(random))));
+			}
+			empcaInput.add(features);
+		}
+		return empcaInput;
+	}
+
+	/**
+	 * Example test.
+	 *
+	 * @return the array list
+	 */
+	public static ArrayList<ArrayList<Feature>> exampleTest() {
+		ArrayList<ArrayList<Feature>> data = new ArrayList<>();
+		ArrayList<Feature> instance1 = new ArrayList<>();
+		instance1.add(new Feature(1, 0.1));
+		instance1.add(new Feature(2, 0.2));
+		instance1.add(new Feature(3, 0.245));
+		instance1.add(new Feature(4, 0.34));
+		instance1.add(new Feature(5, 0.2));
+		instance1.add(new Feature(6, 0.3));
+		instance1.add(new Feature(7, 0.5));
+		ArrayList<Feature> instance2 = new ArrayList<>();
+		instance2.add(new Feature(1, 0.543));
+		instance2.add(new Feature(2, 0.54));
+		instance2.add(new Feature(3, 0.245));
+		instance2.add(new Feature(4, 0.3234));
+		instance2.add(new Feature(5, 0.24));
+		instance2.add(new Feature(6, 0.24));
+		instance2.add(new Feature(7, 0.43));
+
+		data.add(instance1);
+		data.add(instance2);
+		return data;
 	}
 
 	/**

@@ -16,7 +16,7 @@ import com.opencsv.CSVReader;
 
 import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
-import weka.api.library.LoadArff;
+import utilpackage.WekaUtils;
 import weka.api.library.PreprocessDataImpl;
 import weka.api.library.WekaFileConverterImpl;
 import weka.core.Attribute;
@@ -74,16 +74,15 @@ public class TestPreprocess {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Assert.assertTrue("The file should exists", arffFile.exists());
 		Assert.assertTrue("The file should be readable.", arffFile.canRead());
-		LoadArff arffLoader = new LoadArff(arffFile, 73664);
-		Assert.assertEquals("The excpected class should be: ", 73664, arffLoader.getStructure().classIndex());
-		Assert.assertTrue("The arf file should have string attributes",
-				arffLoader.getStructure().checkForStringAttributes());
+		Instances originalDataset = WekaUtils.getOriginalData(arffFile, "SampleStatus");
+		Assert.assertEquals("The excpected class should be: ", 73664, originalDataset.classIndex());
+		Assert.assertTrue("The arf file should have string attributes", originalDataset.checkForStringAttributes());
 		PreprocessDataImpl preprocessData = new PreprocessDataImpl();
 		Instances data = null;
 		// Attributes of String Type contain only NA. Also, they are not accepted by
 		// NaiveBayes.
-		if (arffLoader.getStructure().checkForStringAttributes()) {
-			data = preprocessData.removeFeaturesByType(arffLoader.getDataSet(), Attribute.STRING);
+		if (originalDataset.checkForStringAttributes()) {
+			data = preprocessData.removeFeaturesByType(originalDataset, Attribute.STRING);
 		}
 		// DATA attribute has no information and we remove it. Vital_status and
 		// Days_To_Death attribute are very connected with SampleStatus attribute so are

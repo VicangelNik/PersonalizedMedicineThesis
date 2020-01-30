@@ -17,7 +17,7 @@ import weka.core.Instances;
 public class NaiveBayesImplementation implements AppClassifier {
 
 	/** The logger. */
-	private static AppLogger logger = new AppLogger("classifier log", "classifiers\\classifiers.log");
+	private static AppLogger logger = AppLogger.getInstance();
 
 	/*
 	 * (non-Javadoc)

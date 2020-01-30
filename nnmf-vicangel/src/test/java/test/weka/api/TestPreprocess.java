@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.opencsv.CSVReader;
 
+import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
 import utilpackage.WekaUtils;
@@ -27,6 +29,9 @@ import weka.core.Instances;
  * The Class TestPreprocess.
  */
 public class TestPreprocess {
+
+	/** The logger. */
+	private static AppLogger logger = AppLogger.getInstance();
 
 	/**
 	 * Test preprocess level one.
@@ -121,5 +126,32 @@ public class TestPreprocess {
 		String lastValue = list.get(list.size() - 1);
 		builder.append(lastValue.trim());
 		return builder.toString();
+	}
+
+	/**
+	 * Test show data information.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void testShowDataInformation() throws IOException {
+		showDataInformation();
+	}
+
+	/**
+	 * Show data information.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void showDataInformation() throws IOException {
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
+		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
+		logger.getLogger().log(Level.INFO, "{0}", "Number of classes: " + originalDataset.numClasses());
+		logger.getLogger().log(Level.INFO, "{0}", "Number of features" + originalDataset.numAttributes());
+		logger.getLogger().log(Level.INFO, "{0}", "Number of instances" + originalDataset.numInstances());
+		logger.getLogger().log(Level.INFO, "{0}", "Class Index: " + originalDataset.classIndex());
+		logger.getLogger().log(Level.INFO, "{0}",
+				"Class name" + originalDataset.attribute(originalDataset.classIndex()).name());
+		logger.getLogger().log(Level.INFO, "{0}", originalDataset.toSummaryString());
 	}
 }

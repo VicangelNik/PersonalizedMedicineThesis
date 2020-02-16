@@ -2,7 +2,6 @@ package interfaces;
 
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface PreprocessData.
  */
@@ -17,7 +16,7 @@ public interface PreprocessData {
 	 * @throws Exception the exception
 	 */
 	public Instances removeFeaturesByType(Instances data, int tagId) throws Exception;
-	
+
 	/**
 	 * Removes the feature.
 	 *
@@ -27,4 +26,13 @@ public interface PreprocessData {
 	 * @throws Exception the exception
 	 */
 	public Instances removeFeature(Instances data, String rangeList) throws Exception;
+
+	/**
+	 * Removes the missing values.
+	 *
+	 * @param data the data
+	 * @return the instances
+	 * @throws Exception the exception
+	 */
+	public Instances removeMissingValues(Instances data) throws Exception;
 }

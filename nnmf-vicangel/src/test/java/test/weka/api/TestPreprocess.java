@@ -101,6 +101,10 @@ public class TestPreprocess {
 		int daysToDeathIndex = data.attribute("Days_To_Death").index() + 1;
 		String rangeList = "First," + vitalStatusIndex + "," + daysToDeathIndex;
 		data = preprocessData.removeFeature(data, rangeList);
+		// Removes the missing values. Replaces all missing values for nominal and
+		// numeric attributes in a dataset with the modes and means from the training
+		// data. The class attribute is skipped by default.
+		data = preprocessData.removeMissingValues(data);
 		// ASSERTS
 		Assert.assertFalse("Attribute DATA should not exist in dataset", data.attribute("DATA") != null);
 		Assert.assertFalse("Attribute Vital_status should not exist in dataset",

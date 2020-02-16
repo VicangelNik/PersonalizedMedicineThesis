@@ -1,9 +1,14 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.scify.EMPCA.EMPCA;
@@ -11,6 +16,7 @@ import org.scify.EMPCA.Feature;
 import org.scify.EMPCA.JavaPCAInputToScala;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
+import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import scala.Tuple2;
 import utilpackage.WekaUtils;
@@ -29,22 +35,40 @@ import weka.core.Instances;
  * The Class TestEMPCA.
  */
 public class TestEMPCA {
+	private static AppLogger logger = AppLogger.getInstance();
 
 	/**
 	 * Test.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
 	 */
 	@Test
 	public void test() throws IOException {
-
-//		ArrayList<ArrayList<Feature>> empcaInput = convertWekaForEMPCAInput("PatientAndControlProcessedLevelTwo.arff",
-//				"SampleStatus");
-		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert(testData()), 50);
+		// PrintStream out = new PrintStream(new FileOutputStream(Constants.loggerPath +
+		// "project.log", true), true);
+		// System.setOut(out);
+		ArrayList<ArrayList<Feature>> empcaInput = convertWekaForEMPCAInput("PatientAndControlProcessedLevelTwo.arff",
+				"SampleStatus");
+		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert(empcaInput), 20);
 		DoubleMatrix2D c = empca.performEM(20);
 		System.out.println("finish perform em");
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
-		System.out.println("finish");
+		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
+		System.out.println("finish doEig");
+	}
+
+	@SuppressWarnings("unused")
+	private static void printEigenValuesVectors(Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors) {
+		System.out.println("start printing values");
+		logger.getLogger().log(Level.INFO, "EigenValues" + System.lineSeparator());
+		for (int i = 0; i < eigenValueAndVectors._1.length; i++) {
+			double value = eigenValueAndVectors._1[i];
+			logger.getLogger().log(Level.INFO, String.valueOf(value) + "\t");
+		}
+		logger.getLogger().log(Level.INFO, "EigenVectors" + System.lineSeparator());
+		for (int i = 0; i < eigenValueAndVectors._2.columns(); i++) {
+			logger.getLogger().log(Level.INFO, String.valueOf(eigenValueAndVectors._2.viewColumn(i)));
+		}
 	}
 
 	/**
@@ -53,11 +77,12 @@ public class TestEMPCA {
 	 * @param fileName  the file name
 	 * @param className the class name
 	 * @return the array list
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception
 	 */
 	private ArrayList<ArrayList<Feature>> convertWekaForEMPCAInput(String fileName, String className)
 			throws IOException {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + fileName);
+		List<String> nanFeatureList = new ArrayList<>();
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
 		ArrayList<ArrayList<Feature>> empcaInput = new ArrayList<>();
 		Enumeration<Instance> instEnumeration = originalDataset.enumerateInstances();
@@ -68,11 +93,50 @@ public class TestEMPCA {
 			while (attEnumeration.hasMoreElements()) {
 				Attribute attribute = attEnumeration.nextElement();
 				int attIndex = attribute.index();
-				features.add(new Feature(attIndex, current.value(attIndex)));
+				double value = current.value(attIndex);
+				if (checkIsNullOrInfinity(value, attribute.name(), nanFeatureList)) {
+					throw new IllegalArgumentException(
+							"At this point data set should not have any NaN or infinity value");
+				}
+				features.add(new Feature(attIndex, value));
 			}
 			empcaInput.add(features);
 		}
+		List<String> distinctElements = nanFeatureList.stream().distinct().collect(Collectors.toList());
+		System.out.println("Number of distinct features with NaN values: " + distinctElements.size());
+		System.out.println("Number of NaN value occurencies: " + nanFeatureList.size());
+		// distinctElements.forEach(System.out::println);
 		return empcaInput;
+	}
+
+	/**
+	 * Write eigen values and eigen vectors to file.
+	 *
+	 * @param fileName
+	 * @param eigenValueAndVectors
+	 */
+	private static void writeEigensToFile(String fileName, Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+			bw.write("Number of eigenValues: " + eigenValueAndVectors._1.length + System.lineSeparator());
+			bw.write("Number of eigenVectors (rows): " + eigenValueAndVectors._2.rows() + System.lineSeparator());
+			bw.write("Number of eigenVectors (columns): " + eigenValueAndVectors._2.columns() + System.lineSeparator());
+			bw.newLine();
+			for (int i = 0; i < eigenValueAndVectors._1.length; i++) {
+				bw.write(String.valueOf(eigenValueAndVectors._1[i]) + System.lineSeparator());
+			}
+			for (int i = 0; i < eigenValueAndVectors._2.columns(); i++) {
+				bw.write("The number of size for the " + i + "th is: " + eigenValueAndVectors._2.viewColumn(i).size()
+						+ System.lineSeparator());
+				bw.write(String.valueOf(eigenValueAndVectors._2.viewColumn(i)));
+				bw.newLine();
+			}
+			bw.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// nothing to do
+		}
+
 	}
 
 	/**
@@ -80,6 +144,7 @@ public class TestEMPCA {
 	 *
 	 * @return the array list
 	 */
+	@SuppressWarnings("unused")
 	private static ArrayList<ArrayList<Feature>> testData() {
 		Random rand = new Random();
 		DecimalFormat df = new DecimalFormat("#.###");
@@ -136,4 +201,19 @@ public class TestEMPCA {
 		}
 	}
 
+	/**
+	 * checkIsNullOrInfinity
+	 *
+	 * @param value
+	 * @param name
+	 * @return
+	 */
+	private static boolean checkIsNullOrInfinity(double value, String name, List<String> list) {
+		if (Double.isInfinite(value) || Double.isNaN(value)) {
+			// System.out.println("value: " + value + " Feature: " + name);
+			list.add(name);
+			return true;
+		}
+		return false;
+	}
 }

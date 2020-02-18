@@ -55,6 +55,27 @@ public class TestEMPCA {
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
 		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		System.out.println("finish doEig");
+		eigensToWeka(eigenValueAndVectors._2);
+
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param eigenVectors
+	 * @return
+	 */
+	private static Instances eigensToWeka(DoubleMatrix2D eigenVectors) {
+		ArrayList<Attribute> attInfo = new ArrayList<>();
+		for (int i = 0; i < eigenVectors.columns(); i++) {
+			ArrayList<String> attributeValues = new ArrayList<>();
+			for (int j = 0; j < eigenVectors.rows(); j++) {
+				attributeValues.add(String.valueOf(eigenVectors.viewColumn(i).get(j)));
+			}
+			Attribute attribute = new Attribute("dimension" + i, attributeValues, i);
+			attInfo.add(attribute);
+		}
+		return new Instances("EMPCAData", attInfo, attInfo.size());
 	}
 
 	@SuppressWarnings("unused")

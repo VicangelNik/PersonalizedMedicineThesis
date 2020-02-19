@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -248,6 +250,19 @@ public class Utils {
 				e.printStackTrace();
 				LOGGER.log(Level.INFO, e.getMessage());
 			}
+		}
+	}
+
+	/**
+	 * Checks whether directory is empty.
+	 * 
+	 * @param directory
+	 * @return
+	 * @throws IOException
+	 */
+	public static boolean isDirEmpty(final Path directory) throws IOException {
+		try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory)) {
+			return !dirStream.iterator().hasNext();
 		}
 	}
 }

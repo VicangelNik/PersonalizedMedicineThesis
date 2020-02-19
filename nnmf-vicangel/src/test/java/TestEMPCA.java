@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.scify.EMPCA.EMPCA;
 import org.scify.EMPCA.Feature;
@@ -55,12 +56,12 @@ public class TestEMPCA {
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
 		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		System.out.println("finish doEig");
-		eigensToWeka(eigenValueAndVectors._2);
-
+		Instances reData = eigensToWeka(eigenValueAndVectors._2);
+		Assert.assertTrue(reData.numAttributes() > 0);
 	}
 
 	/**
-	 * TODO
+	 * From EMPCA Tto WEKA
 	 * 
 	 * @param eigenVectors
 	 * @return

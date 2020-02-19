@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -342,12 +345,57 @@ public final class WekaUtils {
 		return classifierSelection.selectClassifier(classifierName, instances);
 	}
 
+	/**
+	 * 
+	 * @param file
+	 * @param featureClassName
+	 * @return
+	 * @throws IOException
+	 */
 	public static Instances getOriginalData(File file, String featureClassName) throws IOException {
 		AbstractFileLoader arffLoader = new ArffLoader();
 		arffLoader.setFile(file);
 		Instances originalData = arffLoader.getDataSet();
 		originalData.setClass(originalData.attribute(featureClassName));
 		return originalData;
+	}
+
+	/**
+	 * Write object to disk.
+	 * 
+	 * @param filePath
+	 * @param object
+	 * @throws Exception
+	 */
+	public static void serializeObject(String filePath, Object[] object, boolean writeAll) {
+		Path path = Paths.get(filePath);
+		// create the directory to which the object will be written
+		try {
+			Files.createDirectories(path.getParent());
+			if (writeAll) {
+				weka.core.SerializationHelper.writeAll(path.toString(), object);
+			} else {
+				weka.core.SerializationHelper.write(path.toString(), object);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} finally {
+			// nothing to do yet
+		}
+	}
+
+	public static Object[] desirializeObject(String filePath, boolean readAll) throws Exception {
+		Path path = Paths.get(filePath);
+		if (readAll) {
+			return weka.core.SerializationHelper.readAll(path.toString());
+		} else {
+			return (Object[]) weka.core.SerializationHelper.read(path.toString());
+		}
 	}
 
 }

@@ -25,13 +25,12 @@ import org.jblas.DoubleMatrix;
 import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Utils.
  *
  * @author Nikiforos
  */
-public class Utils {
+public final class Utils {
 
 	/** The Constant rand. */
 	public static final Random rand = new Random();
@@ -43,6 +42,13 @@ public class Utils {
 	public static final String FILE_DATA_PATH = Constants.SRC_TEST_RESOURCES_PATH + "data" + TXT_SUFFIX;
 
 	private static final Logger LOGGER = Logger.getLogger(Utils.class.getName());
+
+	/**
+	 * Instantiates a new utils.
+	 */
+	private Utils() {
+		throw new IllegalArgumentException("utillity class");
+	}
 
 	/**
 	 * Feed double array with random numbers.
@@ -209,13 +215,6 @@ public class Utils {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	/**
-	 * Instantiates a new utils.
-	 */
-	private Utils() {
-		// do nothing
 	}
 
 	/**

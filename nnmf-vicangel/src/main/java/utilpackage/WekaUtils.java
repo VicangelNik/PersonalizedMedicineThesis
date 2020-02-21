@@ -41,7 +41,6 @@ import weka.core.Instances;
 import weka.core.converters.AbstractFileLoader;
 import weka.core.converters.ArffLoader;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class WekaUtils.
  */
@@ -51,7 +50,7 @@ public final class WekaUtils {
 	 * Instantiates a new weka utils.
 	 */
 	private WekaUtils() {
-		// nothing to do
+		throw new IllegalArgumentException("utillity class");
 	}
 
 	/** The Constant WEKA_SUFFIX. */

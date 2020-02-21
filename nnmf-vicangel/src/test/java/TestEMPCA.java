@@ -20,6 +20,7 @@ import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import scala.Tuple2;
+import utilpackage.TransformToWeka;
 import utilpackage.WekaUtils;
 import weka.core.Attribute;
 import weka.core.Instance;
@@ -50,33 +51,14 @@ public class TestEMPCA {
 		// System.setOut(out);
 		ArrayList<ArrayList<Feature>> empcaInput = convertWekaForEMPCAInput("PatientAndControlProcessedLevelTwo.arff",
 				"SampleStatus");
-		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert(empcaInput), 20);
+		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert(empcaInput), 15);
 		DoubleMatrix2D c = empca.performEM(20);
 		System.out.println("finish perform em");
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
 		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		System.out.println("finish doEig");
-		Instances reData = eigensToWeka(eigenValueAndVectors._2);
+		Instances reData = TransformToWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset");
 		Assert.assertTrue(reData.numAttributes() > 0);
-	}
-
-	/**
-	 * From EMPCA Tto WEKA
-	 * 
-	 * @param eigenVectors
-	 * @return
-	 */
-	private static Instances eigensToWeka(DoubleMatrix2D eigenVectors) {
-		ArrayList<Attribute> attInfo = new ArrayList<>();
-		for (int i = 0; i < eigenVectors.columns(); i++) {
-			ArrayList<String> attributeValues = new ArrayList<>();
-			for (int j = 0; j < eigenVectors.rows(); j++) {
-				attributeValues.add(String.valueOf(eigenVectors.viewColumn(i).get(j)));
-			}
-			Attribute attribute = new Attribute("dimension" + i, attributeValues, i);
-			attInfo.add(attribute);
-		}
-		return new Instances("EMPCAData", attInfo, attInfo.size());
 	}
 
 	@SuppressWarnings("unused")

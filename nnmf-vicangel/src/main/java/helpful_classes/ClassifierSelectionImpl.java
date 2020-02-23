@@ -40,11 +40,7 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 		}
 		}
 		try {
-			// if (abstractClassifier instanceof ZeroR) {
-			// abstractClassifier.buildClassifier(loader.getDataSet());
-			// } else {
 			abstractClassifier.buildClassifier(instances);
-			// }
 		} catch (Exception e) {
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}

@@ -4,11 +4,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,11 +17,12 @@ import org.scify.EMPCA.JavaPCAInputToScala;
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
+import helpful_classes.NaiveBayesImplementation;
 import scala.Tuple2;
-import utilpackage.TransformToWeka;
+import utilpackage.TransformWekaEMPCA;
 import utilpackage.WekaUtils;
+import weka.classifiers.AbstractClassifier;
 import weka.core.Attribute;
-import weka.core.Instance;
 import weka.core.Instances;
 
 /*
@@ -46,19 +45,21 @@ public class TestEMPCA {
 	 */
 	@Test
 	public void test() throws IOException {
-		// PrintStream out = new PrintStream(new FileOutputStream(Constants.loggerPath +
-		// "project.log", true), true);
-		// System.setOut(out);
-		ArrayList<ArrayList<Feature>> empcaInput = convertWekaForEMPCAInput("PatientAndControlProcessedLevelTwo.arff",
-				"SampleStatus");
-		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert(empcaInput), 15);
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
+		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
+		List<ArrayList<Feature>> empcaInput = TransformWekaEMPCA.createEMPCAInputFromWeka(originalDataset);
+		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert((ArrayList<ArrayList<Feature>>) empcaInput), 60);
 		DoubleMatrix2D c = empca.performEM(20);
 		System.out.println("finish perform em");
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
 		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		System.out.println("finish doEig");
-		Instances reData = TransformToWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset");
+		Instances reData = TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset");
 		Assert.assertTrue(reData.numAttributes() > 0);
+		// CROSS VALIDATION
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
+		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+				new Random(1));
 	}
 
 	@SuppressWarnings("unused")
@@ -73,44 +74,6 @@ public class TestEMPCA {
 		for (int i = 0; i < eigenValueAndVectors._2.columns(); i++) {
 			logger.getLogger().log(Level.INFO, String.valueOf(eigenValueAndVectors._2.viewColumn(i)));
 		}
-	}
-
-	/**
-	 * Convert weka for EMPCA input.
-	 *
-	 * @param fileName  the file name
-	 * @param className the class name
-	 * @return the array list
-	 * @throws Exception
-	 */
-	private ArrayList<ArrayList<Feature>> convertWekaForEMPCAInput(String fileName, String className)
-			throws IOException {
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + fileName);
-		List<String> nanFeatureList = new ArrayList<>();
-		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-		ArrayList<ArrayList<Feature>> empcaInput = new ArrayList<>();
-		Enumeration<Instance> instEnumeration = originalDataset.enumerateInstances();
-		while (instEnumeration.hasMoreElements()) {
-			Instance current = instEnumeration.nextElement();
-			ArrayList<Feature> features = new ArrayList<>();
-			Enumeration<Attribute> attEnumeration = current.enumerateAttributes();
-			while (attEnumeration.hasMoreElements()) {
-				Attribute attribute = attEnumeration.nextElement();
-				int attIndex = attribute.index();
-				double value = current.value(attIndex);
-				if (checkIsNullOrInfinity(value, attribute.name(), nanFeatureList)) {
-					throw new IllegalArgumentException(
-							"At this point data set should not have any NaN or infinity value");
-				}
-				features.add(new Feature(attIndex, value));
-			}
-			empcaInput.add(features);
-		}
-		List<String> distinctElements = nanFeatureList.stream().distinct().collect(Collectors.toList());
-		System.out.println("Number of distinct features with NaN values: " + distinctElements.size());
-		System.out.println("Number of NaN value occurencies: " + nanFeatureList.size());
-		// distinctElements.forEach(System.out::println);
-		return empcaInput;
 	}
 
 	/**
@@ -203,21 +166,5 @@ public class TestEMPCA {
 		if (attribute.isNominal()) {
 			System.out.println(attribute.name());
 		}
-	}
-
-	/**
-	 * checkIsNullOrInfinity
-	 *
-	 * @param value
-	 * @param name
-	 * @return
-	 */
-	private static boolean checkIsNullOrInfinity(double value, String name, List<String> list) {
-		if (Double.isInfinite(value) || Double.isNaN(value)) {
-			// System.out.println("value: " + value + " Feature: " + name);
-			list.add(name);
-			return true;
-		}
-		return false;
 	}
 }

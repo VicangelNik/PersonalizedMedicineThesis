@@ -22,11 +22,13 @@ import weka.core.Instances;
 public class TestClassificationTestCase {
 
 	/** The dataset file name. */
-	private final String datasetFileName = Constants.WEKA_FILES + "iris.arff";// Constants.SRC_MAIN_RESOURCES_PATH +
-																				// "PatientAndControlProcessedLevelTwo.arff";
+	// private final String datasetFileName = Constants.WEKA_FILES + "iris.arff";
+	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH
+			+ "PatientAndControlProcessedLevelTwo.arff";
 
 	/** The class name. */
-	private final String className = "class";// "SampleStatus";
+	// private final String className = "class";
+	private final String className = "SampleStatus";
 
 	/**
 	 * Test naive bayes classification.
@@ -89,7 +91,8 @@ public class TestClassificationTestCase {
 					true, options);
 			// CROSS VALIDATION
 			AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset);
-			new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
+			new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+					new Random(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());

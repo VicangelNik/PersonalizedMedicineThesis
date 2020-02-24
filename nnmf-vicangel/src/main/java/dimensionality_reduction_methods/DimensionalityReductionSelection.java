@@ -1,15 +1,20 @@
 package dimensionality_reduction_methods;
 
+import java.util.logging.Level;
+
 import abstract_classes.DimensionalityReduction;
+import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import interfaces.DimensionalityReductionSelectionInterface;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class DimensionalityReductionSelection.
  */
 public class DimensionalityReductionSelection implements DimensionalityReductionSelectionInterface {
+
+	/** The logger. */
+	private static AppLogger logger = AppLogger.getInstance();
 
 	/*
 	 * (non-Javadoc)
@@ -20,18 +25,24 @@ public class DimensionalityReductionSelection implements DimensionalityReduction
 	 */
 	@Override
 	public Instances DimensionalityReductionSelector(String selection, Instances dataset, boolean debug,
-			String[] options) throws Exception {
-		DimensionalityReduction reductionMethod;
-		switch (selection) {
-		case Constants.PCA: {
-			reductionMethod = new PrincipalComponentAnalysisWeka();
-			setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
-			return ((PrincipalComponentAnalysisWeka) reductionMethod).dimReductionMethod(options);
+			String[] options) {
+		try {
+			DimensionalityReduction reductionMethod;
+			switch (selection) {
+			case Constants.PCA: {
+				reductionMethod = new PrincipalComponentAnalysisWeka();
+				setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
+				return ((PrincipalComponentAnalysisWeka) reductionMethod).dimReductionMethod(options);
+			}
+			default: {
+				throw new IllegalArgumentException("Invalid selection");
+			}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.getLogger().log(Level.SEVERE, "DimensionalityReductionSelector in in error: {0}", e);
 		}
-		default: {
-			throw new IllegalArgumentException("Invalid selection");
-		}
-		}
+		return null;
 	}
 
 	/**

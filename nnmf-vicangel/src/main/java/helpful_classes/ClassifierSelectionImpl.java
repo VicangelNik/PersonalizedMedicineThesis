@@ -42,6 +42,7 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 		try {
 			abstractClassifier.buildClassifier(instances);
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 		abstractClassifier.setDebug(true);

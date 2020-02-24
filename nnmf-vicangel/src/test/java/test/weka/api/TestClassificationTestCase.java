@@ -15,20 +15,19 @@ import utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestClassificationTestCase.
  */
 public class TestClassificationTestCase {
 
 	/** The dataset file name. */
-	// private final String datasetFileName = Constants.WEKA_FILES + "iris.arff";
-	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH
-			+ "PatientAndControlProcessedLevelTwo.arff";
+	 private final String datasetFileName = Constants.WEKA_FILES + "iris.arff";
+//	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH
+//			+ "PatientAndControlProcessedLevelTwo.arff";
 
 	/** The class name. */
-	// private final String className = "class";
-	private final String className = "SampleStatus";
+	 private final String className = "class";
+	//private final String className = "SampleStatus";
 
 	/**
 	 * Test naive bayes classification.
@@ -74,7 +73,7 @@ public class TestClassificationTestCase {
 
 	/**
 	 * Test naive bayes cross validation evaluation with dimensionality reduction.
-	 *
+	 * 
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 

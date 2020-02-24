@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -48,14 +49,16 @@ public class TestEMPCA {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		List<ArrayList<Feature>> empcaInput = TransformWekaEMPCA.createEMPCAInputFromWeka(originalDataset);
-		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert((ArrayList<ArrayList<Feature>>) empcaInput), 60);
+		List<Double> classValues = empcaInput.stream().map(x -> x.get(0).getValue()).collect(Collectors.toList());
+		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert((ArrayList<ArrayList<Feature>>) empcaInput), 20);
 		DoubleMatrix2D c = empca.performEM(20);
 		System.out.println("finish perform em");
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
 		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		System.out.println("finish doEig");
-		Instances reData = TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset");
-		Assert.assertTrue(reData.numAttributes() > 0);
+		Instances reData = TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset", classValues);
+		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns());
+		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,

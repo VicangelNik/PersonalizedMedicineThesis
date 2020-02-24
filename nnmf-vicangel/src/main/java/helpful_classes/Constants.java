@@ -1,6 +1,5 @@
 package helpful_classes;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Constants.
  */
@@ -25,6 +24,15 @@ public class Constants {
 	/** The Constant WEKA_FILES. */
 	public static final String WEKA_FILES = "src\\test\\resources\\wekaFiles\\";
 
+	/** The Constant loggerPath. */
+	public static final String loggerPath = "C:\\applications\\thesis\\";
+
+	/** The Constant MORMAL_TISSUE. */
+	public static final String MORMAL_TISSUE = "NormalTissue";
+
+	/** The Constant PRIMARY_TUMOR. */
+	public static final String PRIMARY_TUMOR = "PrimaryTumor";
+
 	/** The Constant NAIVE_BAYES. */
 	// CLASSIFIERS
 	public static final String NAIVE_BAYES = "naiveBayes";
@@ -33,9 +41,6 @@ public class Constants {
 	// DIMENSIONALITY REDUCTION METHODS
 	public static final String PCA = "pca";
 
-	/** The Constant loggerPath. */
-	public static final String loggerPath = "C:\\applications\\thesis\\";
-
-	/** The Constant ZeroR. */
+	/** The Constant ZERO_R. */
 	public static final String ZERO_R = "zeroR";
 }

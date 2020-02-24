@@ -156,6 +156,8 @@ public class TestPreprocess {
 		logger.getLogger().log(Level.INFO, "{0}", "Class Index: " + originalDataset.classIndex());
 		logger.getLogger().log(Level.INFO, "{0}",
 				"Class name" + originalDataset.attribute(originalDataset.classIndex()).name());
+		logger.getLogger().log(Level.INFO, "{0}",
+				"Attribute Class Index: " + originalDataset.attributeStats(originalDataset.classIndex()));
 		logger.getLogger().log(Level.INFO, "{0}", originalDataset.toSummaryString());
 	}
 }

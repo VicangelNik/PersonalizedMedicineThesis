@@ -26,6 +26,7 @@ import weka.classifiers.AbstractClassifier;
 import weka.core.Attribute;
 import weka.core.Instances;
 
+// TODO: Auto-generated Javadoc
 /*
  * The standard Scala backend is a Java VM. Scala classes are Java classes, and vice versa.
  * You can call the methods of either language from methods in the other one.
@@ -37,25 +38,41 @@ import weka.core.Instances;
  * The Class TestEMPCA.
  */
 public class TestEMPCA {
+
+	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();
 
 	/**
 	 * Test.
 	 *
-	 * @throws IOException
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void test() throws IOException {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
+		// INPUT TO EMPCA PART
 		List<ArrayList<Feature>> empcaInput = TransformWekaEMPCA.createEMPCAInputFromWeka(originalDataset);
-		List<Double> classValues = empcaInput.stream().map(x -> x.get(0).getValue()).collect(Collectors.toList());
-		EMPCA empca = new EMPCA(JavaPCAInputToScala.convert((ArrayList<ArrayList<Feature>>) empcaInput), 20);
+		Assert.assertTrue("The number of lists (instances) should be 335", 335 == empcaInput.size());
+		// the position 3 is chosen arbitarily.
+		Assert.assertTrue("The number of features of each instance should be 72122", 72122 == empcaInput.get(3).size());
+		scala.collection.immutable.List<Tuple2<Object, Object>>[] convertedToScalaList = JavaPCAInputToScala
+				.convert((ArrayList<ArrayList<Feature>>) empcaInput);
+		Assert.assertEquals("The sizes of the 2 arrays should be the same", empcaInput.size(),
+				convertedToScalaList.length);
+		Assert.assertEquals("The sizes of the 2 arrays should be the same", empcaInput.get(3).size(),
+				convertedToScalaList[3].length());
+		// DO EMPCA PART
+		EMPCA empca = new EMPCA(convertedToScalaList, 20);
 		DoubleMatrix2D c = empca.performEM(20);
 		System.out.println("finish perform em");
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
 		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		System.out.println("finish doEig");
+		// OUTPUT TO WEKA PART
+		// zero position of each instance's feature list contains the class value. Class
+		// values are PrimaryTumor, NormalTissue. PrimaryTumor -> 0, NormalTissue-> 1
+		List<Double> classValues = empcaInput.stream().map(x -> x.get(0).getValue()).collect(Collectors.toList());
 		Instances reData = TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset", classValues);
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns());
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
@@ -65,6 +82,11 @@ public class TestEMPCA {
 				new Random(1));
 	}
 
+	/**
+	 * Prints the eigen values vectors.
+	 *
+	 * @param eigenValueAndVectors the eigen value and vectors
+	 */
 	@SuppressWarnings("unused")
 	private static void printEigenValuesVectors(Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors) {
 		System.out.println("start printing values");
@@ -80,10 +102,10 @@ public class TestEMPCA {
 	}
 
 	/**
-	 * Write eigen values and eigen vectors to file.
+	 * Write eigens to file.
 	 *
-	 * @param fileName
-	 * @param eigenValueAndVectors
+	 * @param fileName             the file name
+	 * @param eigenValueAndVectors the eigen value and vectors
 	 */
 	private static void writeEigensToFile(String fileName, Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
@@ -110,18 +132,37 @@ public class TestEMPCA {
 	}
 
 	/**
+	 * Test random data set.
+	 */
+	@Test
+	public void testRandomDataSet() {
+		ArrayList<ArrayList<Feature>> dataset = testData();
+		scala.collection.immutable.List<Tuple2<Object, Object>>[] convertedToScalaList = JavaPCAInputToScala
+				.convert(dataset);
+		// DO EMPCA PART
+		EMPCA empca = new EMPCA(convertedToScalaList, 20);
+		DoubleMatrix2D c = empca.performEM(20);
+		System.out.println("finish perform em");
+		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
+		System.out.println("finish doEig");
+		System.out.println("Number of eigenValues: " + eigenValueAndVectors._1.length + System.lineSeparator());
+		System.out.println("Number of eigenVectors (rows): " + eigenValueAndVectors._2.rows() + System.lineSeparator());
+		System.out.println(
+				"Number of eigenVectors (columns): " + eigenValueAndVectors._2.columns() + System.lineSeparator());
+	}
+
+	/**
 	 * Test data.
 	 *
 	 * @return the array list
 	 */
-	@SuppressWarnings("unused")
 	private static ArrayList<ArrayList<Feature>> testData() {
 		Random rand = new Random();
 		DecimalFormat df = new DecimalFormat("#.###");
 		ArrayList<ArrayList<Feature>> empcaInput = new ArrayList<>();
-		for (int i = 0; i < 450; i++) {
+		for (int i = 0; i < 45; i++) {
 			ArrayList<Feature> features = new ArrayList<>();
-			for (int j = 0; j < 75000; j++) {
+			for (int j = 0; j < 750; j++) {
 				double random = rand.nextDouble();
 				features.add(new Feature(j, Double.parseDouble(df.format(random))));
 			}

@@ -24,7 +24,6 @@ import weka.api.library.WekaFileConverterImpl;
 import weka.core.Attribute;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestPreprocess.
  */

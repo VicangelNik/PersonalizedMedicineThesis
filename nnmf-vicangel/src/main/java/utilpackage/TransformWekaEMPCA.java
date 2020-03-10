@@ -35,6 +35,13 @@ public final class TransformWekaEMPCA {
 	 * @return the list of instances and each instance contains a list of feature
 	 *         values.
 	 */
+	// ---------features1....N
+	// --------------------------
+	// instance1
+	// instance2
+	// .
+	// .
+	// instanceN|
 	public static List<ArrayList<Feature>> createEMPCAInputFromWeka(Instances originalDataset) {
 		List<String> nanFeatureList = new ArrayList<>();
 		ArrayList<ArrayList<Feature>> empcaInput = new ArrayList<>();
@@ -70,11 +77,20 @@ public final class TransformWekaEMPCA {
 	}
 
 	/**
-	 * 
+	 * Creates the EMPCA input from weka.
+	 *
 	 * @param originalDataset
-	 * @return
+	 * @return the list of features and each features contains a list of its
+	 *         instance values.
 	 */
-	public static List<ArrayList<Feature>> createEMPCAInputFromWeka2(Instances originalDataset) {
+	// ---------Instnace1....N
+	// --------------------------
+	// Feature1
+	// Feature2
+	// .
+	// .
+	// featureN|
+	public static List<ArrayList<Feature>> createEMPCAInputFromWekaV2(Instances originalDataset) {
 		ArrayList<ArrayList<Feature>> empcaInput = new ArrayList<>();
 		Enumeration<Attribute> attEnumeration = originalDataset.enumerateAttributes();
 		while (attEnumeration.hasMoreElements()) {
@@ -112,9 +128,9 @@ public final class TransformWekaEMPCA {
 		Instances instances = new Instances(nameNewDataset, attInfo, eigenVectors.rows());
 		// set instances to data set
 		for (int i = 0; i < eigenVectors.rows(); i++) {
-			instances.add(new DenseInstance(eigenVectors.columns()));
+			instances.add(new DenseInstance(eigenVectors.columns() + 1));
 		}
-		List<String> attributeValues = convertClassDoubleValuesToNominal(classValues);
+		List<String> attributeClassValues = convertClassDoubleValuesToNominal(classValues);
 		// fill data set with values
 		for (int i = 0; i < eigenVectors.columns(); i++) {
 			DoubleMatrix1D matrix1D = eigenVectors.viewColumn(i);
@@ -126,10 +142,12 @@ public final class TransformWekaEMPCA {
 		}
 		instances.setClassIndex(eigenVectors.columns());
 		// fill the class data
-//		for (int j = 0; j < eigenVectors.rows(); j++) {
-//			// eigenVectors.columns() = class index because index start from zero.
-//			instances.get(j).attribute(eigenVectors.columns()).setStringValue(attributeValues.get(j));
-//		}
+		for (int j = 0; j < eigenVectors.rows(); j++) {
+			// TODO
+			// eigenVectors.columns() = class index because index start from zero.
+			instances.get(j).attribute(eigenVectors.columns()).setStringValue(attributeClassValues.get(j));
+			instances.get(j).attribute(eigenVectors.columns()).addStringValue(attributeClassValues.get(j));
+		}
 		return instances;
 	}
 
@@ -151,8 +169,9 @@ public final class TransformWekaEMPCA {
 	}
 
 	/**
-	 * Convers class doble values to Nominal.
-	 * 
+	 * Converts class double values to Nominal. 0 maps to Primary tumor while 1 maps
+	 * to Normal tissue.
+	 *
 	 * @param classValues
 	 * @return
 	 */

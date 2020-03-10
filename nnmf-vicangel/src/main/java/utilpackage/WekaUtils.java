@@ -37,6 +37,7 @@ import helpful_classes.ClassifierSelectionImpl;
 import helpful_classes.MultiKey;
 import interfaces.ClassifierSelection;
 import weka.classifiers.AbstractClassifier;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.AbstractFileLoader;
 import weka.core.converters.ArffLoader;
@@ -345,7 +346,7 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param file
 	 * @param featureClassName
 	 * @return
@@ -361,7 +362,7 @@ public final class WekaUtils {
 
 	/**
 	 * Write object to disk.
-	 * 
+	 *
 	 * @param filePath
 	 * @param object
 	 * @throws Exception
@@ -397,4 +398,18 @@ public final class WekaUtils {
 		}
 	}
 
+	/**
+	 * Gets the class values of the Dataset.
+	 *
+	 * @param originalDataset
+	 * @return
+	 */
+	public static List<Double> getDatasetClassValues(Instances originalDataset) {
+		List<Double> classValues = new ArrayList<>();
+		for (int i = 0; i < originalDataset.numInstances(); i++) {
+			Instance current = originalDataset.get(i);
+			classValues.add(current.value(originalDataset.classIndex()));
+		}
+		return classValues;
+	}
 }

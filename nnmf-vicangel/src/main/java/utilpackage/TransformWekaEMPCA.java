@@ -32,7 +32,8 @@ public final class TransformWekaEMPCA {
 	 * Creates the EMPCA input from weka.
 	 *
 	 * @param originalDataset the original dataset
-	 * @return the list
+	 * @return the list of instances and each instance contains a list of feature
+	 *         values.
 	 */
 	public static List<ArrayList<Feature>> createEMPCAInputFromWeka(Instances originalDataset) {
 		List<String> nanFeatureList = new ArrayList<>();
@@ -50,6 +51,10 @@ public final class TransformWekaEMPCA {
 				Attribute attribute = attEnumeration.nextElement();
 				int attIndex = attribute.index();
 				double value = current.value(attIndex);
+				// the check was helpful because data preprocess was incomplete and it had
+				// missing values and the current.value(attIndex) was returning nulls.
+				// After that, ReplaceMissingValues method made data complete without missing
+				// values.
 				if (checkIsNullOrInfinity(value, attribute.name(), nanFeatureList)) {
 					throw new IllegalArgumentException(
 							"At this point data set should not have any NaN or infinity value");
@@ -61,7 +66,28 @@ public final class TransformWekaEMPCA {
 		List<String> distinctElements = nanFeatureList.stream().distinct().collect(Collectors.toList());
 		System.out.println("Number of distinct features with NaN values: " + distinctElements.size());
 		System.out.println("Number of NaN value occurencies: " + nanFeatureList.size());
-		// distinctElements.forEach(System.out::println);
+		return empcaInput;
+	}
+
+	/**
+	 * 
+	 * @param originalDataset
+	 * @return
+	 */
+	public static List<ArrayList<Feature>> createEMPCAInputFromWeka2(Instances originalDataset) {
+		ArrayList<ArrayList<Feature>> empcaInput = new ArrayList<>();
+		Enumeration<Attribute> attEnumeration = originalDataset.enumerateAttributes();
+		while (attEnumeration.hasMoreElements()) {
+			Attribute attribute = attEnumeration.nextElement();
+			int attIndex = attribute.index();
+			ArrayList<Feature> features = new ArrayList<>();
+			for (int i = 0; i < originalDataset.numInstances(); i++) {
+				Instance current = originalDataset.get(i);
+				double value = current.value(attIndex);
+				features.add(new Feature(i, value));
+			}
+			empcaInput.add(features);
+		}
 		return empcaInput;
 	}
 

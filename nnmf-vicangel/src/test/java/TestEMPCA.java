@@ -81,6 +81,42 @@ public class TestEMPCA {
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 				new Random(1));
 	}
+	
+	@Test
+	public void test2() throws IOException {
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
+		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
+		// INPUT TO EMPCA PART
+		List<ArrayList<Feature>> empcaInput = TransformWekaEMPCA.createEMPCAInputFromWeka2(originalDataset);
+		Assert.assertTrue("The number of lists (instances) should be 72121", 72121 == empcaInput.size());
+		// the position 3 is chosen arbitarily.
+		Assert.assertTrue("The number of features of each instance should be 335", 335 == empcaInput.get(3).size());
+		scala.collection.immutable.List<Tuple2<Object, Object>>[] convertedToScalaList = JavaPCAInputToScala
+				.convert((ArrayList<ArrayList<Feature>>) empcaInput);
+		Assert.assertEquals("The sizes of the 2 arrays should be the same", empcaInput.size(),
+				convertedToScalaList.length);
+		Assert.assertEquals("The sizes of the 2 arrays should be the same", empcaInput.get(3).size(),
+				convertedToScalaList[3].length());
+		// DO EMPCA PART
+		EMPCA empca = new EMPCA(convertedToScalaList, 20);
+		DoubleMatrix2D c = empca.performEM(20);
+		System.out.println("finish perform em");
+		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
+		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
+		System.out.println("finish doEig");
+		// OUTPUT TO WEKA PART
+		// zero position of each instance's feature list contains the class value. Class
+		// values are PrimaryTumor, NormalTissue. PrimaryTumor -> 0, NormalTissue-> 1
+		List<Double> classValues = empcaInput.stream().map(x -> x.get(0).getValue()).collect(Collectors.toList());
+		Instances reData = TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset", classValues);
+		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns());
+		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
+		// CROSS VALIDATION
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
+		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+				new Random(1));
+	}
+	
 
 	/**
 	 * Prints the eigen values vectors.

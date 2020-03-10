@@ -5,7 +5,6 @@ import java.util.Random;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface AppClassifier.
  */

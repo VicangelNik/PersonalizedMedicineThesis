@@ -65,6 +65,7 @@ public class NaiveBayesImplementation implements AppClassifier {
 			logger.getLogger().log(Level.INFO, "{0}", eval.toMatrixString());
 			// printCrossValidationResults(eval, data.classIndex());
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 	}

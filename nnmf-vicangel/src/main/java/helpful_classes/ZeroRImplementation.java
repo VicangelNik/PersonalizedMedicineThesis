@@ -54,5 +54,4 @@ public class ZeroRImplementation implements AppClassifier {
 		}
 
 	}
-
 }

@@ -143,10 +143,7 @@ public final class TransformWekaEMPCA {
 		instances.setClassIndex(eigenVectors.columns());
 		// fill the class data
 		for (int j = 0; j < eigenVectors.rows(); j++) {
-			// TODO
-			// eigenVectors.columns() = class index because index start from zero.
-			instances.get(j).attribute(eigenVectors.columns()).setStringValue(attributeClassValues.get(j));
-			instances.get(j).attribute(eigenVectors.columns()).addStringValue(attributeClassValues.get(j));
+			instances.get(j).setValue(instances.classIndex(), attributeClassValues.get(j));
 		}
 		return instances;
 	}

@@ -22,6 +22,7 @@ import helpful_classes.NaiveBayesImplementation;
 import scala.Tuple2;
 import utilpackage.TransformWekaEMPCA;
 import utilpackage.WekaUtils;
+import weka.api.library.WekaFileConverterImpl;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Attribute;
 import weka.core.Instances;
@@ -48,6 +49,7 @@ public class TestEMPCA {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
+	@Deprecated
 	public void test() throws IOException {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
@@ -82,8 +84,14 @@ public class TestEMPCA {
 				new Random(1));
 	}
 
+	/**
+	 * Test EMPCA calculation, prints eigenvalues and eigenvectors to log, saves new
+	 * low dimensional data to arff file and does a simple classification.
+	 * 
+	 * @throws IOException
+	 */
 	@Test
-	public void test2() throws IOException {
+	public void testEMPCA() throws IOException {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		// INPUT TO EMPCA PART
@@ -109,12 +117,32 @@ public class TestEMPCA {
 		// OUTPUT TO WEKA PART
 		Instances reData = TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset",
 				WekaUtils.getDatasetClassValues(originalDataset));
+		// here we save the new data in an arff file
+		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + "empcaData.arff");
 		// eigenValueAndVectors._2.columns() + 1 be the new data set has also the class
 		// attribute.
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns() + 1);
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
+		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+				new Random(1));
+	}
+
+	/**
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testEmpcaData() throws IOException {
+		// GET DATA
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
+		File empcaDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "empcaData.arff");
+		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
+		Instances empcaDataset = WekaUtils.getOriginalData(empcaDataFile, "class");
+		// CROSS VALIDATION
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, empcaDataset);
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 				new Random(1));
 	}

@@ -38,6 +38,7 @@ public class NaiveBayesImplementation implements AppClassifier {
 			logger.getLogger().log(Level.INFO, "{0}", abstractClassifier);
 			return abstractClassifier;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 		return null;

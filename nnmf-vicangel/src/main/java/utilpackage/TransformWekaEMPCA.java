@@ -42,6 +42,7 @@ public final class TransformWekaEMPCA {
 	// .
 	// .
 	// instanceN|
+	@Deprecated
 	public static List<ArrayList<Feature>> createEMPCAInputFromWeka(Instances originalDataset) {
 		List<String> nanFeatureList = new ArrayList<>();
 		ArrayList<ArrayList<Feature>> empcaInput = new ArrayList<>();

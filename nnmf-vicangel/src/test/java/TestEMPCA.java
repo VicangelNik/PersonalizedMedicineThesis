@@ -1,6 +1,4 @@
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -16,11 +14,13 @@ import org.scify.EMPCA.Feature;
 import org.scify.EMPCA.JavaPCAInputToScala;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
+import dimensionality_reduction_methods.DimensionalityReductionSelection;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import helpful_classes.NaiveBayesImplementation;
 import scala.Tuple2;
 import utilpackage.TransformWekaEMPCA;
+import utilpackage.Utils;
 import utilpackage.WekaUtils;
 import weka.api.library.WekaFileConverterImpl;
 import weka.classifiers.AbstractClassifier;
@@ -69,7 +69,7 @@ public class TestEMPCA {
 		DoubleMatrix2D c = empca.performEM(20);
 		System.out.println("finish perform em");
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
-		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
+		Utils.writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		System.out.println("finish doEig");
 		// OUTPUT TO WEKA PART
 		// zero position of each instance's feature list contains the class value. Class
@@ -112,7 +112,7 @@ public class TestEMPCA {
 		DoubleMatrix2D c = empca.performEM(20);
 		System.out.println("finish perform em");
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
-		writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
+		Utils.writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		System.out.println("finish doEig");
 		// OUTPUT TO WEKA PART
 		Instances reData = TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset",
@@ -131,6 +131,7 @@ public class TestEMPCA {
 	}
 
 	/**
+	 * Test EMPCA loading the already lowered dimension data.
 	 * 
 	 * @throws IOException
 	 */
@@ -143,6 +144,27 @@ public class TestEMPCA {
 		Instances empcaDataset = WekaUtils.getOriginalData(empcaDataFile, "class");
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, empcaDataset);
+		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+				new Random(1));
+	}
+
+	/**
+	 * Same as testEMPCA but it is called from DimensionalityReductionSelector
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void doEMPCA() throws IOException {
+		// first option should be the number of expecting principal components
+		// second option should be the desirable number of em iterations
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
+		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
+		String[] options = { "20", "20" };
+		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
+		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector("empca", originalDataset,
+				true, options);
+		// CROSS VALIDATION
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset);
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 				new Random(1));
 	}
@@ -164,36 +186,6 @@ public class TestEMPCA {
 		for (int i = 0; i < eigenValueAndVectors._2.columns(); i++) {
 			logger.getLogger().log(Level.INFO, String.valueOf(eigenValueAndVectors._2.viewColumn(i)));
 		}
-	}
-
-	/**
-	 * Write eigens to file.
-	 *
-	 * @param fileName             the file name
-	 * @param eigenValueAndVectors the eigen value and vectors
-	 */
-	private static void writeEigensToFile(String fileName, Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors) {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
-			bw.write("Number of eigenValues: " + eigenValueAndVectors._1.length + System.lineSeparator());
-			bw.write("Number of eigenVectors (rows): " + eigenValueAndVectors._2.rows() + System.lineSeparator());
-			bw.write("Number of eigenVectors (columns): " + eigenValueAndVectors._2.columns() + System.lineSeparator());
-			bw.newLine();
-			for (int i = 0; i < eigenValueAndVectors._1.length; i++) {
-				bw.write(String.valueOf(eigenValueAndVectors._1[i]) + System.lineSeparator());
-			}
-			for (int i = 0; i < eigenValueAndVectors._2.columns(); i++) {
-				bw.write("The number of size for the " + i + "th is: " + eigenValueAndVectors._2.viewColumn(i).size()
-						+ System.lineSeparator());
-				bw.write(String.valueOf(eigenValueAndVectors._2.viewColumn(i)));
-				bw.newLine();
-			}
-			bw.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			// nothing to do
-		}
-
 	}
 
 	/**

@@ -3,6 +3,10 @@ package helpful_classes;
 /**
  * The Class Constants.
  */
+/**
+ * @author vic
+ *
+ */
 public class Constants {
 
 	/**
@@ -37,10 +41,12 @@ public class Constants {
 	// CLASSIFIERS
 	public static final String NAIVE_BAYES = "naiveBayes";
 
-	/** The Constant PCA. */
 	// DIMENSIONALITY REDUCTION METHODS
+	/** The Constant PCA. */
 	public static final String PCA = "pca";
 
 	/** The Constant ZERO_R. */
 	public static final String ZERO_R = "zeroR";
+
+	public static final String EMPCA = "empca";
 }

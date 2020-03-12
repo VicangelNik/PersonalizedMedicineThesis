@@ -22,8 +22,10 @@ import java.util.logging.Logger;
 
 import org.jblas.DoubleMatrix;
 
+import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
+import scala.Tuple2;
 
 /**
  * The Class Utils.
@@ -262,6 +264,33 @@ public final class Utils {
 	public static boolean isDirEmpty(final Path directory) throws IOException {
 		try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory)) {
 			return !dirStream.iterator().hasNext();
+		}
+	}
+
+	/**
+	 * Write eigens to file.
+	 *
+	 * @param fileName             the file name
+	 * @param eigenValueAndVectors the eigen value and vectors
+	 */
+	public static void writeEigensToFile(String fileName, Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+			bw.write("Number of eigenValues: " + eigenValueAndVectors._1.length + System.lineSeparator());
+			bw.write("Number of eigenVectors (rows): " + eigenValueAndVectors._2.rows() + System.lineSeparator());
+			bw.write("Number of eigenVectors (columns): " + eigenValueAndVectors._2.columns() + System.lineSeparator());
+			bw.newLine();
+			for (int i = 0; i < eigenValueAndVectors._1.length; i++) {
+				bw.write(String.valueOf(eigenValueAndVectors._1[i]) + System.lineSeparator());
+			}
+			for (int i = 0; i < eigenValueAndVectors._2.columns(); i++) {
+				bw.write(String.valueOf(eigenValueAndVectors._2.viewColumn(i)));
+				bw.newLine();
+			}
+			bw.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// nothing to do
 		}
 	}
 }

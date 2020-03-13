@@ -14,6 +14,7 @@ import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import interfaces.DimensionalityReductionSelectionInterface;
 import scala.Tuple2;
+import smile.manifold.IsoMap;
 import utilpackage.TransformToFromWeka;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
@@ -48,6 +49,9 @@ public class DimensionalityReductionSelection implements DimensionalityReduction
 			case Constants.EMPCA: {
 				return doEmpca(dataset, options);
 			}
+			case Constants.ISOMAP: {
+				return doIsomap(dataset, options);
+			}
 			default: {
 				throw new IllegalArgumentException("Invalid selection");
 			}
@@ -57,6 +61,25 @@ public class DimensionalityReductionSelection implements DimensionalityReduction
 			logger.getLogger().log(Level.SEVERE, "DimensionalityReductionSelector in in error: {0}", e);
 		}
 		return null;
+	}
+
+	/**
+	 * Do isomap.
+	 *
+	 * @param originalDataset the original dataset
+	 * @param options         the options
+	 * @return the instances
+	 */
+	private Instances doIsomap(Instances originalDataset, String[] options) {
+		// first option should be the number of expected dimensions
+		// second option should be the k nearest neighbors
+		// third option should be whether C-Isomap or standard algorithm
+		double data[][] = TransformToFromWeka.transformWekaToIsomap(originalDataset);
+		IsoMap myIsomap = new IsoMap(data, Integer.parseInt(options[0]), Integer.parseInt(options[1]),
+				Boolean.parseBoolean(options[2]));
+		double[][] coordinates = myIsomap.getCoordinates();
+		return TransformToFromWeka.isomapToWeka(coordinates, "isomapDataset",
+				WekaUtils.getDatasetClassValues(originalDataset), "class");
 	}
 
 	/**
@@ -73,11 +96,11 @@ public class DimensionalityReductionSelection implements DimensionalityReduction
 	}
 
 	/**
-	 * Do EMPCA
-	 * 
-	 * @param originalDataset
-	 * @param options
-	 * @return
+	 * Do empca.
+	 *
+	 * @param originalDataset the original dataset
+	 * @param options         the options
+	 * @return the instances
 	 */
 	private static Instances doEmpca(Instances originalDataset, String[] options) {
 		// first option should be the number of expecting principal components

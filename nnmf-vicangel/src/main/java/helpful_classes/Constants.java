@@ -1,5 +1,6 @@
 package helpful_classes;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Constants.
  */
@@ -41,12 +42,16 @@ public class Constants {
 	// CLASSIFIERS
 	public static final String NAIVE_BAYES = "naiveBayes";
 
+	/** The Constant ZERO_R. */
+	public static final String ZERO_R = "zeroR";
+
 	// DIMENSIONALITY REDUCTION METHODS
 	/** The Constant PCA. */
 	public static final String PCA = "pca";
 
-	/** The Constant ZERO_R. */
-	public static final String ZERO_R = "zeroR";
-
+	/** The Constant EMPCA. */
 	public static final String EMPCA = "empca";
+
+	/** The Constant ISOMAP. */
+	public static final String ISOMAP = "isomap";
 }

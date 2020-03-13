@@ -2,88 +2,49 @@
 /*
  *
  */
+import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
-import org.jblas.DoubleMatrix;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import dimensionality_reduction_methods.IsoMapVic;
 import helpful_classes.Constants;
-import smile.graph.Graph;
-import utilpackage.Utils;
+import helpful_classes.NaiveBayesImplementation;
+import smile.manifold.IsoMap;
+import utilpackage.TransformToFromWeka;
+import utilpackage.WekaUtils;
+import weka.classifiers.AbstractClassifier;
+import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestIsomapTestCase.
  */
 public class TestIsomapTestCase {
 
-	/** The double array. */
-	private static double data[][];
-
-	/** The dimension. */
-	private final int dimension = 2;
-
-	/** The k nearest. */
-	private final int kNearest = 2;
-
-	/**
-	 * Clear resources.
-	 */
-	@AfterClass
-	public static void clearResources() {
-		// remove all the files of the directory but not the files in subdirectories
-		Utils.removeFiles(Constants.SRC_TEST_RESOURCES_PATH);
-	}
-
-	/**
-	 * Initialize matrix.
-	 */
-	// @Before
-	public void initializeMatrix() {
-		// initialize array
-		data = new double[400][4];
-		// set numerical parameters to the array
-		Utils.setParametersToArray(data);
-		// initialize matrixX
-		DoubleMatrix matrixX = new DoubleMatrix(data);
-		// write data with the class attribute into file
-		Utils.writeMatrixToFile(Utils.FILE_DATA_PATH, matrixX);
-	}
-
-	/**
-	 * Test isomap tet case.
-	 *
-	 * @throws IOException
-	 */
-	@Ignore
 	@Test
 	public void TestIsomapTetCase() throws IOException {
-		IsoMapVic myIsomap = new IsoMapVic(data, dimension, kNearest, false);
+		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
+		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
+		int dimensions = 10;
+		int kNearest = 5;
+		boolean cIsomap = true;
+		double data[][] = TransformToFromWeka.transformWekaToIsomap(originalDataset);
+		Assert.assertTrue("Data should not be null or empty",data!=null && data.length>0);
+		IsoMap myIsomap = new IsoMap(data, dimensions, kNearest, cIsomap);
 		double[][] coordinates = myIsomap.getCoordinates();
-		int[] index = utiltestpackage.TestUtils.readIndexForIsomapTest("src\\test\\resources\\isomapTests\\index.txt");
-		Graph graph = myIsomap.getNearestNeighborGraph();
-		Assert.assertArrayEquals(index, myIsomap.getIndex());
-		Assert.assertArrayEquals("The dataset should be the same ", data, myIsomap.getDataset());
-		Assert.assertEquals("The dimension of the manifold should be equal to 2", 2, myIsomap.getD());
-		Assert.assertEquals("The k-nearest neighbour should be equal to 2", 2, myIsomap.getK());
+		Assert.assertTrue("Isomap results should not be null or empty",coordinates!=null && coordinates.length>0);
+		Instances reData = TransformToFromWeka.isomapToWeka(coordinates, "isomapDataset", WekaUtils.getDatasetClassValues(originalDataset),
+				"class");
+		// CROSS VALIDATION
+				AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
+				new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, reData, 10,
+						new Random(1));
+			//	new NaiveBayesImplementation().classify(abstractClassifier, originalDataset);
+//		Graph graph = myIsomap.getNearestNeighborGraph();
+//		int[] indexes = myIsomap.getIndex();
+//		Assert.assertArrayEquals("The dataset should be the same ", data, myIsomap.getDataset());
+//		Assert.assertEquals("The dimension of the manifold should be equal to 2", 2, myIsomap.getD());
+//		Assert.assertEquals("The k-nearest neighbour should be equal to 2", 2, myIsomap.getK());
 	}
-
-	/**
-	 * Test C isomap tet case.
-	 */
-	@Ignore
-	@Test
-	public void TestCIsomapTetCase() {
-		IsoMapVic myIsomap = new IsoMapVic(data, dimension, kNearest, true);
-		double[][] coordinates = myIsomap.getCoordinates();
-		myIsomap.getIndex();
-		Assert.assertArrayEquals("The dataset should be the same ", data, myIsomap.getDataset());
-		Assert.assertEquals("The dimension of the manifold should be equal to 2", 2, myIsomap.getD());
-		Assert.assertEquals("The k-nearest neighbour should be equal to 2", 2, myIsomap.getK());
-	}
-
 }

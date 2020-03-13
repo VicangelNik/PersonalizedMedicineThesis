@@ -19,7 +19,7 @@ import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import helpful_classes.NaiveBayesImplementation;
 import scala.Tuple2;
-import utilpackage.TransformWekaEMPCA;
+import utilpackage.TransformToFromWeka;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
 import weka.api.library.WekaFileConverterImpl;
@@ -54,7 +54,7 @@ public class TestEMPCA {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		// INPUT TO EMPCA PART
-		List<ArrayList<Feature>> empcaInput = TransformWekaEMPCA.createEMPCAInputFromWeka(originalDataset);
+		List<ArrayList<Feature>> empcaInput = TransformToFromWeka.createEMPCAInputFromWeka(originalDataset);
 		Assert.assertTrue("The number of lists (instances) should be 335", 335 == empcaInput.size());
 		// the position 3 is chosen arbitarily.
 		Assert.assertTrue("The number of features of each instance should be 72122", 72122 == empcaInput.get(3).size());
@@ -75,7 +75,7 @@ public class TestEMPCA {
 		// zero position of each instance's feature list contains the class value. Class
 		// values are PrimaryTumor, NormalTissue. PrimaryTumor -> 0, NormalTissue-> 1
 		List<Double> classValues = empcaInput.stream().map(x -> x.get(0).getValue()).collect(Collectors.toList());
-		Instances reData = TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset", classValues);
+		Instances reData = TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset", classValues);
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns());
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
 		// CROSS VALIDATION
@@ -95,7 +95,7 @@ public class TestEMPCA {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		// INPUT TO EMPCA PART
-		List<ArrayList<Feature>> empcaInput = TransformWekaEMPCA.createEMPCAInputFromWekaV2(originalDataset);
+		List<ArrayList<Feature>> empcaInput = TransformToFromWeka.createEMPCAInputFromWekaV2(originalDataset);
 		Assert.assertTrue("The number of lists (instances) should be 72121", 72121 == empcaInput.size());
 		// the position 3 is chosen arbitarily.
 		Assert.assertTrue("The number of features of each instance should be 335", 335 == empcaInput.get(3).size());
@@ -115,7 +115,7 @@ public class TestEMPCA {
 		Utils.writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		System.out.println("finish doEig");
 		// OUTPUT TO WEKA PART
-		Instances reData = TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset",
+		Instances reData = TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset",
 				WekaUtils.getDatasetClassValues(originalDataset));
 		// here we save the new data in an arff file
 		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
@@ -165,7 +165,7 @@ public class TestEMPCA {
 				true, options);
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset);
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10,
 				new Random(1));
 	}
 

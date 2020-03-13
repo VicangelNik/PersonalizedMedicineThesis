@@ -17,14 +17,14 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 /**
- * The Class TransformWekaEMPCA.
+ * The Class TransformToFromWeka.
  */
-public final class TransformWekaEMPCA {
+public final class TransformToFromWeka {
 
 	/**
-	 * Instantiates a new transform weka EMPCA.
+	 * Instantiates a new transform to from weka.
 	 */
-	private TransformWekaEMPCA() {
+	private TransformToFromWeka() {
 		throw new IllegalArgumentException("utillity class");
 	}
 
@@ -32,8 +32,7 @@ public final class TransformWekaEMPCA {
 	 * Creates the EMPCA input from weka.
 	 *
 	 * @param originalDataset the original dataset
-	 * @return the list of instances and each instance contains a list of feature
-	 *         values.
+	 * @return the list
 	 */
 	// ---------features1....N
 	// --------------------------
@@ -78,11 +77,10 @@ public final class TransformWekaEMPCA {
 	}
 
 	/**
-	 * Creates the EMPCA input from weka.
+	 * Creates the EMPCA input from weka V 2.
 	 *
-	 * @param originalDataset
-	 * @return the list of features and each features contains a list of its
-	 *         instance values.
+	 * @param originalDataset the original dataset
+	 * @return the list
 	 */
 	// ---------Instnace1....N
 	// --------------------------
@@ -113,6 +111,7 @@ public final class TransformWekaEMPCA {
 	 *
 	 * @param eigenVectors   the eigen vectors
 	 * @param nameNewDataset the name new dataset
+	 * @param classValues    the class values
 	 * @return the instances
 	 */
 	public static Instances eigensToWeka(DoubleMatrix2D eigenVectors, String nameNewDataset, List<Double> classValues) {
@@ -167,11 +166,10 @@ public final class TransformWekaEMPCA {
 	}
 
 	/**
-	 * Converts class double values to Nominal. 0 maps to Primary tumor while 1 maps
-	 * to Normal tissue.
+	 * Convert class double values to nominal.
 	 *
-	 * @param classValues
-	 * @return
+	 * @param classValues the class values
+	 * @return the list
 	 */
 	private static List<String> convertClassDoubleValuesToNominal(List<Double> classValues) {
 		List<String> attributeValues = new ArrayList<>();
@@ -185,4 +183,57 @@ public final class TransformWekaEMPCA {
 		return attributeValues;
 	}
 
+	/**
+	 * 
+	 * @param originalDataset
+	 * @return
+	 */
+	public static double[][] transformWekaToIsomap(Instances originalDataset) {
+		double data[][] = new double[originalDataset.numInstances()][originalDataset.numAttributes() - 1];
+		for (int i = 0; i < originalDataset.numInstances(); i++) {
+			Instance current = originalDataset.get(i);
+			int j = 0;
+			Enumeration<Attribute> attEnumeration = originalDataset.enumerateAttributes();
+			while (attEnumeration.hasMoreElements()) {
+				Attribute attribute = attEnumeration.nextElement();
+				data[i][j] = current.value(attribute.index());
+				j++;
+			}
+		}
+		return data;
+	}
+
+	public static Instances isomapToWeka(double[][] coordinates, String nameNewDataset, List<Double> classValues,
+			String className) {
+		// We can not set values to numeric attributes directly!!!Thus we construct new
+		// data set with its attributes and no values. coordinates[0].length represent
+		// the number of dimensions and coordinates.length the number of instance. We
+		// assume that coordinates[0] is not null or empty
+		ArrayList<Attribute> attInfo = new ArrayList<>();
+		// set attributes to data set
+		for (int i = 0; i < coordinates[0].length; i++) {
+			attInfo.add(new Attribute("dimension" + i));
+		}
+		// add class
+		attInfo.add(new Attribute(className, Arrays.asList(Constants.PRIMARY_TUMOR, Constants.MORMAL_TISSUE)));
+		Instances instances = new Instances(nameNewDataset, attInfo, coordinates.length);
+		// set instances to data set +1 is for the class attribute
+		for (int i = 0; i < coordinates.length; i++) {
+			instances.add(new DenseInstance(coordinates[0].length + 1));
+		}
+		List<String> attributeClassValues = convertClassDoubleValuesToNominal(classValues);
+		// fill data set with values
+		for (int i = 0; i < coordinates.length; i++) {
+			for (int j = 0; j < coordinates[0].length; j++) {
+				instances.get(i).setValue(j, coordinates[i][j]);
+			}
+		}
+		// class index will be the number of dimensions + 1 (counting from 0)
+		instances.setClassIndex(coordinates[0].length);
+		// fill the class data
+		for (int j = 0; j < coordinates.length; j++) {
+			instances.get(j).setValue(instances.classIndex(), attributeClassValues.get(j));
+		}
+		return instances;
+	}
 }

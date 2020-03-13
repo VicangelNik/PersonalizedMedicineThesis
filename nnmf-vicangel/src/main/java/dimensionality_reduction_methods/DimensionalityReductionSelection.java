@@ -14,7 +14,7 @@ import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import interfaces.DimensionalityReductionSelectionInterface;
 import scala.Tuple2;
-import utilpackage.TransformWekaEMPCA;
+import utilpackage.TransformToFromWeka;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
 import weka.core.Instances;
@@ -82,7 +82,7 @@ public class DimensionalityReductionSelection implements DimensionalityReduction
 	private static Instances doEmpca(Instances originalDataset, String[] options) {
 		// first option should be the number of expecting principal components
 		// second option should be the desirable number of em iterations
-		List<ArrayList<Feature>> empcaInput = TransformWekaEMPCA.createEMPCAInputFromWekaV2(originalDataset);
+		List<ArrayList<Feature>> empcaInput = TransformToFromWeka.createEMPCAInputFromWekaV2(originalDataset);
 		scala.collection.immutable.List<Tuple2<Object, Object>>[] convertedToScalaList = JavaPCAInputToScala
 				.convert((ArrayList<ArrayList<Feature>>) empcaInput);
 		// the second parameter is the number of the principal components we want as
@@ -92,7 +92,7 @@ public class DimensionalityReductionSelection implements DimensionalityReduction
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
 		Utils.writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		// OUTPUT TO WEKA PART
-		return TransformWekaEMPCA.eigensToWeka(eigenValueAndVectors._2, "empcaDataset",
+		return TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset",
 				WekaUtils.getDatasetClassValues(originalDataset));
 	}
 

@@ -109,5 +109,11 @@
 			<artifactId>EMPCA</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<!-- multiLayerPerceptrons -->
+		<dependency>
+			<groupId>nz.ac.waikato.cms.weka</groupId>
+			<artifactId>multiLayerPerceptrons</artifactId>
+			<version>1.0.10</version>
+		</dependency>
 	</dependencies>
 </project>

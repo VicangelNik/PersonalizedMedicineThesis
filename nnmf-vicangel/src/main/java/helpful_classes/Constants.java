@@ -1,6 +1,5 @@
 package helpful_classes;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Constants.
  */
@@ -54,4 +53,10 @@ public class Constants {
 
 	/** The Constant ISOMAP. */
 	public static final String ISOMAP = "isomap";
+
+	/** The Constant LLE. */
+	public static final String LLE = "lle";
+
+	/** The Constant AUTOENCODER_WEKA. */
+	public static final String AUTOENCODER_WEKA = "mlpAutoencoder";
 }

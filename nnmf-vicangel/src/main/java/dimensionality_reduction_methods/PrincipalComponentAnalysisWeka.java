@@ -6,7 +6,6 @@ import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.PrincipalComponents;
 
-// TODO: Auto-generated Javadoc
 // http://weka.sourceforge.net/doc.dev/weka/filters/unsupervised/attribute/PrincipalComponents.html
 /**
  * The Class PrincipalComponentAnalysisWeka.

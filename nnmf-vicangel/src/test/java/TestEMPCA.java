@@ -161,12 +161,11 @@ public class TestEMPCA {
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		String[] options = { "20", "20" };
 		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
-		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector("empca", originalDataset,
-				true, options);
+		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.EMPCA,
+				originalDataset, true, options);
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset);
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10,
-				new Random(1));
+		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
 	}
 
 	/**

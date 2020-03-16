@@ -2,7 +2,6 @@ package abstract_classes;
 
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class DimensionalityReduction.
  */

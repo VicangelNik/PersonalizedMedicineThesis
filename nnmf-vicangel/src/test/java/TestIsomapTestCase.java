@@ -37,12 +37,12 @@ public class TestIsomapTestCase {
 		int dimensions = 10;
 		int kNearest = 5;
 		boolean cIsomap = false;
-		double data[][] = TransformToFromWeka.transformWekaToIsomap(originalDataset);
+		double data[][] = TransformToFromWeka.transformWekaToManifolds(originalDataset);
 		Assert.assertTrue("Data should not be null or empty", data != null && data.length > 0);
 		IsoMap myIsomap = new IsoMap(data, dimensions, kNearest, cIsomap);
 		double[][] coordinates = myIsomap.getCoordinates();
 		Assert.assertTrue("Isomap results should not be null or empty", coordinates != null && coordinates.length > 0);
-		Instances reData = TransformToFromWeka.isomapToWeka(coordinates, "isomapDataset",
+		Instances reData = TransformToFromWeka.manifoldsToWeka(coordinates, "isomapDataset",
 				WekaUtils.getDatasetClassValues(originalDataset), "class");
 		// here we save the new data in an arff file
 		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
@@ -55,7 +55,6 @@ public class TestIsomapTestCase {
 		int[] indexes = myIsomap.getIndex();
 		Assert.assertTrue("Graph should not be empty", !graph.getEdges().isEmpty());
 		Assert.assertTrue("Original indices should exist.", indexes.length > 0);
-
 	}
 
 	/**
@@ -89,8 +88,8 @@ public class TestIsomapTestCase {
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		String[] options = { "10", "5", "false" };
 		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
-		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector("isomap", originalDataset,
-				true, options);
+		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.ISOMAP,
+				originalDataset, true, options);
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset);
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));

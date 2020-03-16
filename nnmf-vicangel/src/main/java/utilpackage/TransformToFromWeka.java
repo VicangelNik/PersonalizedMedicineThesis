@@ -184,11 +184,12 @@ public final class TransformToFromWeka {
 	}
 
 	/**
+	 * Transfer data from weka to Isomap or LLE.
 	 * 
 	 * @param originalDataset
 	 * @return
 	 */
-	public static double[][] transformWekaToIsomap(Instances originalDataset) {
+	public static double[][] transformWekaToManifolds(Instances originalDataset) {
 		double data[][] = new double[originalDataset.numInstances()][originalDataset.numAttributes() - 1];
 		for (int i = 0; i < originalDataset.numInstances(); i++) {
 			Instance current = originalDataset.get(i);
@@ -203,7 +204,16 @@ public final class TransformToFromWeka {
 		return data;
 	}
 
-	public static Instances isomapToWeka(double[][] coordinates, String nameNewDataset, List<Double> classValues,
+	/**
+	 * Transfer data from LLE or Isomap algorithms to WEKA.
+	 * 
+	 * @param coordinates
+	 * @param nameNewDataset
+	 * @param classValues
+	 * @param className
+	 * @return
+	 */
+	public static Instances manifoldsToWeka(double[][] coordinates, String nameNewDataset, List<Double> classValues,
 			String className) {
 		// We can not set values to numeric attributes directly!!!Thus we construct new
 		// data set with its attributes and no values. coordinates[0].length represent

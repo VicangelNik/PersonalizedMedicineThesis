@@ -5,47 +5,6 @@
 	<groupId>com.nikiforos.non.negative.matrix.factorization</groupId>
 	<artifactId>nnmf-vicangel</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<build>
-		<pluginManagement>
-			<plugins>
-				<!-- maven-compiler-plugin which allows you to set the Java version for 
-					your project. -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.6.0</version>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
-						<!-- Resolve error: unmappable character for encoding Cp1253 -->
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<!-- This plugin compiles Scala files -->
-				<plugin>
-					<groupId>net.alchim31.maven</groupId>
-					<artifactId>scala-maven-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>scala-compile-first</id>
-							<phase>process-resources</phase>
-							<goals>
-								<goal>add-source</goal>
-								<goal>compile</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>scala-test-compile</id>
-							<phase>process-test-resources</phase>
-							<goals>
-								<goal>testCompile</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
 	<dependencies>
 		<!-- For junit test -->
 		<dependency>
@@ -115,5 +74,88 @@
 			<artifactId>multiLayerPerceptrons</artifactId>
 			<version>1.0.10</version>
 		</dependency>
+		<dependency>
+			<groupId>nz.ac.waikato.cms.weka</groupId>
+			<artifactId>wekaDeeplearning4j</artifactId>
+			<version>1.5.14</version>
+		</dependency>
+		<!-- smile-netlib module is not available in the classpath. Pure Java matrix 
+			library will be employed. Due to issues with mkl_rt and native location it 
+			will not be used for now. -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.github.haifengl</groupId> -->
+		<!-- <artifactId>smile-netlib</artifactId> -->
+		<!-- <version>2.2.2</version> -->
+		<!-- </dependency> -->
 	</dependencies>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- maven-compiler-plugin which allows you to set the Java version for 
+					your project. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.6.0</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+						<!-- Resolve error: unmappable character for encoding Cp1253 -->
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+				<!-- This plugin compiles Scala files -->
+				<plugin>
+					<groupId>net.alchim31.maven</groupId>
+					<artifactId>scala-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>scala-compile-first</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>add-source</goal>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>scala-test-compile</id>
+							<phase>process-test-resources</phase>
+							<goals>
+								<goal>testCompile</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<!-- unpack dependency to target for setting in build path it may be useful 
+			in the future -->
+		<!-- <plugins> -->
+		<!-- <plugin> -->
+		<!-- <groupId>org.apache.maven.plugins</groupId> -->
+		<!-- <artifactId>maven-dependency-plugin</artifactId> -->
+		<!-- <executions> -->
+		<!-- <execution> -->
+		<!-- <id>unpack</id> -->
+		<!-- <phase>install</phase> -->
+		<!-- <goals> -->
+		<!-- <goal>unpack</goal> -->
+		<!-- </goals> -->
+		<!-- <configuration> -->
+		<!-- <artifactItems> -->
+		<!-- <artifactItem> -->
+		<!-- <groupId>com.github.haifengl</groupId> -->
+		<!-- <artifactId>smile-netlib</artifactId> -->
+		<!-- <version>2.2.2</version> -->
+		<!-- <type>jar</type> -->
+		<!-- <overWrite>false</overWrite> -->
+		<!-- <outputDirectory>${project.build.directory}</outputDirectory> -->
+		<!-- </artifactItem> -->
+		<!-- </artifactItems> -->
+		<!-- </configuration> -->
+		<!-- </execution> -->
+		<!-- </executions> -->
+		<!-- </plugin> -->
+		<!-- </plugins> -->
+	</build>
 </project>

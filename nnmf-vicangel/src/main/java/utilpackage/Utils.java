@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -291,6 +292,30 @@ public final class Utils {
 			e.printStackTrace();
 		} finally {
 			// nothing to do
+		}
+	}
+
+	/**
+	 * Adds temporarily an additional path to java.library.path. It may be useful in
+	 * the future.
+	 * 
+	 * @param tmpDirName
+	 */
+	@SuppressWarnings("unused")
+	private static void addLibsToJavaLibraryPath(final String tmpDirName) {
+		try {
+			String JAVA_LIBRARY_PATH = "java.library.path";
+			String SYS_PATHS = "sys_paths";
+			String paths = System.getProperty(JAVA_LIBRARY_PATH);
+			System.setProperty(JAVA_LIBRARY_PATH, paths + ";" + tmpDirName);
+			/* Optionally add these two lines */
+			System.setProperty("jna.library.path", tmpDirName);
+			System.setProperty("jni.library.path", tmpDirName);
+			final Field fieldSysPath = ClassLoader.class.getDeclaredField(SYS_PATHS);
+			fieldSysPath.setAccessible(true);
+			fieldSysPath.set(null, null);
+		} catch (IllegalAccessException | NoSuchFieldException e) {
+			e.printStackTrace();
 		}
 	}
 }

@@ -37,13 +37,10 @@ public class TestLLE {
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		double data[][] = TransformToFromWeka.transformWekaToManifolds(originalDataset);
 		Assert.assertTrue("Data should not be null or empty", data != null && data.length > 0);
-
-		for (int dimensions = 2; dimensions < 201; dimensions++) {
-			for (int kNearest = 1; kNearest < 500; kNearest++) {
+		for (int dimensions = 10; dimensions < 201; dimensions += 10) {
+			for (int kNearest = 5; kNearest < 500; kNearest += 5) {
 				try {
 					LLE lle = new LLE(data, dimensions, kNearest);
-					System.out.println(dimensions + "   " + kNearest);
-
 					double[][] coordinates = lle.getCoordinates();
 					Assert.assertTrue("LLE results should not be null or empty",
 							coordinates != null && coordinates.length > 0);
@@ -51,18 +48,19 @@ public class TestLLE {
 							WekaUtils.getDatasetClassValues(originalDataset), "class");
 					// here we save the new data in an arff file
 					WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
-					wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + "lleData.arff");
+					wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + "lle\\" + "k_"
+							+ kNearest + "d_" + dimensions + "lleData.arff");
 					// CROSS VALIDATION
-					AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
-					new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, reData, 10,
-							new Random(1));
+//					AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
+//					new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, reData, 10,
+//							new Random(1));
 					// new NaiveBayesImplementation().classify(abstractClassifier, originalDataset);
 					Graph graph = lle.getNearestNeighborGraph();
 					int[] indexes = lle.getIndex();
 					Assert.assertTrue("Graph should not be empty", !graph.getEdges().isEmpty());
 					Assert.assertTrue("Original indices should exist.", indexes.length > 0);
 				} catch (Exception e) {
-					e.printStackTrace();
+					// e.printStackTrace();
 				}
 			}
 		}

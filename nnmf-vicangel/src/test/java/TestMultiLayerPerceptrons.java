@@ -1,7 +1,4 @@
 
-/*
- *
- */
 import java.io.File;
 
 import org.junit.Assert;
@@ -14,17 +11,17 @@ import weka.api.library.WekaFileConverterImpl;
 import weka.core.Instances;
 
 /**
- * The Class TestLLETestCase.
+ * The Class TestMultiLayerPerceptrons.
  */
 public class TestMultiLayerPerceptrons {
 
 	/**
-	 * Test Autoencoder case.
+	 * Test Autoencoder Weka case.
 	 *
 	 * @throws Exception the exception
 	 */
 	@Test
-	public void TestAutoencoderTetCase() throws Exception {
+	public void TestAutoencoderWekaTetCase() throws Exception {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		// DIMENSIONALITY REDUCTION

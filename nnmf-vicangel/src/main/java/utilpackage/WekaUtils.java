@@ -33,7 +33,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import com.google.common.base.Strings;
 
-import helpful_classes.ClassifierSelectionImpl;
+import classifiers.ClassifierChooser;
 import helpful_classes.MultiKey;
 import interfaces.ClassifierSelection;
 import weka.classifiers.AbstractClassifier;
@@ -340,9 +340,9 @@ public final class WekaUtils {
 	 * @param loader         the loader
 	 * @return the classifier
 	 */
-	public static AbstractClassifier getClassifier(String classifierName, Instances instances) {
-		ClassifierSelection classifierSelection = new ClassifierSelectionImpl();
-		return classifierSelection.selectClassifier(classifierName, instances);
+	public static AbstractClassifier getClassifier(String classifierName, Instances instances, String[] options) {
+		ClassifierSelection classifierSelection = new ClassifierChooser();
+		return classifierSelection.selectClassifier(classifierName, instances, options);
 	}
 
 	/**

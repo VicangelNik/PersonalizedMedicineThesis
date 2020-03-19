@@ -1,5 +1,6 @@
 package helpful_classes;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Constants.
  */
@@ -43,6 +44,9 @@ public class Constants {
 
 	/** The Constant ZERO_R. */
 	public static final String ZERO_R = "zeroR";
+
+	/** The Constant JRIP. */
+	public static final String JRIP = "jRip";
 
 	// DIMENSIONALITY REDUCTION METHODS
 	/** The Constant PCA. */

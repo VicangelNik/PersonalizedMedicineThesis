@@ -9,9 +9,9 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
+import classifiers.NaiveBayesImplementation;
 import dimensionality_reduction_methods.DimensionalityReductionSelection;
 import helpful_classes.Constants;
-import helpful_classes.NaiveBayesImplementation;
 import smile.graph.Graph;
 import smile.manifold.LLE;
 import utilpackage.TransformToFromWeka;
@@ -77,7 +77,8 @@ public class TestLLE {
 		File lleDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "lleData.arff");
 		Instances lleDataset = WekaUtils.getOriginalData(lleDataFile, "class");
 		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, lleDataset);
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, lleDataset,
+				new String[] {});
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, lleDataset, 10, new Random(1));
 	}
 
@@ -98,7 +99,8 @@ public class TestLLE {
 		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.LLE,
 				originalDataset, true, options);
 		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset);
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
+				new String[] {});
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
 	}
 }

@@ -1,18 +1,21 @@
-package helpful_classes;
+package classifiers;
 
 import java.util.logging.Level;
 
+import helpful_classes.AppLogger;
+import helpful_classes.Constants;
+import interfaces.ClassifierSelection;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.bayes.NaiveBayesUpdateable;
 import weka.classifiers.evaluation.Evaluation;
+import weka.classifiers.rules.JRip;
 import weka.classifiers.rules.ZeroR;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ClassifierSelectionImpl.
  */
-public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
+public class ClassifierChooser implements ClassifierSelection {
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();
@@ -24,7 +27,7 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 	 * weka.core.converters.AbstractFileLoader)
 	 */
 	@Override
-	public AbstractClassifier selectClassifier(String selection, Instances instances) {
+	public AbstractClassifier selectClassifier(String selection, Instances instances, String[] options) {
 		AbstractClassifier abstractClassifier = null;
 		switch (selection) {
 		case Constants.NAIVE_BAYES: {
@@ -35,18 +38,22 @@ public class ClassifierSelectionImpl implements interfaces.ClassifierSelection {
 			abstractClassifier = new ZeroR();
 			break;
 		}
+		case Constants.JRIP: {
+			abstractClassifier = new JRip();
+			break;
+		}
 		default: {
 			throw new IllegalArgumentException("Select a classifier");
 		}
 		}
 		try {
+			abstractClassifier.setOptions(options);
 			abstractClassifier.buildClassifier(instances);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 		abstractClassifier.setDebug(true);
-
 		System.out.println(abstractClassifier.getCapabilities());
 		logger.getLogger().log(Level.INFO, "{0}", abstractClassifier.getCapabilities());
 		// logger.getLogger().log(Level.INFO, abstractClassifier.getRevision());

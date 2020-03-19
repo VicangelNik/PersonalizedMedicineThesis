@@ -12,8 +12,9 @@ public interface ClassifierSelection {
 	 * Select classifier.
 	 *
 	 * @param selection the selection
-	 * @param loader    the loader
+	 * @param instances the instances
+	 * @param options   the options
 	 * @return the abstract classifier
 	 */
-	public AbstractClassifier selectClassifier(String selection, Instances instances);
+	public AbstractClassifier selectClassifier(String selection, Instances instances, String[] options);
 }

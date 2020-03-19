@@ -7,10 +7,10 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
+import classifiers.NaiveBayesImplementation;
+import classifiers.ZeroRImplementation;
 import dimensionality_reduction_methods.DimensionalityReductionSelection;
 import helpful_classes.Constants;
-import helpful_classes.NaiveBayesImplementation;
-import helpful_classes.ZeroRImplementation;
 import utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
@@ -40,7 +40,8 @@ public class TestClassificationTestCase {
 		Assert.assertTrue("The file should exists", level2File.exists());
 		Assert.assertTrue("The file should be readable.", level2File.canRead());
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, originalDataset);
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, originalDataset,
+				new String[] {});
 		new NaiveBayesImplementation().classify(abstractClassifier, originalDataset);
 	}
 
@@ -53,7 +54,8 @@ public class TestClassificationTestCase {
 	public void testNaiveBayesCrossValidationEvaluation() throws IOException {
 		File level2File = new File(datasetFileName);
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, originalDataset);
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, originalDataset,
+				new String[] {});
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 				new Random(1));
 	}
@@ -67,13 +69,14 @@ public class TestClassificationTestCase {
 	public void testZeroR() throws IOException {
 		File level2File = new File(datasetFileName);
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.ZERO_R, originalDataset);
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.ZERO_R, originalDataset,
+				new String[] {});
 		new ZeroRImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10, new Random(1));
 	}
 
 	/**
 	 * Test naive bayes cross validation evaluation with dimensionality reduction.
-	 * 
+	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 
@@ -89,7 +92,8 @@ public class TestClassificationTestCase {
 			Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector("pca", originalDataset,
 					true, options);
 			// CROSS VALIDATION
-			AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset);
+			AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
+					new String[] {});
 			new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 					new Random(1));
 		} catch (Exception e) {

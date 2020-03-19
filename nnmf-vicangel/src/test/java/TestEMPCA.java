@@ -14,10 +14,11 @@ import org.scify.EMPCA.Feature;
 import org.scify.EMPCA.JavaPCAInputToScala;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
+import classifiers.JRipWeka;
+import classifiers.NaiveBayesImplementation;
 import dimensionality_reduction_methods.DimensionalityReductionSelection;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
-import helpful_classes.NaiveBayesImplementation;
 import scala.Tuple2;
 import utilpackage.TransformToFromWeka;
 import utilpackage.Utils;
@@ -79,7 +80,7 @@ public class TestEMPCA {
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns());
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
 		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 				new Random(1));
 	}
@@ -87,7 +88,7 @@ public class TestEMPCA {
 	/**
 	 * Test EMPCA calculation, prints eigenvalues and eigenvectors to log, saves new
 	 * low dimensional data to arff file and does a simple classification.
-	 * 
+	 *
 	 * @throws IOException
 	 */
 	@Test
@@ -125,32 +126,34 @@ public class TestEMPCA {
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns() + 1);
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
 		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 				new Random(1));
 	}
 
 	/**
 	 * Test EMPCA loading the already lowered dimension data.
-	 * 
+	 *
 	 * @throws IOException
 	 */
 	@Test
 	public void testEmpcaData() throws IOException {
 		// GET DATA
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		File empcaDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "empcaData.arff");
-		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		Instances empcaDataset = WekaUtils.getOriginalData(empcaDataFile, "class");
 		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, empcaDataset);
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
-				new Random(1));
+		// NAIVE BAYES
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, empcaDataset,
+				new String[] {});
+		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
+		// JRIP
+		abstractClassifier = WekaUtils.getClassifier(Constants.JRIP, empcaDataset, new String[] {});
+		new JRipWeka().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
 	}
 
 	/**
 	 * Same as testEMPCA but it is called from DimensionalityReductionSelector
-	 * 
+	 *
 	 * @throws IOException
 	 */
 	@Test
@@ -164,7 +167,8 @@ public class TestEMPCA {
 		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.EMPCA,
 				originalDataset, true, options);
 		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset);
+		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
+				new String[] {});
 		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
 	}
 

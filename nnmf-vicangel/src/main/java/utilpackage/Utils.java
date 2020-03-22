@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package utilpackage;
 
@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -223,7 +224,7 @@ public final class Utils {
 	/**
 	 * Instantiate the list of lists. THe lists will be as much as the listSize
 	 * parameter indicates.
-	 * 
+	 *
 	 * @param listSize
 	 * @return
 	 */
@@ -237,7 +238,7 @@ public final class Utils {
 
 	/**
 	 * Removes all files in a directory but no subdirectories and the files in them.
-	 * 
+	 *
 	 * @param pathOfFiles
 	 */
 	public static void removeFiles(String pathOfFiles) {
@@ -257,7 +258,7 @@ public final class Utils {
 
 	/**
 	 * Checks whether directory is empty.
-	 * 
+	 *
 	 * @param directory
 	 * @return
 	 * @throws IOException
@@ -298,7 +299,7 @@ public final class Utils {
 	/**
 	 * Adds temporarily an additional path to java.library.path. It may be useful in
 	 * the future.
-	 * 
+	 *
 	 * @param tmpDirName
 	 */
 	@SuppressWarnings("unused")
@@ -316,6 +317,36 @@ public final class Utils {
 			fieldSysPath.set(null, null);
 		} catch (IllegalAccessException | NoSuchFieldException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 *
+	 * @param startTime
+	 * @param endTime
+	 */
+	public static void printExecutionTime(long startTime, long endTime) {
+		long timeNanoSecs = endTime - startTime;
+		long timeMilliSecs = TimeUnit.NANOSECONDS.toMillis(timeNanoSecs);
+		long timeSecs = TimeUnit.NANOSECONDS.toSeconds(timeNanoSecs);
+		long timeMin = TimeUnit.NANOSECONDS.toMinutes(timeNanoSecs);
+		long timeHour = TimeUnit.NANOSECONDS.toHours(timeNanoSecs);
+
+		System.out.print("\nExecution Time: ");
+		if (timeHour > 0) {
+			System.out.print(timeHour + " Hours, ");
+		}
+		if (timeMin > 0) {
+			System.out.print(timeMin % 60 + " Minutes, ");
+		}
+		if (timeSecs > 0) {
+			System.out.print(timeSecs % 60 + " Seconds, ");
+		}
+		if (timeMilliSecs > 0) {
+			System.out.print(timeMilliSecs % 1E+3 + " MicroSeconds, ");
+		}
+		if (timeNanoSecs > 0) {
+			System.out.print(timeNanoSecs % 1E+6 + " NanoSeconds");
 		}
 	}
 }

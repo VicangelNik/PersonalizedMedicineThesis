@@ -95,6 +95,7 @@ public class TestEMPCA {
 	public void testEMPCA() throws IOException {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
+		int nPCs = 1010;
 		// INPUT TO EMPCA PART
 		List<ArrayList<Feature>> empcaInput = TransformToFromWeka.createEMPCAInputFromWekaV2(originalDataset);
 		Assert.assertTrue("The number of lists (instances) should be 72121", 72121 == empcaInput.size());
@@ -109,7 +110,7 @@ public class TestEMPCA {
 		// DO EMPCA PART
 		// the second parameter is the number of the principal components we want as
 		// result. Due to a hack it will return always minus 10 from the expected.
-		EMPCA empca = new EMPCA(convertedToScalaList, 20);
+		EMPCA empca = new EMPCA(convertedToScalaList, nPCs);
 		DoubleMatrix2D c = empca.performEM(20);
 		System.out.println("finish perform em");
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
@@ -120,7 +121,7 @@ public class TestEMPCA {
 				WekaUtils.getDatasetClassValues(originalDataset));
 		// here we save the new data in an arff file
 		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
-		wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + "empcaData.arff");
+		wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + (nPCs - 10) + "empcaData.arff");
 		// eigenValueAndVectors._2.columns() + 1 be the new data set has also the class
 		// attribute.
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns() + 1);
@@ -162,14 +163,19 @@ public class TestEMPCA {
 		// second option should be the desirable number of em iterations
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
-		String[] options = { "20", "20" };
+		// number of principal components, the result due to hack will be minus 10
+		String nPCs = "1010";
+		String[] options = { nPCs, "20" };
+		// Get current time
+		long start = System.nanoTime();
 		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
 		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.EMPCA,
 				originalDataset, true, options);
-		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
-				new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
+		Utils.printExecutionTime(start, System.nanoTime());
+		// here we save the new data in an arff file
+		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		wekaFileConverterImpl.arffSaver(dataset,
+				Constants.SRC_MAIN_RESOURCES_PATH + (Integer.parseInt(nPCs) - 10) + "empcaData.arff");
 	}
 
 	/**

@@ -91,9 +91,8 @@ public class TestIsomapTestCase {
 		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
 		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.ISOMAP,
 				originalDataset, true, options);
-		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
-				new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
+		// here we save the new data in an arff file
+		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		wekaFileConverterImpl.arffSaver(dataset, Constants.SRC_MAIN_RESOURCES_PATH + "isomapData.arff");
 	}
 }

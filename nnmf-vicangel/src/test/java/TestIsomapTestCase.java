@@ -15,6 +15,7 @@ import helpful_classes.Constants;
 import smile.graph.Graph;
 import smile.manifold.IsoMap;
 import utilpackage.TransformToFromWeka;
+import utilpackage.Utils;
 import utilpackage.WekaUtils;
 import weka.api.library.WekaFileConverterImpl;
 import weka.classifiers.AbstractClassifier;
@@ -87,12 +88,23 @@ public class TestIsomapTestCase {
 		// third option should be whether C-Isomap or standard algorithm
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
-		String[] options = { "10", "5", "false" };
+		String nDimensions = "20";
+		Double value = Math.pow(originalDataset.numAttributes() / 2, 0.5);
+		String ruleOfThumb = String.valueOf(value.intValue());
+		String[] kArray = { "5", "10", "25", "100", ruleOfThumb, "250" };
 		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
-		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.ISOMAP,
-				originalDataset, true, options);
-		// here we save the new data in an arff file
-		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
-		wekaFileConverterImpl.arffSaver(dataset, Constants.SRC_MAIN_RESOURCES_PATH + "isomapData.arff");
+		// Get current time
+		for (String k : kArray) {
+			String[] options = { nDimensions, k, "false" };
+			System.out.println("Execution for:" + nDimensions + " dimensions with" + k + "k nearest neighbours");
+			long start = System.nanoTime();
+			Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.ISOMAP,
+					originalDataset, true, options);
+			Utils.printExecutionTime(start, System.nanoTime());
+			// here we save the new data in an arff file
+			WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+			wekaFileConverterImpl.arffSaver(dataset,
+					Constants.SRC_MAIN_RESOURCES_PATH + nDimensions + "_" + k + "_" + "isomapData.arff");
+		}
 	}
 }

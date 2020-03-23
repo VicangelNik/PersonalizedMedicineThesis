@@ -4,7 +4,7 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
-import dimensionality_reduction_methods.DimensionalityReductionSelection;
+import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.Constants;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
@@ -27,7 +27,7 @@ public class TestMultiLayerPerceptrons {
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		String cores = String.valueOf(Runtime.getRuntime().availableProcessors());
 		// DIMENSIONALITY REDUCTION
-		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
+		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
 		String[] options = weka.core.Utils
 				.splitOptions("-N 1 -L 0.01 -O 1.0E-6 -G -P " + cores + " -E " + cores + " -S 1 -seed 1");
 		// Get current time

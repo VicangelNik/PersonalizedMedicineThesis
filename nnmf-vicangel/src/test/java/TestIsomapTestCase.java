@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import classifiers.NaiveBayesImplementation;
-import dimensionality_reduction_methods.DimensionalityReductionSelection;
+import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.Constants;
 import smile.graph.Graph;
 import smile.manifold.IsoMap;
@@ -92,7 +92,7 @@ public class TestIsomapTestCase {
 		Double value = Math.pow(originalDataset.numAttributes() / 2, 0.5);
 		String ruleOfThumb = String.valueOf(value.intValue());
 		String[] kArray = { "5", "10", "25", "100", ruleOfThumb, "250" };
-		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
+		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
 		// Get current time
 		for (String k : kArray) {
 			String[] options = { nDimensions, k, "false" };

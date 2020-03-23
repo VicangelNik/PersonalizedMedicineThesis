@@ -16,7 +16,7 @@ import org.scify.EMPCA.JavaPCAInputToScala;
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import classifiers.JRipWeka;
 import classifiers.NaiveBayesImplementation;
-import dimensionality_reduction_methods.DimensionalityReductionSelection;
+import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import scala.Tuple2;
@@ -168,7 +168,7 @@ public class TestEMPCA {
 		String[] options = { nPCs, "20" };
 		// Get current time
 		long start = System.nanoTime();
-		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
+		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
 		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.EMPCA,
 				originalDataset, true, options);
 		Utils.printExecutionTime(start, System.nanoTime());

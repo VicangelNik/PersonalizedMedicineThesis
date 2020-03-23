@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import classifiers.NaiveBayesImplementation;
 import classifiers.ZeroRImplementation;
-import dimensionality_reduction_methods.DimensionalityReductionSelection;
+import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.Constants;
 import utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
@@ -85,7 +85,7 @@ public class TestClassificationTestCase {
 		File level2File = new File(datasetFileName);
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
 		// DIMENSIONALITY REDUCTION
-		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
+		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
 		try {
 			// http://weka.sourceforge.net/doc.dev/weka/filters/unsupervised/attribute/PrincipalComponents.html
 			String[] options = weka.core.Utils.splitOptions("-R 0.95 -A 5 -M -1");

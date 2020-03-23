@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import classifiers.NaiveBayesImplementation;
-import dimensionality_reduction_methods.DimensionalityReductionSelection;
+import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.Constants;
 import smile.graph.Graph;
 import smile.manifold.LLE;
@@ -95,7 +95,7 @@ public class TestLLE {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		String[] options = { "10", "5" };
-		DimensionalityReductionSelection dimensionalityReductionSelection = new DimensionalityReductionSelection();
+		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
 		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.LLE,
 				originalDataset, true, options);
 		// CROSS VALIDATION

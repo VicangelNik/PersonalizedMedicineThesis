@@ -12,7 +12,7 @@ import abstract_classes.DimensionalityReduction;
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
-import interfaces.DimensionalityReductionSelectionInterface;
+import interfaces.DimensionalityReductionSelection;
 import scala.Tuple2;
 import smile.manifold.IsoMap;
 import smile.manifold.LLE;
@@ -24,7 +24,7 @@ import weka.core.Instances;
 /**
  * The Class DimensionalityReductionSelection.
  */
-public class DimensionalityReductionSelection implements DimensionalityReductionSelectionInterface {
+public class DimensionalityReductionChooser implements DimensionalityReductionSelection {
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();

@@ -38,8 +38,8 @@ public class Constants {
 	/** The Constant PRIMARY_TUMOR. */
 	public static final String PRIMARY_TUMOR = "PrimaryTumor";
 
-	/** The Constant NAIVE_BAYES. */
 	// CLASSIFIERS
+	/** The Constant NAIVE_BAYES. */
 	public static final String NAIVE_BAYES = "naiveBayes";
 
 	/** The Constant ZERO_R. */
@@ -47,6 +47,12 @@ public class Constants {
 
 	/** The Constant JRIP. */
 	public static final String JRIP = "jRip";
+
+	/** The Constant PART. */
+	public static final String PART = "part";
+
+	/** The Constant IBK. */
+	public static final String IBK = "ibk";
 
 	// DIMENSIONALITY REDUCTION METHODS
 	/** The Constant PCA. */
@@ -63,4 +69,5 @@ public class Constants {
 
 	/** The Constant AUTOENCODER_WEKA. */
 	public static final String AUTOENCODER_WEKA = "mlpAutoencoder";
+
 }

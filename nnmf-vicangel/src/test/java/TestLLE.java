@@ -96,7 +96,7 @@ public class TestLLE {
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		String[] options = { "10", "5" };
 		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
-		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.LLE,
+		Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.LLE,
 				originalDataset, true, options);
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,

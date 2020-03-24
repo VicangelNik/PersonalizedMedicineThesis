@@ -98,7 +98,7 @@ public class TestIsomapTestCase {
 			String[] options = { nDimensions, k, "false" };
 			System.out.println("Execution for:" + nDimensions + " dimensions with" + k + "k nearest neighbours");
 			long start = System.nanoTime();
-			Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.ISOMAP,
+			Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.ISOMAP,
 					originalDataset, true, options);
 			Utils.printExecutionTime(start, System.nanoTime());
 			// here we save the new data in an arff file

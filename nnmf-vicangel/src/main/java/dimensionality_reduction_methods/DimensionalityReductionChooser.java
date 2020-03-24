@@ -37,7 +37,7 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 	 * boolean, java.lang.String[])
 	 */
 	@Override
-	public Instances DimensionalityReductionSelector(String selection, Instances dataset, boolean debug,
+	public Instances dimensionalityReductionSelector(String selection, Instances dataset, boolean debug,
 			String[] options) {
 		try {
 			switch (selection) {

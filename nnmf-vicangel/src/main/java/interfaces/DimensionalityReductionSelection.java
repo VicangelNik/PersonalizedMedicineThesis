@@ -16,6 +16,6 @@ public interface DimensionalityReductionSelection {
 	 * @param options   the options
 	 * @return the instances
 	 */
-	public Instances DimensionalityReductionSelector(String selection, Instances dataset, boolean debug,
+	public Instances dimensionalityReductionSelector(String selection, Instances dataset, boolean debug,
 			String[] options);
 }

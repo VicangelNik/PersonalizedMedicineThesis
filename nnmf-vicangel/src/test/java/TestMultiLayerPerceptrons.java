@@ -32,7 +32,7 @@ public class TestMultiLayerPerceptrons {
 				.splitOptions("-N 1 -L 0.01 -O 1.0E-6 -G -P " + cores + " -E " + cores + " -S 1 -seed 1");
 		// Get current time
 		long start = System.nanoTime();
-		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.AUTOENCODER_WEKA,
+		Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.AUTOENCODER_WEKA,
 				originalDataset, true, options);
 		Utils.printExecutionTime(start, System.nanoTime());
 		// here we save the new data in an arff file

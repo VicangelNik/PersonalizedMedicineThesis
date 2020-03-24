@@ -89,7 +89,7 @@ public class TestClassificationTestCase {
 		try {
 			// http://weka.sourceforge.net/doc.dev/weka/filters/unsupervised/attribute/PrincipalComponents.html
 			String[] options = weka.core.Utils.splitOptions("-R 0.95 -A 5 -M -1");
-			Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector("pca", originalDataset,
+			Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector("pca", originalDataset,
 					true, options);
 			// CROSS VALIDATION
 			AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,

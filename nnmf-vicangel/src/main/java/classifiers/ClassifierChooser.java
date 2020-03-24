@@ -8,7 +8,9 @@ import interfaces.ClassifierSelection;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.bayes.NaiveBayesUpdateable;
 import weka.classifiers.evaluation.Evaluation;
+import weka.classifiers.lazy.IBk;
 import weka.classifiers.rules.JRip;
+import weka.classifiers.rules.PART;
 import weka.classifiers.rules.ZeroR;
 import weka.core.Instances;
 
@@ -40,6 +42,14 @@ public class ClassifierChooser implements ClassifierSelection {
 		}
 		case Constants.JRIP: {
 			abstractClassifier = new JRip();
+			break;
+		}
+		case Constants.PART: {
+			abstractClassifier = new PART();
+			break;
+		}
+		case Constants.IBK: {
+			abstractClassifier = new IBk();
 			break;
 		}
 		default: {

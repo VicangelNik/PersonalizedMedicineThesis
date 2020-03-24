@@ -169,7 +169,7 @@ public class TestEMPCA {
 		// Get current time
 		long start = System.nanoTime();
 		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
-		Instances dataset = dimensionalityReductionSelection.DimensionalityReductionSelector(Constants.EMPCA,
+		Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.EMPCA,
 				originalDataset, true, options);
 		Utils.printExecutionTime(start, System.nanoTime());
 		// here we save the new data in an arff file

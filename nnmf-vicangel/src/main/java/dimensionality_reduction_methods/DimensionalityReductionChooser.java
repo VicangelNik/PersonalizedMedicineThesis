@@ -82,12 +82,13 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 		// first option should be the number of expected dimensions
 		// second option should be the k nearest neighbors
 		// third option should be whether C-Isomap or standard algorithm
+		// the last 2 options will be always the dataset name and the name of the class
 		double data[][] = TransformToFromWeka.transformWekaToManifolds(originalDataset);
 		IsoMap myIsomap = new IsoMap(data, Integer.parseInt(options[0]), Integer.parseInt(options[1]),
 				Boolean.parseBoolean(options[2]));
 		double[][] coordinates = myIsomap.getCoordinates();
-		return TransformToFromWeka.manifoldsToWeka(coordinates, "isomapDataset",
-				WekaUtils.getDatasetClassValues(originalDataset), "class");
+		return TransformToFromWeka.manifoldsToWeka(coordinates, options[3],
+				WekaUtils.getDatasetClassValues(originalDataset), options[4]);
 	}
 
 	/**
@@ -130,6 +131,7 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 	private static Instances doEmpca(Instances originalDataset, String[] options) {
 		// first option should be the number of expecting principal components
 		// second option should be the desirable number of em iterations
+		// the last 2 options will be always the dataset name and the name of the class
 		List<ArrayList<Feature>> empcaInput = TransformToFromWeka.createEMPCAInputFromWekaV2(originalDataset);
 		scala.collection.immutable.List<Tuple2<Object, Object>>[] convertedToScalaList = JavaPCAInputToScala
 				.convert((ArrayList<ArrayList<Feature>>) empcaInput);
@@ -140,8 +142,7 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
 		Utils.writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		// OUTPUT TO WEKA PART
-		return TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset",
-				WekaUtils.getDatasetClassValues(originalDataset));
+		return TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, options[2],
+				WekaUtils.getDatasetClassValues(originalDataset), options[3]);
 	}
-
 }

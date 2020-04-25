@@ -76,7 +76,8 @@ public class TestEMPCA {
 		// zero position of each instance's feature list contains the class value. Class
 		// values are PrimaryTumor, NormalTissue. PrimaryTumor -> 0, NormalTissue-> 1
 		List<Double> classValues = empcaInput.stream().map(x -> x.get(0).getValue()).collect(Collectors.toList());
-		Instances reData = TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset", classValues);
+		Instances reData = TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset", classValues,
+				"class");
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns());
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
 		// CROSS VALIDATION
@@ -95,10 +96,10 @@ public class TestEMPCA {
 	public void testEMPCA() throws IOException {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
-		int nPCs = 1010;
+		int nPCs = 20;
 		// INPUT TO EMPCA PART
 		List<ArrayList<Feature>> empcaInput = TransformToFromWeka.createEMPCAInputFromWekaV2(originalDataset);
-		Assert.assertTrue("The number of lists (instances) should be 72121", 72121 == empcaInput.size());
+		Assert.assertTrue("The number of lists (features) should be 72121", 72121 == empcaInput.size());
 		// the position 3 is chosen arbitarily.
 		Assert.assertTrue("The number of features of each instance should be 335", 335 == empcaInput.get(3).size());
 		scala.collection.immutable.List<Tuple2<Object, Object>>[] convertedToScalaList = JavaPCAInputToScala
@@ -118,7 +119,7 @@ public class TestEMPCA {
 		System.out.println("finish doEig");
 		// OUTPUT TO WEKA PART
 		Instances reData = TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset",
-				WekaUtils.getDatasetClassValues(originalDataset));
+				WekaUtils.getDatasetClassValues(originalDataset), "class");
 		// here we save the new data in an arff file
 		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
 		wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + (nPCs - 10) + "empcaData.arff");
@@ -140,7 +141,7 @@ public class TestEMPCA {
 	@Test
 	public void testEmpcaData() throws IOException {
 		// GET DATA
-		File empcaDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "empcaData.arff");
+		File empcaDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "10empcaData.arff");
 		Instances empcaDataset = WekaUtils.getOriginalData(empcaDataFile, "class");
 		// CROSS VALIDATION
 		// NAIVE BAYES
@@ -161,21 +162,28 @@ public class TestEMPCA {
 	public void doEMPCA() throws IOException {
 		// first option should be the number of expecting principal components
 		// second option should be the desirable number of em iterations
+		// the last 2 options will be always the dataset name and the name of the class
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		// number of principal components, the result due to hack will be minus 10
-		String nPCs = "1010";
-		String[] options = { nPCs, "20" };
-		// Get current time
-		long start = System.nanoTime();
-		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
-		Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.EMPCA,
-				originalDataset, true, options);
-		Utils.printExecutionTime(start, System.nanoTime());
-		// here we save the new data in an arff file
-		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
-		wekaFileConverterImpl.arffSaver(dataset,
-				Constants.SRC_MAIN_RESOURCES_PATH + (Integer.parseInt(nPCs) - 10) + "empcaData.arff");
+		String[] nPCsArray = { "20", "30", "60", "110", "510", "1010" };
+		String className = "class";
+		for (String nPCs : nPCsArray) {
+			String newDatasetName = (Integer.parseInt(nPCs) - 10) + "empcaData";
+			String[] options = { nPCs, "20", newDatasetName, className };
+			// Get current time
+			long start = System.nanoTime();
+			DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
+			Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.EMPCA,
+					originalDataset, true, options);
+			System.out.println("Execution for EMPCA with " + nPCs + " principal components\n");
+			logger.getLogger().log(Level.INFO, "Execution for EMPCA with " + nPCs + " principal components\n");
+			logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
+			// here we save the new data in an arff file
+			WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+			wekaFileConverterImpl.arffSaver(dataset,
+					Constants.SRC_MAIN_RESOURCES_PATH + newDatasetName + WekaUtils.WEKA_SUFFIX);
+		}
 	}
 
 	/**

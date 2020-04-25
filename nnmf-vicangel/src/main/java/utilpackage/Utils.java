@@ -325,28 +325,35 @@ public final class Utils {
 	 * @param startTime
 	 * @param endTime
 	 */
-	public static void printExecutionTime(long startTime, long endTime) {
+	public static String printExecutionTime(long startTime, long endTime) {
 		long timeNanoSecs = endTime - startTime;
 		long timeMilliSecs = TimeUnit.NANOSECONDS.toMillis(timeNanoSecs);
 		long timeSecs = TimeUnit.NANOSECONDS.toSeconds(timeNanoSecs);
 		long timeMin = TimeUnit.NANOSECONDS.toMinutes(timeNanoSecs);
 		long timeHour = TimeUnit.NANOSECONDS.toHours(timeNanoSecs);
-
+		StringBuilder sb = new StringBuilder("\nExecution Time: ");
 		System.out.print("\nExecution Time: ");
 		if (timeHour > 0) {
 			System.out.print(timeHour + " Hours, ");
+			sb.append(timeHour + " Hours, ");
 		}
 		if (timeMin > 0) {
 			System.out.print(timeMin % 60 + " Minutes, ");
+			sb.append(timeMin % 60 + " Minutes, ");
 		}
 		if (timeSecs > 0) {
 			System.out.print(timeSecs % 60 + " Seconds, ");
+			sb.append(timeSecs % 60 + " Seconds, ");
 		}
 		if (timeMilliSecs > 0) {
 			System.out.print(timeMilliSecs % 1E+3 + " MicroSeconds, ");
+			sb.append(timeMilliSecs % 1E+3 + " MicroSeconds, ");
 		}
 		if (timeNanoSecs > 0) {
 			System.out.print(timeNanoSecs % 1E+6 + " NanoSeconds");
+			sb.append(timeNanoSecs % 1E+6 + " NanoSeconds");
 		}
+		sb.append(System.lineSeparator());
+		return sb.toString();
 	}
 }

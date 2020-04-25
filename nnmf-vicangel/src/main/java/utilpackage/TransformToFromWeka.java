@@ -114,7 +114,7 @@ public final class TransformToFromWeka {
 	 * @param classValues    the class values
 	 * @return the instances
 	 */
-	public static Instances eigensToWeka(DoubleMatrix2D eigenVectors, String nameNewDataset, List<Double> classValues) {
+	public static Instances eigensToWeka(DoubleMatrix2D eigenVectors, String nameNewDataset, List<Double> classValues, String className) {
 		// We can not set values to numeric attributes directly!!!Thus we construct new
 		// data set with its attributes and no values.
 		// columns represent the dimensions and rows the number of values values
@@ -124,7 +124,7 @@ public final class TransformToFromWeka {
 			attInfo.add(new Attribute("dimension" + i));
 		}
 		// add class
-		attInfo.add(new Attribute("class", Arrays.asList(Constants.PRIMARY_TUMOR, Constants.MORMAL_TISSUE)));
+		attInfo.add(new Attribute(className, Arrays.asList(Constants.PRIMARY_TUMOR, Constants.MORMAL_TISSUE)));
 		Instances instances = new Instances(nameNewDataset, attInfo, eigenVectors.rows());
 		// set instances to data set
 		for (int i = 0; i < eigenVectors.rows(); i++) {

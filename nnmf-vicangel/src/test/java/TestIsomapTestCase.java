@@ -5,12 +5,14 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.logging.Level;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import classifiers.NaiveBayesImplementation;
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
+import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import smile.graph.Graph;
 import smile.manifold.IsoMap;
@@ -25,6 +27,9 @@ import weka.core.Instances;
  * The Class TestIsomapTestCase.
  */
 public class TestIsomapTestCase {
+
+	/** The logger. */
+	private static AppLogger logger = AppLogger.getInstance();
 
 	/**
 	 * Test isomap tet case.
@@ -86,25 +91,38 @@ public class TestIsomapTestCase {
 		// first option should be the number of expected dimensions
 		// second option should be the k nearest neighbors
 		// third option should be whether C-Isomap or standard algorithm
+		// the last 2 options will be always the dataset name and the name of the class
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
-		String nDimensions = "20";
+		String[] nDimensionsArray = { "10", "20", "50", "100", "500", "1000" };
+		String className = "class";
 		Double value = Math.pow(originalDataset.numAttributes() / 2, 0.5);
 		String ruleOfThumb = String.valueOf(value.intValue());
 		String[] kArray = { "5", "10", "25", "100", ruleOfThumb, "250" };
 		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
-		// Get current time
-		for (String k : kArray) {
-			String[] options = { nDimensions, k, "false" };
-			System.out.println("Execution for:" + nDimensions + " dimensions with" + k + "k nearest neighbours");
-			long start = System.nanoTime();
-			Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.ISOMAP,
-					originalDataset, true, options);
-			Utils.printExecutionTime(start, System.nanoTime());
-			// here we save the new data in an arff file
-			WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
-			wekaFileConverterImpl.arffSaver(dataset,
-					Constants.SRC_MAIN_RESOURCES_PATH + nDimensions + "_" + k + "_" + "isomapData.arff");
+		for (String nDimensions : nDimensionsArray) {
+			for (String k : kArray) {
+				String datasetName = nDimensions + "dimesions_" + k + " nearestNeighbours_isomapData";
+				String[] options = { nDimensions, k, "false", datasetName, className };
+				// Get current time
+				long start = System.nanoTime();
+				try {
+					Instances dataset = dimensionalityReductionSelection
+							.dimensionalityReductionSelector(Constants.ISOMAP, originalDataset, true, options);
+
+					System.out.println(
+							"Execution for:" + nDimensions + " dimensions with" + k + "k nearest neighbours in Isomap");
+					logger.getLogger().log(Level.INFO, "Execution for:" + nDimensions + " dimensions with " + k
+							+ "k nearest neighbours in Isomap\n");
+					logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
+					// here we save the new data in an arff file
+					WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+					wekaFileConverterImpl.arffSaver(dataset,
+							Constants.SRC_MAIN_RESOURCES_PATH + datasetName + WekaUtils.WEKA_SUFFIX);
+				} catch (Exception e) {
+					// nothing to do
+				}
+			}
 		}
 	}
 }

@@ -8,10 +8,12 @@ import org.junit.Test;
 
 import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
+import utilpackage.WekaUtils;
 import weka.api.library.LoadCsv;
 import weka.api.library.WekaFileConverterImpl;
+import weka.core.Instances;
+import weka.core.converters.CSVLoader;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestConverterTestCase.
  */
@@ -33,9 +35,38 @@ public class TestConverterTestCase {
 			Assert.assertTrue("The file should exists", arffFile.exists());
 			Assert.assertTrue("The file should be readable.", arffFile.canRead());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 
+	/**
+	 * Saves the processed data set as csv
+	 * 
+	 * @throws IOException
+	 * 
+	 */
+	@Test
+	public void testConvertArffToCSVTestCase() throws IOException {
+		String featureClassName = "SampleStatus";
+		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
+		File csvFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "finalDataset.csv");
+		Instances originalDataset = WekaUtils.getOriginalData(arffFile, featureClassName);
+		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		Assert.assertTrue("The excpected class should be in position: ", 72121 == originalDataset.classIndex());
+		wekaFileConverterImpl.csvSaver(originalDataset, csvFile.getAbsolutePath());
+		// Check CSV file
+		Assert.assertTrue("The file should exists", csvFile.exists());
+		Assert.assertTrue("The file should be readable.", csvFile.canRead());
+		// load csv
+		CSVLoader csvLoader = new CSVLoader();
+		csvLoader.setFile(csvFile.getAbsoluteFile());
+		Instances csvData = csvLoader.getDataSet();
+		csvData.setClass(csvData.attribute(featureClassName));
+		// ASSERTS
+		Assert.assertTrue("The number of instances should be the same",
+				csvData.numInstances() == originalDataset.numInstances());
+		Assert.assertTrue("The number of attributes should be the same",
+				csvData.numAttributes() == originalDataset.numAttributes());
+		Assert.assertTrue("The class index should be the same", csvData.classIndex() == originalDataset.classIndex());
 	}
 }

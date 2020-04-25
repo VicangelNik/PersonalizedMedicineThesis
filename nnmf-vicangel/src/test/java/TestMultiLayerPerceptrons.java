@@ -25,6 +25,7 @@ public class TestMultiLayerPerceptrons {
 	public void TestAutoencoderWekaTetCase() throws Exception {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
+		// this command return the logical processors (threads)
 		String cores = String.valueOf(Runtime.getRuntime().availableProcessors());
 		// DIMENSIONALITY REDUCTION
 		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();

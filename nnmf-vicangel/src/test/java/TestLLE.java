@@ -16,7 +16,7 @@ import smile.graph.Graph;
 import smile.manifold.LLE;
 import utilpackage.TransformToFromWeka;
 import utilpackage.WekaUtils;
-import weka.api.library.WekaFileConverterImpl;
+import weka.api.library.WekaFileConverter;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
@@ -47,7 +47,7 @@ public class TestLLE {
 					Instances reData = TransformToFromWeka.manifoldsToWeka(coordinates, "lleDataset",
 							WekaUtils.getDatasetClassValues(originalDataset), "class");
 					// here we save the new data in an arff file
-					WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+					WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 					wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + "lle\\" + "k_"
 							+ kNearest + "d_" + dimensions + "lleData.arff");
 					// CROSS VALIDATION

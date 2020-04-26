@@ -20,7 +20,7 @@ import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
 import utilpackage.WekaUtils;
 import weka.api.library.PreprocessDataImpl;
-import weka.api.library.WekaFileConverterImpl;
+import weka.api.library.WekaFileConverter;
 import weka.core.Attribute;
 import weka.core.Instances;
 
@@ -110,7 +110,7 @@ public class TestPreprocess {
 				data.attribute("Vital_status") != null);
 		Assert.assertFalse("Attribute Days_To_Death should not exist in dataset",
 				data.attribute("Days_To_Death") != null);
-		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 		wekaFileConverterImpl.arffSaver(data, level2File.getAbsolutePath());
 	}
 

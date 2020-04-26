@@ -8,7 +8,7 @@ import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.Constants;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
-import weka.api.library.WekaFileConverterImpl;
+import weka.api.library.WekaFileConverter;
 import weka.core.Instances;
 
 /**
@@ -37,7 +37,7 @@ public class TestMultiLayerPerceptrons {
 				originalDataset, true, options);
 		Utils.printExecutionTime(start, System.nanoTime());
 		// here we save the new data in an arff file
-		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 		wekaFileConverterImpl.arffSaver(dataset, Constants.SRC_MAIN_RESOURCES_PATH + "autoencoderData.arff");
 		Assert.assertTrue(dataset != null);
 	}

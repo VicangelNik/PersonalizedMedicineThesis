@@ -10,7 +10,7 @@ import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
 import utilpackage.WekaUtils;
 import weka.api.library.LoadCsv;
-import weka.api.library.WekaFileConverterImpl;
+import weka.api.library.WekaFileConverter;
 import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 
@@ -26,7 +26,7 @@ public class TestConverterTestCase {
 	public void testConvertCsvToArffTestCase() {
 		File file = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelOne.csv");
 		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelOne.arff");
-		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 		try {
 			LoadCsv loader = new LoadCsv(file, 73664, EnumSeparators.TAB.getSeparator(), "NA");
 			Assert.assertEquals("The excpected class should be: ", 73664, loader.getStructure().classIndex());
@@ -51,7 +51,7 @@ public class TestConverterTestCase {
 		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		File csvFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "finalDataset.csv");
 		Instances originalDataset = WekaUtils.getOriginalData(arffFile, featureClassName);
-		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 		Assert.assertTrue("The excpected class should be in position: ", 72121 == originalDataset.classIndex());
 		wekaFileConverterImpl.csvSaver(originalDataset, csvFile.getAbsolutePath());
 		// Check CSV file

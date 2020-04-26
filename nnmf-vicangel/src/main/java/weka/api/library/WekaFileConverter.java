@@ -3,7 +3,7 @@ package weka.api.library;
 import java.io.File;
 import java.io.IOException;
 
-import interfaces.WekaFileConverter;
+import interfaces.IWekaFileConverter;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVSaver;
@@ -11,7 +11,7 @@ import weka.core.converters.CSVSaver;
 /**
  * The Class WekaFileConverterImpl.
  */
-public class WekaFileConverterImpl implements WekaFileConverter {
+public class WekaFileConverter implements IWekaFileConverter {
 
 	/*
 	 * (non-Javadoc)
@@ -42,5 +42,4 @@ public class WekaFileConverterImpl implements WekaFileConverter {
 		saver.setMaxDecimalPlaces(20);
 		saver.writeBatch();
 	}
-
 }

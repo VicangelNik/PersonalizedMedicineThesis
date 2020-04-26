@@ -23,7 +23,7 @@ import scala.Tuple2;
 import utilpackage.TransformToFromWeka;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
-import weka.api.library.WekaFileConverterImpl;
+import weka.api.library.WekaFileConverter;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Attribute;
 import weka.core.Instances;
@@ -121,7 +121,7 @@ public class TestEMPCA {
 		Instances reData = TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, "empcaDataset",
 				WekaUtils.getDatasetClassValues(originalDataset), "class");
 		// here we save the new data in an arff file
-		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 		wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + (nPCs - 10) + "empcaData.arff");
 		// eigenValueAndVectors._2.columns() + 1 be the new data set has also the class
 		// attribute.
@@ -180,7 +180,7 @@ public class TestEMPCA {
 			logger.getLogger().log(Level.INFO, "Execution for EMPCA with " + nPCs + " principal components\n");
 			logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
 			// here we save the new data in an arff file
-			WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+			WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 			wekaFileConverterImpl.arffSaver(dataset,
 					Constants.SRC_MAIN_RESOURCES_PATH + newDatasetName + WekaUtils.WEKA_SUFFIX);
 		}

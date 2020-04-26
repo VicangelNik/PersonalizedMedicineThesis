@@ -7,7 +7,7 @@ import weka.core.Instances;
 /**
  * The Interface WekaFileConverter.
  */
-public interface WekaFileConverter {
+public interface IWekaFileConverter {
 
 	/**
 	 * Convert csv to arff.

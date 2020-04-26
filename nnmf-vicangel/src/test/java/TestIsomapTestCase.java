@@ -19,7 +19,7 @@ import smile.manifold.IsoMap;
 import utilpackage.TransformToFromWeka;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
-import weka.api.library.WekaFileConverterImpl;
+import weka.api.library.WekaFileConverter;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
@@ -51,7 +51,7 @@ public class TestIsomapTestCase {
 		Instances reData = TransformToFromWeka.manifoldsToWeka(coordinates, "isomapDataset",
 				WekaUtils.getDatasetClassValues(originalDataset), "class");
 		// here we save the new data in an arff file
-		WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+		WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 		wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + "isomapData.arff");
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
@@ -116,7 +116,7 @@ public class TestIsomapTestCase {
 							+ "k nearest neighbours in Isomap\n");
 					logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
 					// here we save the new data in an arff file
-					WekaFileConverterImpl wekaFileConverterImpl = new WekaFileConverterImpl();
+					WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 					wekaFileConverterImpl.arffSaver(dataset,
 							Constants.SRC_MAIN_RESOURCES_PATH + datasetName + WekaUtils.WEKA_SUFFIX);
 				} catch (Exception e) {

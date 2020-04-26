@@ -19,7 +19,7 @@ import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
 import utilpackage.WekaUtils;
-import weka.api.library.PreprocessDataImpl;
+import weka.api.library.PreprocessData;
 import weka.api.library.WekaFileConverter;
 import weka.core.Attribute;
 import weka.core.Instances;
@@ -81,7 +81,7 @@ public class TestPreprocess {
 		Instances originalDataset = WekaUtils.getOriginalData(arffFile, "SampleStatus");
 		Assert.assertEquals("The excpected class should be: ", 73664, originalDataset.classIndex());
 		Assert.assertTrue("The arf file should have string attributes", originalDataset.checkForStringAttributes());
-		PreprocessDataImpl preprocessData = new PreprocessDataImpl();
+		PreprocessData preprocessData = new PreprocessData();
 		Instances data = null;
 		// Attributes of String Type contain only NA. Also, they are not accepted by
 		// NaiveBayes.

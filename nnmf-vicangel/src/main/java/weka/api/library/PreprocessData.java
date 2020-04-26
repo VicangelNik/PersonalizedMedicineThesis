@@ -1,6 +1,6 @@
 package weka.api.library;
 
-import interfaces.PreprocessData;
+import interfaces.ΙPreprocessData;
 import weka.core.Instances;
 import weka.core.SelectedTag;
 import weka.filters.Filter;
@@ -11,7 +11,7 @@ import weka.filters.unsupervised.attribute.ReplaceMissingValues;
 /**
  * The Class PreprocessDataImpl.
  */
-public class PreprocessDataImpl implements PreprocessData {
+public class PreprocessData implements ΙPreprocessData {
 
 	/*
 	 * (non-Javadoc)

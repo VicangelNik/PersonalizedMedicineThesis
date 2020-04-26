@@ -5,7 +5,7 @@ import weka.core.Instances;
 /**
  * The Interface PreprocessData.
  */
-public interface PreprocessData {
+public interface ΙPreprocessData {
 
 	/**
 	 * Removes the features by type.

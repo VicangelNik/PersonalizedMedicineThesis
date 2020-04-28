@@ -9,9 +9,21 @@ import weka.filters.unsupervised.attribute.RemoveType;
 import weka.filters.unsupervised.attribute.ReplaceMissingValues;
 
 /**
- * The Class PreprocessDataImpl.
+ * The Class PreprocessData.
  */
 public class PreprocessData implements ΙPreprocessData {
+
+	/** The dataset. */
+	private Instances dataset;
+
+	/**
+	 * Instantiates a new preprocess data.
+	 *
+	 * @param dataset the dataset
+	 */
+	public PreprocessData(Instances dataset) {
+		this.dataset = dataset;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -19,12 +31,12 @@ public class PreprocessData implements ΙPreprocessData {
 	 * @see helpful_classes.PreprocessData#removeType(weka.core.Instances, int)
 	 */
 	@Override
-	public Instances removeFeaturesByType(Instances data, int tagId) throws Exception {
+	public Instances removeFeaturesByType(int tagId) throws Exception {
 		RemoveType removeType = new RemoveType();
-		removeType.setInputFormat(data);
+		removeType.setInputFormat(dataset);
 		SelectedTag tag = new SelectedTag(tagId, RemoveType.TAGS_ATTRIBUTETYPE);
 		removeType.setAttributeType(tag);
-		return Filter.useFilter(data, removeType);
+		return Filter.useFilter(dataset, removeType);
 	}
 
 	/*
@@ -34,11 +46,14 @@ public class PreprocessData implements ΙPreprocessData {
 	 * java.lang.String)
 	 */
 	@Override
-	public Instances removeFeature(Instances data, String rangeList) throws Exception {
+	public Instances removeFeature(String rangeList, boolean invert) throws Exception {
 		Remove remove = new Remove();
+		// invert selection is set first because it is used in the source code for the
+		// other sets.
+		remove.setInvertSelection(invert);
 		remove.setAttributeIndices(rangeList);
-		remove.setInputFormat(data);
-		return Filter.useFilter(data, remove);
+		remove.setInputFormat(dataset);
+		return Filter.useFilter(dataset, remove);
 	}
 
 	/*
@@ -47,9 +62,27 @@ public class PreprocessData implements ΙPreprocessData {
 	 * @see interfaces.PreprocessData#removeMissingValues(weka.core.Instances)
 	 */
 	@Override
-	public Instances removeMissingValues(Instances data) throws Exception {
+	public Instances removeMissingValues() throws Exception {
 		ReplaceMissingValues replaceMissingValues = new ReplaceMissingValues();
-		replaceMissingValues.setInputFormat(data);
-		return Filter.useFilter(data, replaceMissingValues);
+		replaceMissingValues.setInputFormat(dataset);
+		return Filter.useFilter(dataset, replaceMissingValues);
+	}
+
+	/**
+	 * Sets the dataset.
+	 *
+	 * @param dataset the new dataset
+	 */
+	public void setDataset(Instances dataset) {
+		this.dataset = dataset;
+	}
+
+	/**
+	 * Gets the dataset.
+	 *
+	 * @return the dataset
+	 */
+	public Instances getDataset() {
+		return dataset;
 	}
 }

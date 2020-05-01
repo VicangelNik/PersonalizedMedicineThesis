@@ -79,37 +79,12 @@
 			<artifactId>wekaDeeplearning4j</artifactId>
 			<version>1.5.14</version>
 		</dependency>
-		<!-- smile-netlib module is not available in the classpath. Pure Java matrix 
-			library will be employed. Due to issues with mkl_rt and native location it 
-			will not be used for now. -->
-		<!-- <dependency> -->
-		<!-- <groupId>com.github.haifengl</groupId> -->
-		<!-- <artifactId>smile-netlib</artifactId> -->
-		<!-- <version>2.2.2</version> -->
-		<!-- </dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.python/jython -->
 		<dependency>
 			<groupId>org.python</groupId>
 			<artifactId>jython-standalone</artifactId>
 			<version>2.7.2</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.facebook.fbjni/fbjni-java-only -->
-		<dependency>
-			<groupId>com.facebook.fbjni</groupId>
-			<artifactId>fbjni-java-only</artifactId>
-			<version>0.0.3</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.pytorch/pytorch_java_only -->
-		<dependency>
-			<groupId>org.pytorch</groupId>
-			<artifactId>pytorch_java_only</artifactId>
-			<version>1.4.0</version>
-		</dependency>
-		<dependency>
-    <groupId>org.brightify.torch</groupId>
-    <artifactId>torch-api</artifactId>
-    <version>1.0.0-alpha.3</version>
-</dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>
@@ -151,38 +126,5 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<!-- unpack dependency to target for setting in build path it may be useful 
-			in the future -->
-		<!-- <plugins> -->
-		<!-- <plugin> -->
-		<!-- <groupId>org.apache.maven.plugins</groupId> -->
-		<!-- <artifactId>maven-dependency-plugin</artifactId> -->
-		<!-- <executions> -->
-		<!-- <execution> -->
-		<!-- <id>unpack</id> -->
-		<!-- <phase>install</phase> -->
-		<!-- <goals> -->
-		<!-- <goal>unpack</goal> -->
-		<!-- </goals> -->
-		<!-- <configuration> -->
-		<!-- <artifactItems> -->
-		<!-- <artifactItem> -->
-		<!-- <groupId>com.github.haifengl</groupId> -->
-		<!-- <artifactId>smile-netlib</artifactId> -->
-		<!-- <version>2.2.2</version> -->
-		<!-- <type>jar</type> -->
-		<!-- <overWrite>false</overWrite> -->
-		<!-- <outputDirectory>${project.build.directory}</outputDirectory> -->
-		<!-- </artifactItem> -->
-		<!-- </artifactItems> -->
-		<!-- </configuration> -->
-		<!-- </execution> -->
-		<!-- </executions> -->
-		<!-- </plugin> -->
-		<!-- </plugins> -->
 	</build>
-	
-	
 </project>
-
-

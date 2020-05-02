@@ -7,18 +7,14 @@ import weka.attributeSelection.PrincipalComponents;
 import weka.attributeSelection.Ranker;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PCARanker.
  */
 public class PCARanker extends DimensionalityReduction implements IDimensionalityReduction {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * interfaces.DimensionalityReductionInterface#dimReductionMethod(java.lang.
-	 * String[])
+	
+	/* (non-Javadoc)
+	 * @see interfaces.IDimensionalityReduction#dimReductionMethod(java.lang.String[])
 	 */
 	@Override
 	public Instances dimReductionMethod(String[] options) throws Exception {
@@ -33,9 +29,7 @@ public class PCARanker extends DimensionalityReduction implements IDimensionalit
 		selector.setSearch(ranker);
 		selector.setEvaluator(pcaEvaluator);
 		selector.SelectAttributes(this.getDataset());
-
 		// Transform data into eigenvector basis.
 		return selector.reduceDimensionality(this.getDataset());
 	}
-
 }

@@ -11,12 +11,9 @@ import weka.filters.unsupervised.attribute.MLPAutoencoder;
  */
 public class AutoencoderWeka extends DimensionalityReduction implements IDimensionalityReduction {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * interfaces.DimensionalityReductionInterface#dimReductionMethod(java.lang.
-	 * String[])
+	
+	/* (non-Javadoc)
+	 * @see interfaces.IDimensionalityReduction#dimReductionMethod(java.lang.String[])
 	 */
 	@Override
 	public Instances dimReductionMethod(String[] options) throws Exception {

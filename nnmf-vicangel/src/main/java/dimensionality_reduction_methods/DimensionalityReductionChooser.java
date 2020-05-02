@@ -1,23 +1,14 @@
 package dimensionality_reduction_methods;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 
-import org.scify.EMPCA.EMPCA;
-import org.scify.EMPCA.Feature;
-import org.scify.EMPCA.JavaPCAInputToScala;
-
 import abstract_classes.DimensionalityReduction;
-import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import interfaces.DimensionalityReductionSelection;
-import scala.Tuple2;
 import smile.manifold.IsoMap;
 import smile.manifold.LLE;
 import utilpackage.TransformToFromWeka;
-import utilpackage.Utils;
 import utilpackage.WekaUtils;
 import weka.core.Instances;
 
@@ -47,7 +38,9 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 				return ((PCAWeka) reductionMethod).dimReductionMethod(options);
 			}
 			case Constants.EMPCA: {
-				return doEmpca(dataset, options);
+				DimensionalityReduction reductionMethod = new ExpectationMaximizationPCA();
+				setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
+				return ((ExpectationMaximizationPCA) reductionMethod).dimReductionMethod(options);
 			}
 			case Constants.ISOMAP: {
 				return doIsomap(dataset, options);
@@ -115,34 +108,9 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 	 * @param dataset         the dataset
 	 * @param debug           the debug
 	 */
-	private void setValuesToDimensionalityReduction(DimensionalityReduction reductionMethod, Instances dataset,
+	private static void setValuesToDimensionalityReduction(DimensionalityReduction reductionMethod, Instances dataset,
 			boolean debug) {
 		reductionMethod.setDataset(dataset);
 		reductionMethod.setDebug(debug);
-	}
-
-	/**
-	 * Do empca.
-	 *
-	 * @param originalDataset the original dataset
-	 * @param options         the options
-	 * @return the instances
-	 */
-	private static Instances doEmpca(Instances originalDataset, String[] options) {
-		// first option should be the number of expecting principal components
-		// second option should be the desirable number of em iterations
-		// the last 2 options will be always the dataset name and the name of the class
-		List<ArrayList<Feature>> empcaInput = TransformToFromWeka.createEMPCAInputFromWekaV2(originalDataset);
-		scala.collection.immutable.List<Tuple2<Object, Object>>[] convertedToScalaList = JavaPCAInputToScala
-				.convert((ArrayList<ArrayList<Feature>>) empcaInput);
-		// the second parameter is the number of the principal components we want as
-		// result. Due to a hack it will return always minus 10 from the expected.
-		EMPCA empca = new EMPCA(convertedToScalaList, Integer.parseInt(options[0]));
-		DoubleMatrix2D c = empca.performEM(Integer.parseInt(options[1]));
-		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
-		Utils.writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
-		// OUTPUT TO WEKA PART
-		return TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, options[2],
-				WekaUtils.getDatasetClassValues(originalDataset), options[3]);
 	}
 }

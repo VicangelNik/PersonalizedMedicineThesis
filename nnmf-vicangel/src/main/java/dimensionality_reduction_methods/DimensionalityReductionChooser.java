@@ -42,9 +42,9 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 		try {
 			switch (selection) {
 			case Constants.PCA: {
-				DimensionalityReduction reductionMethod = new PrincipalComponentAnalysisWeka();
+				DimensionalityReduction reductionMethod = new PCAWeka();
 				setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
-				return ((PrincipalComponentAnalysisWeka) reductionMethod).dimReductionMethod(options);
+				return ((PCAWeka) reductionMethod).dimReductionMethod(options);
 			}
 			case Constants.EMPCA: {
 				return doEmpca(dataset, options);

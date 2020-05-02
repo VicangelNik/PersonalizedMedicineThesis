@@ -1,7 +1,7 @@
 package dimensionality_reduction_methods;
 
 import abstract_classes.DimensionalityReduction;
-import interfaces.DimensionalityReductionInterface;
+import interfaces.IDimensionalityReduction;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.PrincipalComponents;
@@ -11,7 +11,7 @@ import weka.filters.unsupervised.attribute.PrincipalComponents;
  * The Class PrincipalComponentAnalysisWeka.
  */
 public class PrincipalComponentAnalysisWeka extends DimensionalityReduction
-		implements DimensionalityReductionInterface {
+		implements IDimensionalityReduction {
 
 	/** The max attribute names. */
 	private int maxAttributeNames;

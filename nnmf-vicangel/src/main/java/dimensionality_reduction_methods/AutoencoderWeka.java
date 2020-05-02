@@ -1,7 +1,7 @@
 package dimensionality_reduction_methods;
 
 import abstract_classes.DimensionalityReduction;
-import interfaces.DimensionalityReductionInterface;
+import interfaces.IDimensionalityReduction;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.MLPAutoencoder;
@@ -9,7 +9,7 @@ import weka.filters.unsupervised.attribute.MLPAutoencoder;
 /**
  * The Class AutoencoderWeka.
  */
-public class AutoencoderWeka extends DimensionalityReduction implements DimensionalityReductionInterface {
+public class AutoencoderWeka extends DimensionalityReduction implements IDimensionalityReduction {
 
 	/*
 	 * (non-Javadoc)

@@ -1,7 +1,7 @@
 package dimensionality_reduction_methods;
 
 import abstract_classes.DimensionalityReduction;
-import interfaces.DimensionalityReductionInterface;
+import interfaces.IDimensionalityReduction;
 import weka.attributeSelection.AttributeSelection;
 import weka.attributeSelection.PrincipalComponents;
 import weka.attributeSelection.Ranker;
@@ -11,7 +11,7 @@ import weka.core.Instances;
 /**
  * The Class PCARanker.
  */
-public class PCARanker extends DimensionalityReduction implements DimensionalityReductionInterface {
+public class PCARanker extends DimensionalityReduction implements IDimensionalityReduction {
 
 	/*
 	 * (non-Javadoc)

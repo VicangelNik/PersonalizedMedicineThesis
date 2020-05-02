@@ -2,11 +2,10 @@ package interfaces;
 
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface DimensionalityReductionInterface.
  */
-public interface DimensionalityReductionInterface {
+public interface IDimensionalityReduction {
 
 	/**
 	 * Dim reduction method.

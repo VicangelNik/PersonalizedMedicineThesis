@@ -4,9 +4,9 @@ import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
 /**
- * The Interface ClassifierSelection.
+ * The Interface IClassifierSelection.
  */
-public interface ClassifierSelection {
+public interface IClassifierSelection {
 
 	/**
 	 * Select classifier.

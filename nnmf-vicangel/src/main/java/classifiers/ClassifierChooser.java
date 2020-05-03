@@ -4,7 +4,7 @@ import java.util.logging.Level;
 
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
-import interfaces.ClassifierSelection;
+import interfaces.IClassifierSelection;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.bayes.NaiveBayesUpdateable;
 import weka.classifiers.evaluation.Evaluation;
@@ -15,18 +15,18 @@ import weka.classifiers.rules.ZeroR;
 import weka.core.Instances;
 
 /**
- * The Class ClassifierSelectionImpl.
+ * The Class ClassifierChooser.
  */
-public class ClassifierChooser implements ClassifierSelection {
+public class ClassifierChooser implements IClassifierSelection {
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see interfaces.ClassifierSelection#selectClassifier(java.lang.String,
-	 * weka.core.converters.AbstractFileLoader)
+	 * 
+	 * @see interfaces.IClassifierSelection#selectClassifier(java.lang.String,
+	 * weka.core.Instances, java.lang.String[])
 	 */
 	@Override
 	public AbstractClassifier selectClassifier(String selection, Instances instances, String[] options) {

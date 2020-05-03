@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.logging.Level;
 
 import helpful_classes.AppLogger;
-import interfaces.AppClassifier;
+import interfaces.IAppClassifier;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.rules.JRip;
@@ -13,15 +13,15 @@ import weka.core.Instances;
 /**
  * The Class JRipWeka.
  */
-public class JRipWeka implements AppClassifier {
+public class JRipWeka implements IAppClassifier {
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see interfaces.AppClassifier#classify(weka.classifiers.AbstractClassifier,
+	 * 
+	 * @see interfaces.IAppClassifier#classify(weka.classifiers.AbstractClassifier,
 	 * weka.core.Instances)
 	 */
 	@Override
@@ -41,8 +41,8 @@ public class JRipWeka implements AppClassifier {
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see interfaces.AppClassifier#crossValidationEvaluation(weka.classifiers.
+	 * 
+	 * @see interfaces.IAppClassifier#crossValidationEvaluation(weka.classifiers.
 	 * AbstractClassifier, weka.core.Instances, int, java.util.Random)
 	 */
 	@Override
@@ -65,5 +65,4 @@ public class JRipWeka implements AppClassifier {
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 	}
-
 }

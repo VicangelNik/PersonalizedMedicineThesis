@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.logging.Level;
 
 import helpful_classes.AppLogger;
-import interfaces.AppClassifier;
+import interfaces.IAppClassifier;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.evaluation.Evaluation;
 import weka.core.Instances;
@@ -12,15 +12,15 @@ import weka.core.Instances;
 /**
  * The Class IBkWeka.
  */
-public class IBkWeka implements AppClassifier {
+public class IBkWeka implements IAppClassifier {
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see interfaces.AppClassifier#classify(weka.classifiers.AbstractClassifier,
+	 * 
+	 * @see interfaces.IAppClassifier#classify(weka.classifiers.AbstractClassifier,
 	 * weka.core.Instances)
 	 */
 	@Override
@@ -39,8 +39,8 @@ public class IBkWeka implements AppClassifier {
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see interfaces.AppClassifier#crossValidationEvaluation(weka.classifiers.
+	 * 
+	 * @see interfaces.IAppClassifier#crossValidationEvaluation(weka.classifiers.
 	 * AbstractClassifier, weka.core.Instances, int, java.util.Random)
 	 */
 	@Override

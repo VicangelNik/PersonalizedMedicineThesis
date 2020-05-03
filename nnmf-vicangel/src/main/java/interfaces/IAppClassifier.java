@@ -6,9 +6,9 @@ import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
 /**
- * The Interface AppClassifier.
+ * The Interface IAppClassifier.
  */
-public interface AppClassifier {
+public interface IAppClassifier {
 
 	/**
 	 * Classify.

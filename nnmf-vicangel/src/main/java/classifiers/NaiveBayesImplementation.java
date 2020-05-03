@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.logging.Level;
 
 import helpful_classes.AppLogger;
-import interfaces.AppClassifier;
+import interfaces.IAppClassifier;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.evaluation.Evaluation;
@@ -15,17 +15,16 @@ import weka.core.Instances;
 /**
  * The Class NaiveBayesImplementation.
  */
-public class NaiveBayesImplementation implements AppClassifier {
+public class NaiveBayesImplementation implements IAppClassifier {
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see
-	 * interfaces.ClassifierSelection#classify(weka.classifiers.AbstractClassifier,
-	 * weka.core.converters.AbstractFileLoader)
+	 * 
+	 * @see interfaces.IAppClassifier#classify(weka.classifiers.AbstractClassifier,
+	 * weka.core.Instances)
 	 */
 	@Override
 	public AbstractClassifier classify(AbstractClassifier abstractClassifier, Instances data) {
@@ -47,9 +46,8 @@ public class NaiveBayesImplementation implements AppClassifier {
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see
-	 * interfaces.ClassifierSelection#crossValidationEvaluation(weka.classifiers.
+	 * 
+	 * @see interfaces.IAppClassifier#crossValidationEvaluation(weka.classifiers.
 	 * AbstractClassifier, weka.core.Instances, int, java.util.Random)
 	 */
 	@Override
@@ -71,5 +69,4 @@ public class NaiveBayesImplementation implements AppClassifier {
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 	}
-
 }

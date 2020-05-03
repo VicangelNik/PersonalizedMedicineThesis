@@ -35,7 +35,7 @@ import com.google.common.base.Strings;
 
 import classifiers.ClassifierChooser;
 import helpful_classes.MultiKey;
-import interfaces.ClassifierSelection;
+import interfaces.IClassifierSelection;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -341,7 +341,7 @@ public final class WekaUtils {
 	 * @return the classifier
 	 */
 	public static AbstractClassifier getClassifier(String classifierName, Instances instances, String[] options) {
-		ClassifierSelection classifierSelection = new ClassifierChooser();
+		IClassifierSelection classifierSelection = new ClassifierChooser();
 		return classifierSelection.selectClassifier(classifierName, instances, options);
 	}
 

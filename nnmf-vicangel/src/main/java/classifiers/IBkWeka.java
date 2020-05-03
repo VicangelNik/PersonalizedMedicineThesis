@@ -3,6 +3,7 @@ package classifiers;
 import java.util.Random;
 import java.util.logging.Level;
 
+import abstract_classes.AppClassifier;
 import helpful_classes.AppLogger;
 import interfaces.IAppClassifier;
 import weka.classifiers.AbstractClassifier;
@@ -12,7 +13,7 @@ import weka.core.Instances;
 /**
  * The Class IBkWeka.
  */
-public class IBkWeka implements IAppClassifier {
+public class IBkWeka extends AppClassifier implements IAppClassifier {
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();

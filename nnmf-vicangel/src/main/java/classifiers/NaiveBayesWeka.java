@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.Random;
 import java.util.logging.Level;
 
+import abstract_classes.AppClassifier;
 import helpful_classes.AppLogger;
 import interfaces.IAppClassifier;
 import weka.classifiers.AbstractClassifier;
@@ -15,7 +16,7 @@ import weka.core.Instances;
 /**
  * The Class NaiveBayesWeka.
  */
-public class NaiveBayesWeka implements IAppClassifier {
+public class NaiveBayesWeka extends AppClassifier implements IAppClassifier {
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();

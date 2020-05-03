@@ -15,7 +15,7 @@ import org.scify.EMPCA.JavaPCAInputToScala;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import classifiers.JRipWeka;
-import classifiers.NaiveBayesImplementation;
+import classifiers.NaiveBayesWeka;
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
@@ -82,7 +82,7 @@ public class TestEMPCA {
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 				new Random(1));
 	}
 
@@ -129,7 +129,7 @@ public class TestEMPCA {
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 				new Random(1));
 	}
 
@@ -147,7 +147,7 @@ public class TestEMPCA {
 		// NAIVE BAYES
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, empcaDataset,
 				new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
+		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
 		// JRIP
 		abstractClassifier = WekaUtils.getClassifier(Constants.JRIP, empcaDataset, new String[] {});
 		new JRipWeka().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));

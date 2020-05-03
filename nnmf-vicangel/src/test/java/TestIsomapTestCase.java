@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import org.junit.Assert;
 import org.junit.Test;
 
-import classifiers.NaiveBayesImplementation;
+import classifiers.NaiveBayesWeka;
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
@@ -55,7 +55,7 @@ public class TestIsomapTestCase {
 		wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + "isomapData.arff");
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, reData, 10, new Random(1));
+		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, reData, 10, new Random(1));
 		// new NaiveBayesImplementation().classify(abstractClassifier, originalDataset);
 		Graph graph = myIsomap.getNearestNeighborGraph();
 		int[] indexes = myIsomap.getIndex();
@@ -77,7 +77,7 @@ public class TestIsomapTestCase {
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, isomapDataset,
 				new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, isomapDataset, 10, new Random(1));
+		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, isomapDataset, 10, new Random(1));
 	}
 
 	/**

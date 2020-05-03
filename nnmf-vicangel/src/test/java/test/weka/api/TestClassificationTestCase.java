@@ -7,8 +7,8 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
-import classifiers.NaiveBayesImplementation;
-import classifiers.ZeroRImplementation;
+import classifiers.NaiveBayesWeka;
+import classifiers.ZeroRWeka;
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.Constants;
 import utilpackage.WekaUtils;
@@ -42,7 +42,7 @@ public class TestClassificationTestCase {
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, originalDataset,
 				new String[] {});
-		new NaiveBayesImplementation().classify(abstractClassifier, originalDataset);
+		new NaiveBayesWeka().classify(abstractClassifier, originalDataset);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TestClassificationTestCase {
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, originalDataset,
 				new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 				new Random(1));
 	}
 
@@ -71,7 +71,7 @@ public class TestClassificationTestCase {
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.ZERO_R, originalDataset,
 				new String[] {});
-		new ZeroRImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10, new Random(1));
+		new ZeroRWeka().crossValidationEvaluation(abstractClassifier, originalDataset, 10, new Random(1));
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class TestClassificationTestCase {
 			// CROSS VALIDATION
 			AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
 					new String[] {});
-			new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
+			new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
 					new Random(1));
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,5 @@
 package helpful_classes;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Constants.
  */

@@ -9,7 +9,7 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
-import classifiers.NaiveBayesImplementation;
+import classifiers.NaiveBayesWeka;
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.Constants;
 import smile.graph.Graph;
@@ -79,7 +79,7 @@ public class TestLLE {
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, lleDataset,
 				new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, lleDataset, 10, new Random(1));
+		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, lleDataset, 10, new Random(1));
 	}
 
 	/**
@@ -101,6 +101,6 @@ public class TestLLE {
 		// CROSS VALIDATION
 		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
 				new String[] {});
-		new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
+		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
 	}
 }

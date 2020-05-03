@@ -6,10 +6,6 @@ import abstract_classes.DimensionalityReduction;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import interfaces.DimensionalityReductionSelection;
-import smile.manifold.IsoMap;
-import smile.manifold.LLE;
-import utilpackage.TransformToFromWeka;
-import utilpackage.WekaUtils;
 import weka.core.Instances;
 
 /**
@@ -43,10 +39,14 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 				return ((ExpectationMaximizationPCA) reductionMethod).dimReductionMethod(options);
 			}
 			case Constants.ISOMAP: {
-				return doIsomap(dataset, options);
+				DimensionalityReduction reductionMethod = new IsomapSmile();
+				setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
+				return ((IsomapSmile) reductionMethod).dimReductionMethod(options);
 			}
 			case Constants.LLE: {
-				return doLLE(dataset, options);
+				DimensionalityReduction reductionMethod = new LLESmile();
+				setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
+				return ((LLESmile) reductionMethod).dimReductionMethod(options);
 			}
 			case Constants.AUTOENCODER_WEKA: {
 				DimensionalityReduction reductionMethod = new AutoencoderWeka();
@@ -62,43 +62,6 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 			logger.getLogger().log(Level.SEVERE, "DimensionalityReductionSelector in in error: {0}", e);
 		}
 		return null;
-	}
-
-	/**
-	 * Do isomap.
-	 *
-	 * @param originalDataset the original dataset
-	 * @param options         the options
-	 * @return the instances
-	 */
-	private Instances doIsomap(Instances originalDataset, String[] options) {
-		// first option should be the number of expected dimensions
-		// second option should be the k nearest neighbors
-		// third option should be whether C-Isomap or standard algorithm
-		// the last 2 options will be always the dataset name and the name of the class
-		double data[][] = TransformToFromWeka.transformWekaToManifolds(originalDataset);
-		IsoMap myIsomap = new IsoMap(data, Integer.parseInt(options[0]), Integer.parseInt(options[1]),
-				Boolean.parseBoolean(options[2]));
-		double[][] coordinates = myIsomap.getCoordinates();
-		return TransformToFromWeka.manifoldsToWeka(coordinates, options[3],
-				WekaUtils.getDatasetClassValues(originalDataset), options[4]);
-	}
-
-	/**
-	 * Do LLE.
-	 *
-	 * @param originalDataset the original dataset
-	 * @param options         the options
-	 * @return the instances
-	 */
-	private Instances doLLE(Instances originalDataset, String[] options) {
-		// first option should be the number of expected dimensions
-		// second option should be the k nearest neighbors
-		double data[][] = TransformToFromWeka.transformWekaToManifolds(originalDataset);
-		LLE lle = new LLE(data, Integer.parseInt(options[0]), Integer.parseInt(options[1]));
-		double[][] coordinates = lle.getCoordinates();
-		return TransformToFromWeka.manifoldsToWeka(coordinates, "lleDataset",
-				WekaUtils.getDatasetClassValues(originalDataset), "class");
 	}
 
 	/**

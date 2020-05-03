@@ -5,13 +5,13 @@ import java.util.logging.Level;
 import abstract_classes.DimensionalityReduction;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
-import interfaces.DimensionalityReductionSelection;
+import interfaces.IDimensionalityReductionSelection;
 import weka.core.Instances;
 
 /**
  * The Class DimensionalityReductionSelection.
  */
-public class DimensionalityReductionChooser implements DimensionalityReductionSelection {
+public class DimensionalityReductionChooser implements IDimensionalityReductionSelection {
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();
@@ -19,9 +19,9 @@ public class DimensionalityReductionChooser implements DimensionalityReductionSe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see interfaces.DimensionalityReductionSelectionInterface#
-	 * DimensionalityReductionSelector(java.lang.String, weka.core.Instances,
-	 * boolean, java.lang.String[])
+	 * @see
+	 * interfaces.IDimensionalityReductionSelection#dimensionalityReductionSelector(
+	 * java.lang.String, weka.core.Instances, boolean, java.lang.String[])
 	 */
 	@Override
 	public Instances dimensionalityReductionSelector(String selection, Instances dataset, boolean debug,

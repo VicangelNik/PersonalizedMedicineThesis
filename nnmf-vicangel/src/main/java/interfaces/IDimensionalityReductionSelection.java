@@ -3,9 +3,9 @@ package interfaces;
 import weka.core.Instances;
 
 /**
- * The Interface DimensionalityReductionSelectionInterface.
+ * The Interface IDimensionalityReductionSelection.
  */
-public interface DimensionalityReductionSelection {
+public interface IDimensionalityReductionSelection {
 
 	/**
 	 * Dimensionality reduction selector.

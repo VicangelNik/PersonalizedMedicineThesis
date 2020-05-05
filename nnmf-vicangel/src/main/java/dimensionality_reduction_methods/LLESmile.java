@@ -1,6 +1,5 @@
 package dimensionality_reduction_methods;
 
-import abstract_classes.DimensionalityReduction;
 import interfaces.IDimensionalityReduction;
 import smile.manifold.LLE;
 import utilpackage.TransformToFromWeka;

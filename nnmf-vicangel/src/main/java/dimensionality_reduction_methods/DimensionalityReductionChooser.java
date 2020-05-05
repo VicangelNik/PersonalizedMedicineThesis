@@ -2,7 +2,6 @@ package dimensionality_reduction_methods;
 
 import java.util.logging.Level;
 
-import abstract_classes.DimensionalityReduction;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import interfaces.IDimensionalityReductionSelection;

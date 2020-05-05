@@ -1,4 +1,4 @@
-package abstract_classes;
+package dimensionality_reduction_methods;
 
 import weka.core.Instances;
 

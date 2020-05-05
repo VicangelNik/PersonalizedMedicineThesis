@@ -4,7 +4,6 @@ import java.util.Enumeration;
 import java.util.Random;
 import java.util.logging.Level;
 
-import abstract_classes.AppClassifier;
 import helpful_classes.AppLogger;
 import interfaces.IAppClassifier;
 import weka.classifiers.AbstractClassifier;

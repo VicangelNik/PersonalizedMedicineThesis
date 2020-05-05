@@ -7,7 +7,6 @@ import org.scify.EMPCA.EMPCA;
 import org.scify.EMPCA.Feature;
 import org.scify.EMPCA.JavaPCAInputToScala;
 
-import abstract_classes.DimensionalityReduction;
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import helpful_classes.Constants;
 import interfaces.IDimensionalityReduction;

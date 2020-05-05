@@ -1,4 +1,4 @@
-package abstract_classes;
+package classifiers;
 
 /**
  * The Class AppClassifier.

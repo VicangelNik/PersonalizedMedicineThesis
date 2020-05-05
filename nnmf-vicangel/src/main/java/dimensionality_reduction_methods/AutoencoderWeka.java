@@ -1,6 +1,5 @@
 package dimensionality_reduction_methods;
 
-import abstract_classes.DimensionalityReduction;
 import interfaces.IDimensionalityReduction;
 import weka.core.Instances;
 import weka.filters.Filter;

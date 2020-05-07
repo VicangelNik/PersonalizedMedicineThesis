@@ -4,12 +4,10 @@
  */
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import classifiers.NaiveBayesWeka;
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.Constants;
 import smile.graph.Graph;
@@ -17,7 +15,6 @@ import smile.manifold.LLE;
 import utilpackage.TransformToFromWeka;
 import utilpackage.WekaUtils;
 import weka.api.library.WekaFileConverter;
-import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
 /**
@@ -76,10 +73,10 @@ public class TestLLE {
 		// GET DATA
 		File lleDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "lleData.arff");
 		Instances lleDataset = WekaUtils.getOriginalData(lleDataFile, "class");
-		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, lleDataset,
-				new String[] {});
-		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, lleDataset, 10, new Random(1));
+		// TODO CROSS VALIDATION
+//		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, lleDataset,
+//				new String[] {});
+//		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, lleDataset, 10, new Random(1));
 	}
 
 	/**
@@ -98,9 +95,9 @@ public class TestLLE {
 		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
 		Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.LLE,
 				originalDataset, true, options);
-		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
-				new String[] {});
-		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
+		// TODO CROSS VALIDATION
+//		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
+//				new String[] {});
+//		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
 	}
 }

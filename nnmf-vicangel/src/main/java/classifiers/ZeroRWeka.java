@@ -5,44 +5,53 @@ import java.util.logging.Level;
 
 import helpful_classes.AppLogger;
 import interfaces.IAppClassifier;
-import weka.classifiers.AbstractClassifier;
 import weka.classifiers.evaluation.Evaluation;
+import weka.classifiers.rules.ZeroR;
 import weka.core.Instances;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ZeroRWeka.
  */
-public class ZeroRWeka extends AppClassifier implements IAppClassifier {
+public class ZeroRWeka extends ZeroR implements IAppClassifier {
+
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1208983054963268481L;
 
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see interfaces.IAppClassifier#classify(weka.classifiers.AbstractClassifier,
-	 * weka.core.Instances)
+	/** The instances. */
+	private Instances instances;
+
+	/**
+	 * Instantiates a new zero R weka.
+	 *
+	 * @param instances the instances
+	 * @param options   the options
+	 * @param debug     the debug
+	 * @throws Exception the exception
 	 */
-	@Override
-	public AbstractClassifier classify(AbstractClassifier abstractClassifier, Instances data) {
-		System.out.println(abstractClassifier);
-		logger.getLogger().log(Level.INFO, "{0}", abstractClassifier);
-		return abstractClassifier;
+	ZeroRWeka(Instances instances, String[] options, boolean debug) throws Exception {
+		super();
+		this.instances = instances;
+		this.setOptions(options);
+		this.buildClassifier(instances);
+		this.setDebug(debug);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see interfaces.IAppClassifier#crossValidationEvaluation(weka.classifiers.
-	 * AbstractClassifier, weka.core.Instances, int, java.util.Random)
+	 *
+	 * @see interfaces.IAppClassifier#crossValidationEvaluation(int,
+	 * java.util.Random)
 	 */
 	@Override
-	public void crossValidationEvaluation(AbstractClassifier abstractClassifier, Instances data, int numFolds,
-			Random random) {
+	public void crossValidationEvaluation(int numFolds, Random random) {
 		Evaluation eval;
 		try {
-			eval = new Evaluation(data);
-			eval.crossValidateModel(abstractClassifier, data, numFolds, random);
+			eval = new Evaluation(instances);
+			eval.crossValidateModel(this, instances, numFolds, random);
 			System.out.println(eval.toSummaryString("Evaluation results:\n", true));
 			System.out.println(eval.toClassDetailsString());
 			System.out.println(eval.toMatrixString());
@@ -54,5 +63,23 @@ public class ZeroRWeka extends AppClassifier implements IAppClassifier {
 			e.printStackTrace();
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
+	}
+
+	/**
+	 * Gets the instances.
+	 *
+	 * @return the instances
+	 */
+	public Instances getInstances() {
+		return instances;
+	}
+
+	/**
+	 * Sets the instances.
+	 *
+	 * @param instances the new instances
+	 */
+	public void setInstances(Instances instances) {
+		this.instances = instances;
 	}
 }

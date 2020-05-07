@@ -1,17 +1,13 @@
 package classifiers;
 
+import java.util.Random;
 import java.util.logging.Level;
 
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import interfaces.IClassifierSelection;
 import weka.classifiers.AbstractClassifier;
-import weka.classifiers.bayes.NaiveBayesUpdateable;
 import weka.classifiers.evaluation.Evaluation;
-import weka.classifiers.lazy.IBk;
-import weka.classifiers.rules.JRip;
-import weka.classifiers.rules.PART;
-import weka.classifiers.rules.ZeroR;
 import weka.core.Instances;
 
 /**
@@ -24,46 +20,44 @@ public class ClassifierChooser implements IClassifierSelection {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see interfaces.IClassifierSelection#selectClassifier(java.lang.String,
 	 * weka.core.Instances, java.lang.String[])
 	 */
 	@Override
 	public AbstractClassifier selectClassifier(String selection, Instances instances, String[] options) {
 		AbstractClassifier abstractClassifier = null;
-		switch (selection) {
-		case Constants.NAIVE_BAYES: {
-			abstractClassifier = new NaiveBayesUpdateable();
-			break;
-		}
-		case Constants.ZERO_R: {
-			abstractClassifier = new ZeroR();
-			break;
-		}
-		case Constants.JRIP: {
-			abstractClassifier = new JRip();
-			break;
-		}
-		case Constants.PART: {
-			abstractClassifier = new PART();
-			break;
-		}
-		case Constants.IBK: {
-			abstractClassifier = new IBk();
-			break;
-		}
-		default: {
-			throw new IllegalArgumentException("Select a classifier");
-		}
-		}
+		boolean debug = true;
 		try {
-			abstractClassifier.setOptions(options);
-			abstractClassifier.buildClassifier(instances);
+			switch (selection) {
+			case Constants.NAIVE_BAYES: {
+				abstractClassifier = new NaiveBayesWeka(instances, options, debug);
+				break;
+			}
+			case Constants.ZERO_R: {
+				abstractClassifier = new ZeroRWeka(instances, options, debug);
+				break;
+			}
+			case Constants.JRIP: {
+				abstractClassifier = new JRipWeka(instances, options, debug);
+				break;
+			}
+			case Constants.PART: {
+				abstractClassifier = new PARTWeka(instances, options, debug);
+				break;
+			}
+			case Constants.IBK: {
+				abstractClassifier = new IBkWeka(instances, options, debug);
+				break;
+			}
+			default: {
+				throw new IllegalArgumentException("Select a classifier");
+			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
-		abstractClassifier.setDebug(true);
 		System.out.println(abstractClassifier.getCapabilities());
 		logger.getLogger().log(Level.INFO, "{0}", abstractClassifier.getCapabilities());
 		// logger.getLogger().log(Level.INFO, abstractClassifier.getRevision());
@@ -138,5 +132,41 @@ public class ClassifierChooser implements IClassifierSelection {
 		System.out.println(eval.weightedRecall());
 		System.out.println(eval.weightedTrueNegativeRate());
 		System.out.println(eval.weightedTruePositiveRate());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see interfaces.IClassifierSelection#crossValidationAction(java.lang.String,
+	 * weka.classifiers.AbstractClassifier, int, int)
+	 */
+	@Override
+	public void crossValidationAction(String clSelection, AbstractClassifier classifier, int numFolds, int random) {
+		Random rand = new Random(random);
+		switch (clSelection) {
+		case Constants.NAIVE_BAYES: {
+			((NaiveBayesWeka) classifier).crossValidationEvaluation(numFolds, rand);
+			break;
+		}
+		case Constants.ZERO_R: {
+			((ZeroRWeka) classifier).crossValidationEvaluation(numFolds, rand);
+			break;
+		}
+		case Constants.JRIP: {
+			((JRipWeka) classifier).crossValidationEvaluation(numFolds, rand);
+			break;
+		}
+		case Constants.PART: {
+			((PARTWeka) classifier).crossValidationEvaluation(numFolds, rand);
+			break;
+		}
+		case Constants.IBK: {
+			((IBkWeka) classifier).crossValidationEvaluation(numFolds, rand);
+			break;
+		}
+		default: {
+			throw new IllegalArgumentException("Select a classifier");
+		}
+		}
 	}
 }

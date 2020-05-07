@@ -4,13 +4,11 @@
  */
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 import java.util.logging.Level;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import classifiers.NaiveBayesWeka;
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
@@ -20,7 +18,6 @@ import utilpackage.TransformToFromWeka;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
 import weka.api.library.WekaFileConverter;
-import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
 /**
@@ -53,9 +50,9 @@ public class TestIsomapTestCase {
 		// here we save the new data in an arff file
 		WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 		wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + "isomapData.arff");
-		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
-		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, reData, 10, new Random(1));
+		// TODO CROSS VALIDATION
+//		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
+//		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, reData, 10, new Random(1));
 		// new NaiveBayesImplementation().classify(abstractClassifier, originalDataset);
 		Graph graph = myIsomap.getNearestNeighborGraph();
 		int[] indexes = myIsomap.getIndex();
@@ -74,10 +71,10 @@ public class TestIsomapTestCase {
 		// GET DATA
 		File isomapDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "isomapData.arff");
 		Instances isomapDataset = WekaUtils.getOriginalData(isomapDataFile, "class");
-		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, isomapDataset,
-				new String[] {});
-		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, isomapDataset, 10, new Random(1));
+		// TODO CROSS VALIDATION
+//		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, isomapDataset,
+//				new String[] {});
+//		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, isomapDataset, 10, new Random(1));
 	}
 
 	/**

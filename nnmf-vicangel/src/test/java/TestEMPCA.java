@@ -14,8 +14,6 @@ import org.scify.EMPCA.Feature;
 import org.scify.EMPCA.JavaPCAInputToScala;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
-import classifiers.JRipWeka;
-import classifiers.NaiveBayesWeka;
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
@@ -24,7 +22,6 @@ import utilpackage.TransformToFromWeka;
 import utilpackage.Utils;
 import utilpackage.WekaUtils;
 import weka.api.library.WekaFileConverter;
-import weka.classifiers.AbstractClassifier;
 import weka.core.Attribute;
 import weka.core.Instances;
 
@@ -80,10 +77,12 @@ public class TestEMPCA {
 				"class");
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns());
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
-		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
-		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
-				new Random(1));
+		// TODO CROSS VALIDATION
+		// AbstractClassifier abstractClassifier =
+		// WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
+		// new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier,
+		// originalDataset, 10,
+		// new Random(1));
 	}
 
 	/**
@@ -127,10 +126,11 @@ public class TestEMPCA {
 		// attribute.
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns() + 1);
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
-		// CROSS VALIDATION
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
-		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, originalDataset, 10,
-				new Random(1));
+		// TODO CROSS VALIDATION
+		// AbstractClassifier abstractClassifier =
+		// WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
+		// new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier,
+		// originalDataset, 10, new Random(1));
 	}
 
 	/**
@@ -143,14 +143,14 @@ public class TestEMPCA {
 		// GET DATA
 		File empcaDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "10empcaData.arff");
 		Instances empcaDataset = WekaUtils.getOriginalData(empcaDataFile, "class");
-		// CROSS VALIDATION
+		// TODO CROSS VALIDATION
 		// NAIVE BAYES
-		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, empcaDataset,
-				new String[] {});
-		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
-		// JRIP
-		abstractClassifier = WekaUtils.getClassifier(Constants.JRIP, empcaDataset, new String[] {});
-		new JRipWeka().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
+//		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, empcaDataset,
+//				new String[] {});
+//		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
+//		// JRIP
+//		abstractClassifier = WekaUtils.getClassifier(Constants.JRIP, empcaDataset, new String[] {});
+//		new JRipWeka().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class TestEMPCA {
 		String[] nPCsArray = { "20", "30", "60", "110", "510", "1010" };
 		String className = "class";
 		for (String nPCs : nPCsArray) {
-			String newDatasetName = (Integer.parseInt(nPCs) - 10) + "empcaData";
+			String newDatasetName = Integer.parseInt(nPCs) - 10 + "empcaData";
 			String[] options = { nPCs, "20", newDatasetName, className };
 			// Get current time
 			long start = System.nanoTime();

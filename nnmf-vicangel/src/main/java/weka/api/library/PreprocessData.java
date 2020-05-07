@@ -33,9 +33,11 @@ public class PreprocessData implements ΙPreprocessData {
 	@Override
 	public Instances removeFeaturesByType(int tagId) throws Exception {
 		RemoveType removeType = new RemoveType();
-		removeType.setInputFormat(dataset);
 		SelectedTag tag = new SelectedTag(tagId, RemoveType.TAGS_ATTRIBUTETYPE);
 		removeType.setAttributeType(tag);
+		// The setInputFormat(Instances) method always has to be the last call before
+		// the filter is applied, e.g., with Filter.useFilter(Instances,Filter)
+		removeType.setInputFormat(dataset);
 		return Filter.useFilter(dataset, removeType);
 	}
 
@@ -52,6 +54,8 @@ public class PreprocessData implements ΙPreprocessData {
 		// other sets.
 		remove.setInvertSelection(invert);
 		remove.setAttributeIndices(rangeList);
+		// The setInputFormat(Instances) method always has to be the last call before
+		// the filter is applied, e.g., with Filter.useFilter(Instances,Filter)
 		remove.setInputFormat(dataset);
 		return Filter.useFilter(dataset, remove);
 	}
@@ -64,6 +68,8 @@ public class PreprocessData implements ΙPreprocessData {
 	@Override
 	public Instances removeMissingValues() throws Exception {
 		ReplaceMissingValues replaceMissingValues = new ReplaceMissingValues();
+		// The setInputFormat(Instances) method always has to be the last call before
+		// the filter is applied, e.g., with Filter.useFilter(Instances,Filter)
 		replaceMissingValues.setInputFormat(dataset);
 		return Filter.useFilter(dataset, replaceMissingValues);
 	}

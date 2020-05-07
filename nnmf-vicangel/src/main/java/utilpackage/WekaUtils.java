@@ -337,7 +337,8 @@ public final class WekaUtils {
 	 * Gets the classifier.
 	 *
 	 * @param classifierName the classifier name
-	 * @param loader         the loader
+	 * @param instances      the instances
+	 * @param options        the options
 	 * @return the classifier
 	 */
 	public static AbstractClassifier getClassifier(String classifierName, Instances instances, String[] options) {
@@ -346,11 +347,12 @@ public final class WekaUtils {
 	}
 
 	/**
+	 * Gets the original data.
 	 *
-	 * @param file
-	 * @param featureClassName
-	 * @return
-	 * @throws IOException
+	 * @param file             the file
+	 * @param featureClassName the feature class name
+	 * @return the original data
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static Instances getOriginalData(File file, String featureClassName) throws IOException {
 		AbstractFileLoader arffLoader = new ArffLoader();
@@ -361,11 +363,11 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * Write object to disk.
+	 * Serialize object.
 	 *
-	 * @param filePath
-	 * @param object
-	 * @throws Exception
+	 * @param filePath the file path
+	 * @param object   the object
+	 * @param writeAll the write all
 	 */
 	public static void serializeObject(String filePath, Object[] object, boolean writeAll) {
 		Path path = Paths.get(filePath);
@@ -389,6 +391,14 @@ public final class WekaUtils {
 		}
 	}
 
+	/**
+	 * Desirialize object.
+	 *
+	 * @param filePath the file path
+	 * @param readAll  the read all
+	 * @return the object[]
+	 * @throws Exception the exception
+	 */
 	public static Object[] desirializeObject(String filePath, boolean readAll) throws Exception {
 		Path path = Paths.get(filePath);
 		if (readAll) {
@@ -399,10 +409,10 @@ public final class WekaUtils {
 	}
 
 	/**
-	 * Gets the class values of the Dataset.
+	 * Gets the dataset class values.
 	 *
-	 * @param originalDataset
-	 * @return
+	 * @param originalDataset the original dataset
+	 * @return the dataset class values
 	 */
 	public static List<Double> getDatasetClassValues(Instances originalDataset) {
 		List<Double> classValues = new ArrayList<>();
@@ -411,5 +421,19 @@ public final class WekaUtils {
 			classValues.add(current.value(originalDataset.classIndex()));
 		}
 		return classValues;
+	}
+
+	/**
+	 * Cross validation action.
+	 *
+	 * @param classifierName the classifier name
+	 * @param classifier     the classifier
+	 * @param numFolds       the num folds
+	 * @param random         the random
+	 */
+	public static void crossValidationAction(String classifierName, AbstractClassifier classifier, int numFolds,
+			int random) {
+		IClassifierSelection classifierSelection = new ClassifierChooser();
+		classifierSelection.crossValidationAction(classifierName, classifier, numFolds, random);
 	}
 }

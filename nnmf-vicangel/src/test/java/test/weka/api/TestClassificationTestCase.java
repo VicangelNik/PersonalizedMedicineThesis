@@ -12,7 +12,6 @@ import utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestClassificationTestCase.
  */
@@ -97,6 +96,20 @@ public class TestClassificationTestCase {
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
 		AbstractClassifier classifier = WekaUtils.getClassifier(Constants.IBK, originalDataset, new String[] {});
 		WekaUtils.crossValidationAction(Constants.IBK, classifier, numFolds, random);
+	}
+
+	/**
+	 * Test deep learning 4 j.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void testDeepLearning4j() throws IOException {
+		File level2File = new File(datasetFileName);
+		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+		AbstractClassifier classifier = WekaUtils.getClassifier(Constants.DEEPLEARNING4J, originalDataset,
+				new String[] { "1", "true" });
+		WekaUtils.crossValidationAction(Constants.DEEPLEARNING4J, classifier, numFolds, random);
 	}
 
 	/**

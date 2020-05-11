@@ -9,6 +9,11 @@ import interfaces.IClassifierSelection;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.evaluation.Evaluation;
 import weka.core.Instances;
+import weka.dl4j.NeuralNetConfiguration;
+import weka.dl4j.activations.ActivationSoftmax;
+import weka.dl4j.layers.OutputLayer;
+import weka.dl4j.lossfunctions.LossMCXENT;
+import weka.dl4j.updater.Adam;
 
 /**
  * The Class ClassifierChooser.
@@ -48,6 +53,17 @@ public class ClassifierChooser implements IClassifierSelection {
 			}
 			case Constants.IBK: {
 				abstractClassifier = new IBkWeka(instances, options, debug);
+				break;
+			}
+			case Constants.DEEPLEARNING4J: {
+				// Define the output layer
+				OutputLayer outputLayer = new OutputLayer();
+				outputLayer.setActivationFunction(new ActivationSoftmax());
+				outputLayer.setLossFn(new LossMCXENT());
+
+				NeuralNetConfiguration nnc = new NeuralNetConfiguration();
+				nnc.setUpdater(new Adam());
+				abstractClassifier = new Deeplearning4jWeka(options, outputLayer, nnc, instances);
 				break;
 			}
 			default: {
@@ -162,6 +178,10 @@ public class ClassifierChooser implements IClassifierSelection {
 		}
 		case Constants.IBK: {
 			((IBkWeka) classifier).crossValidationEvaluation(numFolds, rand);
+			break;
+		}
+		case Constants.DEEPLEARNING4J: {
+			((Deeplearning4jWeka) classifier).crossValidationEvaluation(numFolds, rand);
 			break;
 		}
 		default: {

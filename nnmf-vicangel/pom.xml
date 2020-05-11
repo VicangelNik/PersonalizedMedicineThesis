@@ -85,6 +85,15 @@
 			<artifactId>jython-standalone</artifactId>
 			<version>2.7.2</version>
 		</dependency>
+		<!-- The type org.deeplearning4j.nn.conf.layers.OutputLayer cannot be resolved. 
+			It is indirectly referenced from required .class files -->
+		<!-- Version 1.0.0-beta5 is chosen because -> ND4J VERSION CHECK FAILED 
+			- INCOMPATIBLE VERSIONS FOUND -->
+		<dependency>
+			<groupId>org.deeplearning4j</groupId>
+			<artifactId>deeplearning4j-nn</artifactId>
+			<version>1.0.0-beta5</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>

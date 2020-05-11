@@ -1,5 +1,6 @@
 package helpful_classes;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Constants.
  */
@@ -53,6 +54,9 @@ public class Constants {
 	/** The Constant IBK. */
 	public static final String IBK = "ibk";
 
+	/** The Constant DEEPLEARNING4J. */
+	public static final String DEEPLEARNING4J = "deepLearning4j";
+
 	// DIMENSIONALITY REDUCTION METHODS
 	/** The Constant PCA. */
 	public static final String PCA = "pca";
@@ -68,5 +72,4 @@ public class Constants {
 
 	/** The Constant AUTOENCODER_WEKA. */
 	public static final String AUTOENCODER_WEKA = "mlpAutoencoder";
-
 }

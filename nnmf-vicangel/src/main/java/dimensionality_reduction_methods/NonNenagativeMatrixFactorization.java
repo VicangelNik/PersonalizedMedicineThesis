@@ -16,8 +16,6 @@ import org.dulab.javanmf.updaterules.MUpdateRule;
 import org.dulab.javanmf.updaterules.UpdateRule;
 import org.jblas.DoubleMatrix;
 
-// TODO: Auto-generated Javadoc
-
 /**
  * The Class NonNenagativeMatrixFactorization.
  */

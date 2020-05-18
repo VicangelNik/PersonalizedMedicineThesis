@@ -14,7 +14,7 @@ import weka.core.Instances;
 /**
  * The Class NaiveBayesWeka.
  */
-public class NaiveBayesWeka extends NaiveBayesUpdateable implements IAppClassifier {
+public class NaiveBayesUpdatableWeka extends NaiveBayesUpdateable implements IAppClassifier {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 6386608612031529129L;
@@ -33,7 +33,7 @@ public class NaiveBayesWeka extends NaiveBayesUpdateable implements IAppClassifi
 	 * @param debug   the debug
 	 * @throws Exception the exception
 	 */
-	NaiveBayesWeka(Instances data, String[] options, boolean debug) throws Exception {
+	NaiveBayesUpdatableWeka(Instances data, String[] options, boolean debug) throws Exception {
 		super();
 		instances = data;
 		this.setOptions(options);

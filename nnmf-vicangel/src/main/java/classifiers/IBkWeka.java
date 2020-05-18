@@ -28,15 +28,13 @@ public class IBkWeka extends IBk implements IAppClassifier {
 	 *
 	 * @param data    the data
 	 * @param options the options
-	 * @param debug   the debug
 	 * @throws Exception the exception
 	 */
-	IBkWeka(Instances data, String[] options, boolean debug) throws Exception {
+	IBkWeka(Instances data, String[] options) throws Exception {
 		super();
 		instances = data;
 		this.setOptions(options);
 		this.buildClassifier(data);
-		this.setDebug(debug);
 	}
 
 	/*

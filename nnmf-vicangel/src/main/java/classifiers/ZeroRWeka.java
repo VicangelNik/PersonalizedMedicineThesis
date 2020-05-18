@@ -9,7 +9,6 @@ import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.rules.ZeroR;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ZeroRWeka.
  */
@@ -29,15 +28,13 @@ public class ZeroRWeka extends ZeroR implements IAppClassifier {
 	 *
 	 * @param instances the instances
 	 * @param options   the options
-	 * @param debug     the debug
 	 * @throws Exception the exception
 	 */
-	ZeroRWeka(Instances instances, String[] options, boolean debug) throws Exception {
+	ZeroRWeka(Instances instances, String[] options) throws Exception {
 		super();
 		this.instances = instances;
 		this.setOptions(options);
 		this.buildClassifier(instances);
-		this.setDebug(debug);
 	}
 
 	/*

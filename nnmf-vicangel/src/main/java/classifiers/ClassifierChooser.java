@@ -32,11 +32,10 @@ public class ClassifierChooser implements IClassifierSelection {
 	@Override
 	public AbstractClassifier selectClassifier(String selection, Instances instances, String[] options) {
 		AbstractClassifier abstractClassifier = null;
-		boolean debug = true;
 		try {
 			switch (selection) {
 			case Constants.NAIVE_BAYES_UPDATABLE: {
-				abstractClassifier = new NaiveBayesUpdatableWeka(instances, options, debug);
+				abstractClassifier = new NaiveBayesUpdatableWeka(instances, options);
 				break;
 			}
 			case Constants.NAIVE_BAYES: {
@@ -44,19 +43,19 @@ public class ClassifierChooser implements IClassifierSelection {
 				break;
 			}
 			case Constants.ZERO_R: {
-				abstractClassifier = new ZeroRWeka(instances, options, debug);
+				abstractClassifier = new ZeroRWeka(instances, options);
 				break;
 			}
 			case Constants.JRIP: {
-				abstractClassifier = new JRipWeka(instances, options, debug);
+				abstractClassifier = new JRipWeka(instances, options);
 				break;
 			}
 			case Constants.PART: {
-				abstractClassifier = new PARTWeka(instances, options, debug);
+				abstractClassifier = new PARTWeka(instances, options);
 				break;
 			}
 			case Constants.IBK: {
-				abstractClassifier = new IBkWeka(instances, options, debug);
+				abstractClassifier = new IBkWeka(instances, options);
 				break;
 			}
 			case Constants.DEEPLEARNING4J: {

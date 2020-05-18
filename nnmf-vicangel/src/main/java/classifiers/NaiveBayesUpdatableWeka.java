@@ -30,10 +30,9 @@ public class NaiveBayesUpdatableWeka extends NaiveBayesUpdateable implements IAp
 	 *
 	 * @param data    the data
 	 * @param options the options
-	 * @param debug   the debug
 	 * @throws Exception the exception
 	 */
-	NaiveBayesUpdatableWeka(Instances data, String[] options, boolean debug) throws Exception {
+	NaiveBayesUpdatableWeka(Instances data, String[] options) throws Exception {
 		super();
 		instances = data;
 		this.setOptions(options);
@@ -43,7 +42,6 @@ public class NaiveBayesUpdatableWeka extends NaiveBayesUpdateable implements IAp
 		while (enumeration.hasMoreElements()) {
 			this.updateClassifier(enumeration.nextElement());
 		}
-		this.setDebug(debug);
 	}
 
 	/*

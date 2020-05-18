@@ -9,7 +9,6 @@ import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.rules.PART;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PARTWeka.
  */
@@ -29,20 +28,18 @@ public class PARTWeka extends PART implements IAppClassifier {
 	 *
 	 * @param instances the instances
 	 * @param options   the options
-	 * @param debug     the debug
 	 * @throws Exception the exception
 	 */
-	PARTWeka(Instances instances, String[] options, boolean debug) throws Exception {
+	PARTWeka(Instances instances, String[] options) throws Exception {
 		super();
 		this.setInstances(instances);
 		this.setOptions(options);
 		this.buildClassifier(instances);
-		this.setDebug(debug);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see interfaces.IAppClassifier#crossValidationEvaluation(int,
 	 * java.util.Random)
 	 */

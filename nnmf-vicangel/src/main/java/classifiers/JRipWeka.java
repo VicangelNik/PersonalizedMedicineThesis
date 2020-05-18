@@ -28,15 +28,13 @@ public class JRipWeka extends JRip implements IAppClassifier {
 	 *
 	 * @param instances the instances
 	 * @param options   the options
-	 * @param debug     the debug
 	 * @throws Exception the exception
 	 */
-	JRipWeka(Instances instances, String[] options, boolean debug) throws Exception {
+	JRipWeka(Instances instances, String[] options) throws Exception {
 		super();
 		this.instances = instances;
 		this.setOptions(options);
 		this.buildClassifier(instances);
-		this.setDebug(debug);
 	}
 
 	/*

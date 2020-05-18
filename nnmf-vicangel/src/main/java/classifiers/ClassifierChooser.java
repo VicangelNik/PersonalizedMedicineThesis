@@ -35,8 +35,12 @@ public class ClassifierChooser implements IClassifierSelection {
 		boolean debug = true;
 		try {
 			switch (selection) {
-			case Constants.NAIVE_BAYES: {
+			case Constants.NAIVE_BAYES_UPDATABLE: {
 				abstractClassifier = new NaiveBayesUpdatableWeka(instances, options, debug);
+				break;
+			}
+			case Constants.NAIVE_BAYES: {
+				abstractClassifier = new NaiveBayesWeka(instances, options);
 				break;
 			}
 			case Constants.ZERO_R: {
@@ -160,8 +164,12 @@ public class ClassifierChooser implements IClassifierSelection {
 	public void crossValidationAction(String clSelection, AbstractClassifier classifier, int numFolds, int random) {
 		Random rand = new Random(random);
 		switch (clSelection) {
-		case Constants.NAIVE_BAYES: {
+		case Constants.NAIVE_BAYES_UPDATABLE: {
 			((NaiveBayesUpdatableWeka) classifier).crossValidationEvaluation(numFolds, rand);
+			break;
+		}
+		case Constants.NAIVE_BAYES: {
+			((NaiveBayesWeka) classifier).crossValidationEvaluation(numFolds, rand);
 			break;
 		}
 		case Constants.ZERO_R: {

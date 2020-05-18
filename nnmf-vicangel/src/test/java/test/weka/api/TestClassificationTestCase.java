@@ -12,6 +12,7 @@ import utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestClassificationTestCase.
  */
@@ -44,6 +45,20 @@ public class TestClassificationTestCase {
 		AbstractClassifier classifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, originalDataset,
 				new String[] {});
 		WekaUtils.crossValidationAction(Constants.NAIVE_BAYES, classifier, numFolds, random);
+	}
+
+	/**
+	 * Test naive bayes updatable.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void testNaiveBayesUpdatable() throws IOException {
+		File level2File = new File(datasetFileName);
+		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+		AbstractClassifier classifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES_UPDATABLE, originalDataset,
+				new String[] {});
+		WekaUtils.crossValidationAction(Constants.NAIVE_BAYES_UPDATABLE, classifier, numFolds, random);
 	}
 
 	/**

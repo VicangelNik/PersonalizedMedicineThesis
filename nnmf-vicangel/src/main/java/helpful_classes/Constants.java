@@ -1,6 +1,5 @@
 package helpful_classes;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Constants.
  */
@@ -38,7 +37,10 @@ public class Constants {
 	/** The Constant PRIMARY_TUMOR. */
 	public static final String PRIMARY_TUMOR = "PrimaryTumor";
 
+	/** The Constant NAIVE_BAYES_UPDATABLE. */
 	// CLASSIFIERS
+	public static final String NAIVE_BAYES_UPDATABLE = "naiveBayesUpdatable";
+
 	/** The Constant NAIVE_BAYES. */
 	public static final String NAIVE_BAYES = "naiveBayes";
 

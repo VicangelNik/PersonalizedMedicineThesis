@@ -20,12 +20,15 @@ import com.opencsv.CSVReader;
 import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
+import utilpackage.LatexUtils;
 import utilpackage.WekaUtils;
 import weka.api.library.PreprocessData;
 import weka.api.library.WekaFileConverter;
 import weka.core.Attribute;
+import weka.core.AttributeStats;
 import weka.core.Instances;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestPreprocess.
  */
@@ -34,7 +37,7 @@ public class TestPreprocess {
 	/** The logger. */
 	private static AppLogger logger = AppLogger.getInstance();
 
-	/** The class name. */
+	/** The Constant className. */
 	private static final String className = "SampleStatus";
 
 	/**
@@ -91,6 +94,8 @@ public class TestPreprocess {
 		// Attributes of String Type contain only NA. Also, they are not accepted by
 		// NaiveBayes.
 		if (data.checkForStringAttributes()) {
+			// there is no need to call always this method
+			// stringAttributesInfo(data);
 			data = preprocessData.removeFeaturesByType(Attribute.STRING);
 		}
 		// DATA attribute has no information and we remove it. Vital_status and
@@ -126,6 +131,8 @@ public class TestPreprocess {
 		Assert.assertEquals("Class index should be 72121", 72121, data.classIndex());
 		Assert.assertEquals("Class name should be SampleStatus", className, data.attribute(data.classIndex()).name());
 		Assert.assertEquals("Number of classes should be 2", 2, data.numClasses());
+		// there is no need to call always this method
+		// LatexUtils.createDataInLatexFormat(data);
 	}
 
 	/**
@@ -264,5 +271,35 @@ public class TestPreprocess {
 		mRNAs.add(classIndex);
 		miRNAs.add(classIndex);
 		meth.add(classIndex);
+	}
+
+	/**
+	 * String attributes info.
+	 *
+	 * @param data the data
+	 */
+	@SuppressWarnings("unused")
+	private static void stringAttributesInfo(Instances data) {
+		Assert.assertEquals("Number of instances", 335, data.numInstances());
+		Assert.assertEquals("Number of attributes", 73665, data.numAttributes());
+		int count = 0;
+		Enumeration<Attribute> attEnumeration = data.enumerateAttributes();
+		StringBuilder sbLatex = new StringBuilder();
+		while (attEnumeration.hasMoreElements()) {
+			Attribute attribute = attEnumeration.nextElement();
+			if (attribute.type() == Attribute.STRING) {
+				count++;
+				LatexUtils.latexTableForFeatures(sbLatex, attribute.name(), count);
+				AttributeStats stats = data.attributeStats(attribute.index());
+				Assert.assertEquals("The distinct values", 0, stats.distinctCount);
+				Assert.assertEquals("The missing values", 335, stats.missingCount);
+				Assert.assertEquals("The unique values", 0, stats.uniqueCount);
+			}
+		}
+		Assert.assertEquals("Number of string attributes", 1540, count);
+		// add the last 3 features which are removed and are not string
+		sbLatex.append("DATA").append(" & ").append("Vital\\_status").append(" & ").append("Days\\_To\\_Death")
+				.append(" & ").append(" & ").append(" \\\\").append(System.lineSeparator());
+		logger.getLogger().log(Level.INFO, "{0}", "Invalid Features: " + sbLatex.toString());
 	}
 }

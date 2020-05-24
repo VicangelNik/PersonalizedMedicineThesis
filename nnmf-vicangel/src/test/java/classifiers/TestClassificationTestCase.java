@@ -1,4 +1,4 @@
-package test.weka.api;
+package classifiers;
 
 import java.io.File;
 import java.io.IOException;

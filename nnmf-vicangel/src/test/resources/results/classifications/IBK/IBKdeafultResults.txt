@@ -1,0 +1,145 @@
+IBK Default
+SRC\MAIN\RESOURCES\PATIENTANDCONTROLPROCESSEDLEVELTWO.ARFF
+May 24, 2020 11:52:02 PM com.github.fommil.netlib.ARPACK <clinit>
+WARNING: Failed to load implementation from: com.github.fommil.netlib.NativeSystemARPACK
+May 24, 2020 11:52:03 PM com.github.fommil.jni.JniLoader liberalLoad
+INFO: successfully loaded C:\Users\NIKIFO~1\AppData\Local\Temp\jniloader1972638287857184289netlib-native_ref-win-x86_64.dll
+Capabilities: [Nominal attributes, Binary attributes, Unary attributes, Empty nominal attributes, Numeric attributes, Date attributes, Missing values, Nominal class, Binary class, Numeric class, Date class, Missing class values]
+Dependencies: []
+Interfaces: [UpdateableClassifier, WeightedInstancesHandler]
+Minimum number of instances: 0
+
+Evaluation results:
+
+Correctly Classified Instances         260               77.6119 %
+Incorrectly Classified Instances        75               22.3881 %
+Kappa statistic                          0.2673
+K&B Relative Info Score               -143.3069 %
+K&B Information Score                 -173.5055 bits     -0.5179 bits/instance
+Class complexity | order 0             121.0727 bits      0.3614 bits/instance
+Class complexity | scheme              619.6376 bits      1.8497 bits/instance
+Complexity improvement     (Sf)       -498.5649 bits     -1.4883 bits/instance
+Mean absolute error                      0.2257
+Root mean squared error                  0.4716
+Relative absolute error                173.1318 %
+Root relative squared error            186.434  %
+Total Number of Instances              335     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.769    0.130    0.988      0.769    0.865      0.362    0.827     0.979     PrimaryTumor
+                 0.870    0.231    0.217      0.870    0.348      0.362    0.827     0.200     NormalTissue
+Weighted Avg.    0.776    0.137    0.935      0.776    0.829      0.362    0.827     0.925     
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 240  72 |   a = PrimaryTumor
+   3  20 |   b = NormalTissue
+
+SRC\MAIN\RESOURCES\METHDATASET.ARFF
+Capabilities: [Nominal attributes, Binary attributes, Unary attributes, Empty nominal attributes, Numeric attributes, Date attributes, Missing values, Nominal class, Binary class, Numeric class, Date class, Missing class values]
+Dependencies: []
+Interfaces: [UpdateableClassifier, WeightedInstancesHandler]
+Minimum number of instances: 0
+
+Evaluation results:
+
+Correctly Classified Instances         200               59.7015 %
+Incorrectly Classified Instances       135               40.2985 %
+Kappa statistic                          0.1241
+K&B Relative Info Score               -337.4056 %
+K&B Information Score                 -408.506  bits     -1.2194 bits/instance
+Class complexity | order 0             121.0727 bits      0.3614 bits/instance
+Class complexity | scheme             1210.6085 bits      3.6138 bits/instance
+Complexity improvement     (Sf)      -1089.5358 bits     -3.2523 bits/instance
+Mean absolute error                      0.4041
+Root mean squared error                  0.6335
+Relative absolute error                309.9802 %
+Root relative squared error            250.4211 %
+Total Number of Instances              335     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.577    0.130    0.984      0.577    0.727      0.227    0.589     0.962     PrimaryTumor
+                 0.870    0.423    0.132      0.870    0.229      0.227    0.589     0.101     NormalTissue
+Weighted Avg.    0.597    0.151    0.925      0.597    0.693      0.227    0.589     0.903     
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 180 132 |   a = PrimaryTumor
+   3  20 |   b = NormalTissue
+
+SRC\MAIN\RESOURCES\MIRNADATASET.ARFF
+Capabilities: [Nominal attributes, Binary attributes, Unary attributes, Empty nominal attributes, Numeric attributes, Date attributes, Missing values, Nominal class, Binary class, Numeric class, Date class, Missing class values]
+Dependencies: []
+Interfaces: [UpdateableClassifier, WeightedInstancesHandler]
+Minimum number of instances: 0
+
+Evaluation results:
+
+Correctly Classified Instances         210               62.6866 %
+Incorrectly Classified Instances       125               37.3134 %
+Kappa statistic                          0.0981
+K&B Relative Info Score               -318.3178 %
+K&B Information Score                 -385.396  bits     -1.1504 bits/instance
+Class complexity | order 0             121.0727 bits      0.3614 bits/instance
+Class complexity | scheme              289.0241 bits      0.8628 bits/instance
+Complexity improvement     (Sf)       -167.9514 bits     -0.5013 bits/instance
+Mean absolute error                      0.3004
+Root mean squared error                  0.439 
+Relative absolute error                230.4219 %
+Root relative squared error            173.5462 %
+Total Number of Instances              335     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.622    0.304    0.965      0.622    0.756      0.164    0.780     0.974     PrimaryTumor
+                 0.696    0.378    0.119      0.696    0.204      0.164    0.780     0.470     NormalTissue
+Weighted Avg.    0.627    0.309    0.907      0.627    0.718      0.164    0.780     0.939     
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 194 118 |   a = PrimaryTumor
+   7  16 |   b = NormalTissue
+
+SRC\MAIN\RESOURCES\MRNADATASET.ARFF
+Capabilities: [Nominal attributes, Binary attributes, Unary attributes, Empty nominal attributes, Numeric attributes, Date attributes, Missing values, Nominal class, Binary class, Numeric class, Date class, Missing class values]
+Dependencies: []
+Interfaces: [UpdateableClassifier, WeightedInstancesHandler]
+Minimum number of instances: 0
+
+Evaluation results:
+
+Correctly Classified Instances         117               34.9254 %
+Incorrectly Classified Instances       218               65.0746 %
+Kappa statistic                         -0.0041
+K&B Relative Info Score               -675.2602 %
+K&B Information Score                 -817.5557 bits     -2.4405 bits/instance
+Class complexity | order 0             121.0727 bits      0.3614 bits/instance
+Class complexity | scheme              389.1532 bits      1.1617 bits/instance
+Complexity improvement     (Sf)       -268.0805 bits     -0.8002 bits/instance
+Mean absolute error                      0.5358
+Root mean squared error                  0.5552
+Relative absolute error                410.9982 %
+Root relative squared error            219.4873 %
+Total Number of Instances              335     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.327    0.348    0.927      0.327    0.483      -0.011   0.490     0.933     PrimaryTumor
+                 0.652    0.673    0.067      0.652    0.121      -0.011   0.490     0.147     NormalTissue
+Weighted Avg.    0.349    0.370    0.868      0.349    0.459      -0.011   0.490     0.879     
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 102 210 |   a = PrimaryTumor
+   8  15 |   b = NormalTissue
+

@@ -74,4 +74,29 @@ public class Constants {
 
 	/** The Constant AUTOENCODER_WEKA. */
 	public static final String AUTOENCODER_WEKA = "mlpAutoencoder";
+
+	// FILE NAMES
+	public static final String completeFileName = Constants.SRC_MAIN_RESOURCES_PATH
+			+ "PatientAndControlProcessedLevelTwo.arff";
+
+	/** The meth file name. */
+	public static final String methFileName = Constants.SRC_MAIN_RESOURCES_PATH + "methDataset.arff";
+
+	/** The mi RNA file name. */
+	public static final String miRNAFileName = Constants.SRC_MAIN_RESOURCES_PATH + "miRNADataset.arff";
+
+	/** The m RNA file name. */
+	public static final String mRNAFileName = Constants.SRC_MAIN_RESOURCES_PATH + "mRNADataset.arff";
+
+	/** The dataset 10 EMPCA file name. */
+	public static final String dataset10EMPCAFileName = Constants.SRC_MAIN_RESOURCES_PATH + "10empcaData.arff";
+
+	/** The dataset 20 EMPCA file name. */
+	public static final String dataset20EMPCAFileName = Constants.SRC_MAIN_RESOURCES_PATH + "20empcaData.arff";
+
+	/** The dataset 50 EMPCA file name. */
+	public static final String dataset50EMPCAFileName = Constants.SRC_MAIN_RESOURCES_PATH + "50empcaData.arff";
+
+	/** The dataset 100 EMPCA file name. */
+	public static final String dataset100EMPCAFileName = Constants.SRC_MAIN_RESOURCES_PATH + "100empcaData.arff";
 }

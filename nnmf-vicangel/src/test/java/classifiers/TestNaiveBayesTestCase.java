@@ -25,7 +25,11 @@ public class TestNaiveBayesTestCase {
 //			+ "PatientAndControlProcessedLevelTwo.arff";
 //	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH + "methDataset.arff";
 //	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH + "miRNADataset.arff";
-	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH + "mRNADataset.arff";
+//	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH + "mRNADataset.arff";
+//	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH + "10empcaData.arff";
+//	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH + "20empcaData.arff";
+//	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH + "50empcaData.arff";
+	private final String datasetFileName = Constants.SRC_MAIN_RESOURCES_PATH + "100empcaData.arff";
 
 	/** The num folds. */
 	private int numFolds = 10;
@@ -34,8 +38,8 @@ public class TestNaiveBayesTestCase {
 	private int random = 1;
 
 	/** The class name. */
-	// private final String className = "class";
-	private final String className = "SampleStatus";
+	private final String className = "class";
+	// private final String className = "SampleStatus";
 
 	/**
 	 * Inits the.

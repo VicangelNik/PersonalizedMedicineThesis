@@ -1,3 +1,5 @@
+package feature.reduction.tests;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -89,7 +91,7 @@ public class TestEMPCA {
 	 * Test EMPCA calculation, prints eigenvalues and eigenvectors to log, saves new
 	 * low dimensional data to arff file and does a simple classification.
 	 *
-	 * @throws IOException
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testEMPCA() throws IOException {
@@ -134,29 +136,9 @@ public class TestEMPCA {
 	}
 
 	/**
-	 * Test EMPCA loading the already lowered dimension data.
+	 * Same as testEMPCA but it is called from DimensionalityReductionSelector.
 	 *
-	 * @throws IOException
-	 */
-	@Test
-	public void testEmpcaData() throws IOException {
-		// GET DATA
-		File empcaDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "10empcaData.arff");
-		Instances empcaDataset = WekaUtils.getOriginalData(empcaDataFile, "class");
-		// TODO CROSS VALIDATION
-		// NAIVE BAYES
-//		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, empcaDataset,
-//				new String[] {});
-//		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
-//		// JRIP
-//		abstractClassifier = WekaUtils.getClassifier(Constants.JRIP, empcaDataset, new String[] {});
-//		new JRipWeka().crossValidationEvaluation(abstractClassifier, empcaDataset, 10, new Random(1));
-	}
-
-	/**
-	 * Same as testEMPCA but it is called from DimensionalityReductionSelector
-	 *
-	 * @throws IOException
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void doEMPCA() throws IOException {
@@ -166,6 +148,8 @@ public class TestEMPCA {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
 		// number of principal components, the result due to hack will be minus 10
+		// There is a hack in the source code of EMPCA you can not create more principal
+		// components than the data instances
 		String[] nPCsArray = { "20", "30", "60", "110", "510", "1010" };
 		String className = "class";
 		for (String nPCs : nPCsArray) {
@@ -283,6 +267,26 @@ public class TestEMPCA {
 	private void checkIsNominal(Attribute attribute) {
 		if (attribute.isNominal()) {
 			System.out.println(attribute.name());
+		}
+	}
+
+	/**
+	 * Test EMPCA data files.
+	 */
+	@Test
+	public void testEMPCADataFiles() {
+		try {
+			int[] nPCsArray = { 10, 20, 50, 100 };
+			String className = "class";
+			for (int nPCs : nPCsArray) {
+				String newDatasetName = nPCs + "empcaData";
+				File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + newDatasetName + WekaUtils.WEKA_SUFFIX);
+				Instances dataset = WekaUtils.getOriginalData(level2File, className);
+				Assert.assertEquals("Number of instances", 335, dataset.numInstances());
+				Assert.assertEquals("Number of attributes", nPCs + 1, dataset.numAttributes());
+			}
+		} catch (IOException e) {
+			Assert.assertFalse(true);
 		}
 	}
 }

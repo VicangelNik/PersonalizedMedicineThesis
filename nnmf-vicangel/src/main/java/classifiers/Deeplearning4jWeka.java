@@ -38,14 +38,14 @@ public class Deeplearning4jWeka extends Dl4jMlpClassifier implements IAppClassif
 		// first option will be the seed
 		// second option will be the debug
 		// Create a new Multi-Layer-Perceptron classifier
-		Dl4jMlpClassifier clf = new Dl4jMlpClassifier();
 		// Set a seed for reproducable results
 		int seed = Integer.parseInt(options[0]);
-		clf.setSeed(seed);
-		clf.setDebug(Boolean.getBoolean(options[1]));
+		this.setSeed(seed);
+		this.setDebug(Boolean.getBoolean(options[1]));
+		this.setNumEpochs(Integer.parseInt(options[2]));
 		// Add the layers to the classifier
-		clf.setLayers(new Layer[] { outputLayer });
-		clf.setNeuralNetConfiguration(nnc);
+		this.setLayers(new Layer[] { outputLayer });
+		this.setNeuralNetConfiguration(nnc);
 		this.instances = instances;
 	}
 

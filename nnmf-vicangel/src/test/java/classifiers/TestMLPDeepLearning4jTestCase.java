@@ -15,9 +15,9 @@ import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
 /**
- * The Class TestIBKTestCase.
+ * The Class TestPartTestCase.
  */
-public class TestIBKTestCase {
+public class TestMLPDeepLearning4jTestCase {
 
 	/** The dataset file name. */
 	// private final String datasetFileName = Constants.WEKA_FILES + "iris.arff";
@@ -29,15 +29,14 @@ public class TestIBKTestCase {
 	private int random = 1;
 
 	/** The class name. */
-	private final String className = "class";
-	// private final String className = "SampleStatus";
+	// private final String className = "class";
+	private final String className = "SampleStatus";
 
 	/** The file names. */
-	// private final String[] fileNames = new String[] { completeFileName,
-	// methFileName, miRNAFileName, mRNAFileName };
-
-	private final String[] fileNames = new String[] { Constants.dataset10EMPCAFileName,
-			Constants.dataset20EMPCAFileName, Constants.dataset50EMPCAFileName, Constants.dataset100EMPCAFileName };
+	private final String[] fileNames = new String[] { Constants.completeFileName, Constants.methFileName,
+			Constants.miRNAFileName, Constants.mRNAFileName };
+//	private final String[] fileNames = new String[] { Constants.dataset10EMPCAFileName,
+//			Constants.dataset20EMPCAFileName, Constants.dataset50EMPCAFileName, Constants.dataset100EMPCAFileName };
 
 	/**
 	 * Inits the.
@@ -50,22 +49,19 @@ public class TestIBKTestCase {
 	}
 
 	/**
-	 * Test ibk default.
+	 * Test part default.
 	 */
 	@Test
-	@DisplayName("IBK Default")
-	public void testIBKDefault() {
-		// weka.classifiers.lazy.IBk -K 1 -W 0 -A
-		// "weka.core.neighboursearch.LinearNNSearch -A \"weka.core.EuclideanDistance -R
-		// first-last\""
+	@DisplayName("Multilayer Perceptron Default")
+	public void testPartDefault() {
 		for (String datasetFileName : fileNames) {
 			System.out.println(datasetFileName.toUpperCase());
 			try {
 				File level2File = new File(datasetFileName);
 				Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-				AbstractClassifier classifier = WekaUtils.getClassifier(Constants.IBK, originalDataset,
-						new String[] { "-output-debug-info" });
-				WekaUtils.crossValidationAction(Constants.IBK, classifier, numFolds, random);
+				AbstractClassifier classifier = WekaUtils.getClassifier(Constants.DEEPLEARNING4J, originalDataset,
+						new String[] { "1", "true", "10" });
+				WekaUtils.crossValidationAction(Constants.DEEPLEARNING4J, classifier, numFolds, random);
 			} catch (IOException e) {
 				Assert.assertFalse(e.getMessage(), true);
 			}

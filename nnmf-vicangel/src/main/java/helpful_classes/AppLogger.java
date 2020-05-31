@@ -71,7 +71,7 @@ public class AppLogger {
 		logger = Logger.getLogger(title);
 		try {
 			// In project.log will be logged everything on the project
-			FileHandler fh = new FileHandler(Constants.loggerPath + title, true);
+			FileHandler fh = new FileHandler(Constants.loggerPath + title, false);
 			logger.addHandler(fh);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fh.setFormatter(formatter);

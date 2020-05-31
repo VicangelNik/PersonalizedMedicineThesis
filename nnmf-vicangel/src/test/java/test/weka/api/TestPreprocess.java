@@ -28,7 +28,6 @@ import weka.core.Attribute;
 import weka.core.AttributeStats;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestPreprocess.
  */

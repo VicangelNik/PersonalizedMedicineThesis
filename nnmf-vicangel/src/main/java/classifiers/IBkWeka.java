@@ -55,7 +55,7 @@ public class IBkWeka extends IBk implements IAppClassifier {
 			logger.getLogger().log(Level.INFO, "{0}", eval.toSummaryString("Evaluation results:\n", true));
 			logger.getLogger().log(Level.INFO, "{0}", eval.toClassDetailsString());
 			logger.getLogger().log(Level.INFO, "{0}", eval.toMatrixString());
-			// printCrossValidationResults(eval, data.classIndex());
+			// ClassifierChooser.printCrossValidationResults(eval, instances.classIndex());
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.getLogger().log(Level.SEVERE, "{0}", e);

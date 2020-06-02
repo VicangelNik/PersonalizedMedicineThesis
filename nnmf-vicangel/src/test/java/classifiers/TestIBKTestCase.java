@@ -2,13 +2,16 @@ package classifiers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
+import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
@@ -19,25 +22,20 @@ import weka.core.Instances;
  */
 public class TestIBKTestCase {
 
+	/** The logger. */
+	private static AppLogger logger = AppLogger.getInstance();
+
+	/** The class name. */
+	private final String className = Constants.classNameForReducedData;
+
 	/** The dataset file name. */
-	// private final String datasetFileName = Constants.WEKA_FILES + "iris.arff";
+	private final String datasetFileName = Constants.dataset20EMPCAFileName;
 
 	/** The num folds. */
 	private int numFolds = 10;
 
 	/** The random. */
 	private int random = 1;
-
-	/** The class name. */
-	private final String className = "class";
-	// private final String className = "SampleStatus";
-
-	/** The file names. */
-	// private final String[] fileNames = new String[] { completeFileName,
-	// methFileName, miRNAFileName, mRNAFileName };
-
-	private final String[] fileNames = new String[] { Constants.dataset10EMPCAFileName,
-			Constants.dataset20EMPCAFileName, Constants.dataset50EMPCAFileName, Constants.dataset100EMPCAFileName };
 
 	/**
 	 * Inits the.
@@ -46,7 +44,17 @@ public class TestIBKTestCase {
 	 */
 	@BeforeEach
 	void init(TestInfo testInfo) {
-		System.out.println(testInfo.getDisplayName());
+		logger.getLogger().log(Level.INFO, "START TEST");
+		logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + datasetFileName);
+		logger.getLogger().log(Level.INFO, "SAVE DISPLAY NAME: " + testInfo.getDisplayName());
+	}
+
+	/**
+	 * On End.
+	 */
+	@AfterEach
+	void onEnd() {
+		logger.getLogger().log(Level.INFO, "END TEST");
 	}
 
 	/**
@@ -58,17 +66,17 @@ public class TestIBKTestCase {
 		// weka.classifiers.lazy.IBk -K 1 -W 0 -A
 		// "weka.core.neighboursearch.LinearNNSearch -A \"weka.core.EuclideanDistance -R
 		// first-last\""
-		for (String datasetFileName : fileNames) {
-			System.out.println(datasetFileName.toUpperCase());
-			try {
-				File level2File = new File(datasetFileName);
-				Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-				AbstractClassifier classifier = WekaUtils.getClassifier(Constants.IBK, originalDataset,
-						new String[] { "-output-debug-info" });
-				WekaUtils.crossValidationAction(Constants.IBK, classifier, numFolds, random);
-			} catch (IOException e) {
-				Assert.assertFalse(e.getMessage(), true);
-			}
+		// for (String datasetFileName : fileNames) {
+		System.out.println(datasetFileName.toUpperCase());
+		try {
+			File level2File = new File(datasetFileName);
+			Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+			AbstractClassifier classifier = WekaUtils.getClassifier(Constants.IBK, originalDataset,
+					new String[] { "-output-debug-info" });
+			WekaUtils.crossValidationAction(Constants.IBK, classifier, numFolds, random);
+		} catch (IOException e) {
+			Assert.assertFalse(e.getMessage(), true);
 		}
+		// }
 	}
 }

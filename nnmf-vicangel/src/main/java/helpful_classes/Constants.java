@@ -76,6 +76,7 @@ public class Constants {
 	public static final String AUTOENCODER_WEKA = "mlpAutoencoder";
 
 	// FILE NAMES
+	/** The Constant completeFileName. */
 	public static final String completeFileName = Constants.SRC_MAIN_RESOURCES_PATH
 			+ "PatientAndControlProcessedLevelTwo.arff";
 
@@ -99,4 +100,22 @@ public class Constants {
 
 	/** The dataset 100 EMPCA file name. */
 	public static final String dataset100EMPCAFileName = Constants.SRC_MAIN_RESOURCES_PATH + "100empcaData.arff";
+
+	// CLASS NAMES
+	/** The class name for reduced data. */
+	public static final String classNameForReducedData = "class";
+
+	/** The class real name. */
+	public static final String classRealName = "SampleStatus";
+
+	/** The Constant datasetRealfileNames. */
+	public static final String[] datasetRealfileNames = new String[] { completeFileName, methFileName, miRNAFileName,
+			mRNAFileName };
+
+	/** The Constant datasetEmpcafileNames. */
+	public static final String[] datasetEmpcafileNames = new String[] { Constants.dataset10EMPCAFileName,
+			Constants.dataset20EMPCAFileName, Constants.dataset50EMPCAFileName, Constants.dataset100EMPCAFileName };
+
+	/** The Constant datasetIrisFileName. */
+	public static final String datasetIrisFileName = Constants.WEKA_FILES + "iris.arff";
 }

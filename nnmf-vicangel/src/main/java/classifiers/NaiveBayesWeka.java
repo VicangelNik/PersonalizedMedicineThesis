@@ -34,7 +34,6 @@ public class NaiveBayesWeka extends NaiveBayes implements IAppClassifier {
 		super();
 		this.instances = instances;
 		this.setOptions(options);
-		logger.getLogger().log(Level.INFO, "Options: {0}", this.getOptions());
 		// build classifier
 		this.buildClassifier(instances);
 	}

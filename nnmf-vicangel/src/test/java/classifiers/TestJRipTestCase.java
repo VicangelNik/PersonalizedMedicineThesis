@@ -37,6 +37,10 @@ public class TestJRipTestCase {
 	/** The random. */
 	private int random = 1;
 
+	private String[] usePruning = new String[] { " -P ", "" };
+
+	private String[] checkErrorRate = new String[] { " -E ", "" };
+
 	/**
 	 * Inits the.
 	 *
@@ -45,8 +49,9 @@ public class TestJRipTestCase {
 	@BeforeEach
 	void init(TestInfo testInfo) {
 		logger.getLogger().log(Level.INFO, "START TEST");
-		logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + datasetFileName);
-		logger.getLogger().log(Level.INFO, "SAVE DISPLAY NAME: " + testInfo.getDisplayName());
+		// logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + datasetFileName);
+		// logger.getLogger().log(Level.INFO, "SAVE DISPLAY NAME: " +
+		// testInfo.getDisplayName());
 	}
 
 	/**
@@ -64,7 +69,6 @@ public class TestJRipTestCase {
 	@DisplayName("Jrip Default")
 	public void testJripDefault() {
 		// "-F 3 -N 2.0 -O 2 -S 1"
-		// for (String datasetFileName : fileNames) {
 		System.out.println(datasetFileName.toUpperCase());
 		try {
 			File level2File = new File(datasetFileName);
@@ -74,6 +78,41 @@ public class TestJRipTestCase {
 		} catch (IOException e) {
 			Assert.assertFalse(e.getMessage(), true);
 		}
-		// }
+	}
+
+	/**
+	 * Test jrip all.
+	 */
+	@Test
+	@DisplayName("Jrip All")
+	public void testJripAll() {
+		// Default: "-F 3 -N 2.0 -O 2 -S 1"
+		try {
+			for (String datasetFileName : Constants.datasetEmpcafileNames) {
+				int count = 0;
+				File level2File = new File(datasetFileName);
+				Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+				for (int optimization = 1; optimization <= 10;) {
+					for (int folds = 1; folds <= 20; folds++) {
+						for (double mWeight = 0.5; mWeight <= 10; mWeight += 0.5) {
+							for (String prune : usePruning) {
+								for (String errorRate : checkErrorRate) {
+									String options = " -O " + optimization + " -F " + folds + " -N " + mWeight + prune
+											+ errorRate;
+									count++;
+									logger.getLogger().log(Level.INFO,
+											"SAVE TEST INFO NAME: " + "Configuration_" + count);
+									AbstractClassifier classifier = WekaUtils.getClassifier(Constants.JRIP,
+											originalDataset, weka.core.Utils.splitOptions(options));
+									WekaUtils.crossValidationAction(Constants.JRIP, classifier, numFolds, random);
+								}
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			Assert.assertFalse(e.getMessage(), true);
+		}
 	}
 }

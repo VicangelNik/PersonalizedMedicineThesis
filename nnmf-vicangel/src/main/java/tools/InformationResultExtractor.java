@@ -20,11 +20,11 @@ public class InformationResultExtractor {
 	/** The Constant savefile. */
 	private static final String savefile = "INFO: SAVE FILE NAME: ";
 
-	/** The Constant saveDisplay. */
-	private static final String saveDisplay = "INFO: SAVE DISPLAY NAME: ";
+	/** The Constant saveTestInfo. */
+	private static final String saveTestInfo = "INFO: SAVE TEST INFO NAME: ";
 
 	/** The Constant optionsPreText. */
-	private static final String optionsPreText = "INFO: Options: ";
+	private static final String optionsPreText = "INFO: OPTIONS: ";
 
 	/**
 	 * The main method.
@@ -46,9 +46,8 @@ public class InformationResultExtractor {
 				String line = scanner.nextLine();
 				if (line.contains(savefile)) {
 					fileName = line.replace(savefile, "");
-					fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
-				} else if (line.contains(saveDisplay)) {
-					displayName = line.replace(saveDisplay, "");
+				} else if (line.contains(saveTestInfo)) {
+					displayName = line.replace(saveTestInfo, "");
 				} else if (line.contains(optionsPreText)) {
 					options = line.replace(optionsPreText, "");
 				} else if (line.contains(searchBy)) {

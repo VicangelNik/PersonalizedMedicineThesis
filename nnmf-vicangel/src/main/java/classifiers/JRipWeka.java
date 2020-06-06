@@ -34,7 +34,6 @@ public class JRipWeka extends JRip implements IAppClassifier {
 		super();
 		this.instances = instances;
 		this.setOptions(options);
-		logger.getLogger().log(Level.INFO, "Options: {0}", this.getOptions());
 		this.buildClassifier(instances);
 	}
 

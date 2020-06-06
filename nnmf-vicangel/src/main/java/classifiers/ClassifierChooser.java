@@ -73,8 +73,6 @@ public class ClassifierChooser implements IClassifierSelection {
 				throw new IllegalArgumentException("Select a classifier");
 			}
 			}
-			logger.getLogger().log(Level.INFO, "Current settings of the classifier: {0}",
-					abstractClassifier.getOptions());
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.getLogger().log(Level.SEVERE, "{0}", e);

@@ -34,7 +34,6 @@ public class ZeroRWeka extends ZeroR implements IAppClassifier {
 		super();
 		this.instances = instances;
 		this.setOptions(options);
-		logger.getLogger().log(Level.INFO, "Options: {0}", this.getOptions());
 		this.buildClassifier(instances);
 	}
 

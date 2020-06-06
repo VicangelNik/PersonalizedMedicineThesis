@@ -17,7 +17,6 @@ import utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestNaiveBayesTestCase.
  */

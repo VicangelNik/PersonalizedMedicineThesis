@@ -36,7 +36,6 @@ public class NaiveBayesUpdatableWeka extends NaiveBayesUpdateable implements IAp
 		super();
 		instances = data;
 		this.setOptions(options);
-		logger.getLogger().log(Level.INFO, "Options: {0}", this.getOptions());
 		Enumeration<Instance> enumeration = instances.enumerateInstances();
 		// build classifier
 		this.buildClassifier(instances);

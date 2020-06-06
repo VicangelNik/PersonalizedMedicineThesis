@@ -34,7 +34,6 @@ public class PARTWeka extends PART implements IAppClassifier {
 		super();
 		this.setInstances(instances);
 		this.setOptions(options);
-		logger.getLogger().log(Level.INFO, "Options: {0}", this.getOptions());
 		this.buildClassifier(instances);
 	}
 

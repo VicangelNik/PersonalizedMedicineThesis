@@ -46,7 +46,6 @@ public class Deeplearning4jWeka extends Dl4jMlpClassifier implements IAppClassif
 		// Add the layers to the classifier
 		this.setLayers(new Layer[] { outputLayer });
 		this.setNeuralNetConfiguration(nnc);
-		logger.getLogger().log(Level.INFO, "Options: {0}", this.getOptions());
 		this.instances = instances;
 	}
 

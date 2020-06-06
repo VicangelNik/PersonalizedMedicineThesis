@@ -34,7 +34,6 @@ public class IBkWeka extends IBk implements IAppClassifier {
 		super();
 		instances = data;
 		this.setOptions(options);
-		logger.getLogger().log(Level.INFO, "Options: {0}", this.getOptions());
 		this.buildClassifier(data);
 	}
 

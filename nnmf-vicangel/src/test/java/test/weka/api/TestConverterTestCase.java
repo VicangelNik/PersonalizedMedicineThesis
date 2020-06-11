@@ -41,16 +41,15 @@ public class TestConverterTestCase {
 
 	/**
 	 * Saves the processed data set as csv
-	 * 
+	 *
 	 * @throws IOException
-	 * 
+	 *
 	 */
 	@Test
 	public void testConvertArffToCSVTestCase() throws IOException {
-		String featureClassName = "SampleStatus";
-		File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
+		File arffFile = new File(Constants.completeFileName);
 		File csvFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "finalDataset.csv");
-		Instances originalDataset = WekaUtils.getOriginalData(arffFile, featureClassName);
+		Instances originalDataset = WekaUtils.getOriginalData(arffFile, Constants.classRealName);
 		WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 		Assert.assertTrue("The excpected class should be in position: ", 72121 == originalDataset.classIndex());
 		wekaFileConverterImpl.csvSaver(originalDataset, csvFile.getAbsolutePath());
@@ -61,7 +60,7 @@ public class TestConverterTestCase {
 		CSVLoader csvLoader = new CSVLoader();
 		csvLoader.setFile(csvFile.getAbsoluteFile());
 		Instances csvData = csvLoader.getDataSet();
-		csvData.setClass(csvData.attribute(featureClassName));
+		csvData.setClass(csvData.attribute(Constants.classRealName));
 		// ASSERTS
 		Assert.assertTrue("The number of instances should be the same",
 				csvData.numInstances() == originalDataset.numInstances());

@@ -16,6 +16,10 @@ public class Constants {
 		throw new IllegalArgumentException("Utillity class should not be initialized");
 	}
 
+	/** The logger. */
+	public static AppLogger logger = AppLogger.getInstance();
+
+	// PATHS
 	/** The Constant SRC_TEST_RESOURCES_PATH. */
 	public static final String SRC_TEST_RESOURCES_PATH = "src\\test\\resources\\";
 

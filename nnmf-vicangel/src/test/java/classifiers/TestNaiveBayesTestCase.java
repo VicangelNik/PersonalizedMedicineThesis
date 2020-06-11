@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
-import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
@@ -21,9 +20,6 @@ import weka.core.Instances;
  * The Class TestNaiveBayesTestCase.
  */
 public class TestNaiveBayesTestCase {
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/** The class name. */
 	private final String className = Constants.classNameForReducedData;
@@ -44,9 +40,9 @@ public class TestNaiveBayesTestCase {
 	 */
 	@BeforeEach
 	void init(TestInfo testInfo) {
-		logger.getLogger().log(Level.INFO, "START TEST");
-		logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + datasetFileName);
-		logger.getLogger().log(Level.INFO, "SAVE DISPLAY NAME: " + testInfo.getDisplayName());
+		Constants.logger.getLogger().log(Level.INFO, "START TEST");
+		Constants.logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + datasetFileName);
+		Constants.logger.getLogger().log(Level.INFO, "SAVE DISPLAY NAME: " + testInfo.getDisplayName());
 	}
 
 	/**
@@ -54,7 +50,7 @@ public class TestNaiveBayesTestCase {
 	 */
 	@AfterEach
 	void onEnd() {
-		logger.getLogger().log(Level.INFO, "END TEST");
+		Constants.logger.getLogger().log(Level.INFO, "END TEST");
 	}
 
 	/**

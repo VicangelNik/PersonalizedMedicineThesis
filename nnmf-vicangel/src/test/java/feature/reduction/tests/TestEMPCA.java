@@ -17,7 +17,6 @@ import org.scify.EMPCA.JavaPCAInputToScala;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
-import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import scala.Tuple2;
 import utilpackage.TransformToFromWeka;
@@ -27,7 +26,6 @@ import weka.api.library.WekaFileConverter;
 import weka.core.Attribute;
 import weka.core.Instances;
 
-// TODO: Auto-generated Javadoc
 /*
  * The standard Scala backend is a Java VM. Scala classes are Java classes, and vice versa.
  * You can call the methods of either language from methods in the other one.
@@ -39,9 +37,6 @@ import weka.core.Instances;
  * The Class TestEMPCA.
  */
 public class TestEMPCA {
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/**
 	 * Test.
@@ -161,8 +156,9 @@ public class TestEMPCA {
 			Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.EMPCA,
 					originalDataset, true, options);
 			System.out.println("Execution for EMPCA with " + nPCs + " principal components\n");
-			logger.getLogger().log(Level.INFO, "Execution for EMPCA with " + nPCs + " principal components\n");
-			logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
+			Constants.logger.getLogger().log(Level.INFO,
+					"Execution for EMPCA with " + nPCs + " principal components\n");
+			Constants.logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
 			// here we save the new data in an arff file
 			WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 			wekaFileConverterImpl.arffSaver(dataset,
@@ -178,14 +174,14 @@ public class TestEMPCA {
 	@SuppressWarnings("unused")
 	private static void printEigenValuesVectors(Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors) {
 		System.out.println("start printing values");
-		logger.getLogger().log(Level.INFO, "EigenValues" + System.lineSeparator());
+		Constants.logger.getLogger().log(Level.INFO, "EigenValues" + System.lineSeparator());
 		for (int i = 0; i < eigenValueAndVectors._1.length; i++) {
 			double value = eigenValueAndVectors._1[i];
-			logger.getLogger().log(Level.INFO, String.valueOf(value) + "\t");
+			Constants.logger.getLogger().log(Level.INFO, String.valueOf(value) + "\t");
 		}
-		logger.getLogger().log(Level.INFO, "EigenVectors" + System.lineSeparator());
+		Constants.logger.getLogger().log(Level.INFO, "EigenVectors" + System.lineSeparator());
 		for (int i = 0; i < eigenValueAndVectors._2.columns(); i++) {
-			logger.getLogger().log(Level.INFO, String.valueOf(eigenValueAndVectors._2.viewColumn(i)));
+			Constants.logger.getLogger().log(Level.INFO, String.valueOf(eigenValueAndVectors._2.viewColumn(i)));
 		}
 	}
 

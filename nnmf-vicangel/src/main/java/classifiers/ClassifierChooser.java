@@ -3,7 +3,6 @@ package classifiers;
 import java.util.Random;
 import java.util.logging.Level;
 
-import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import interfaces.IClassifierSelection;
 import weka.classifiers.AbstractClassifier;
@@ -19,9 +18,6 @@ import weka.dl4j.updater.Adam;
  * The Class ClassifierChooser.
  */
 public class ClassifierChooser implements IClassifierSelection {
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/*
 	 * (non-Javadoc)
@@ -75,7 +71,7 @@ public class ClassifierChooser implements IClassifierSelection {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.getLogger().log(Level.SEVERE, "{0}", e);
+			Constants.logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 		return abstractClassifier;
 	}
@@ -89,51 +85,57 @@ public class ClassifierChooser implements IClassifierSelection {
 	 */
 
 	public static void printCrossValidationResults(Evaluation eval, int classIndex) throws Exception {
-		logger.getLogger().log(Level.INFO, "Number of instances correctly classified: {0}", eval.correct());
-		logger.getLogger().log(Level.INFO, "Number of incorrectly classified instances: {0}, ", eval.incorrect());
-		logger.getLogger().log(Level.INFO, "Number of unclassified instances: {0}", eval.unclassified());
-		logger.getLogger().log(Level.INFO, "Percent of correctly classified instances: {0}", eval.pctCorrect());
-		logger.getLogger().log(Level.INFO, "Percent of incorrectly classified instances: {0}", eval.pctIncorrect());
-		logger.getLogger().log(Level.INFO, "Percent of unclassified instances: {0} ", eval.pctUnclassified());
+		Constants.logger.getLogger().log(Level.INFO, "Number of instances correctly classified: {0}", eval.correct());
+		Constants.logger.getLogger().log(Level.INFO, "Number of incorrectly classified instances: {0}, ",
+				eval.incorrect());
+		Constants.logger.getLogger().log(Level.INFO, "Number of unclassified instances: {0}", eval.unclassified());
+		Constants.logger.getLogger().log(Level.INFO, "Percent of correctly classified instances: {0}",
+				eval.pctCorrect());
+		Constants.logger.getLogger().log(Level.INFO, "Percent of incorrectly classified instances: {0}",
+				eval.pctIncorrect());
+		Constants.logger.getLogger().log(Level.INFO, "Percent of unclassified instances: {0} ", eval.pctUnclassified());
 		try {
-			logger.getLogger().log(Level.INFO, "Correlation coefficient if the class is numeric: {0}",
+			Constants.logger.getLogger().log(Level.INFO, "Correlation coefficient if the class is numeric: {0}",
 					eval.correlationCoefficient());
 		} catch (Exception e) {
-			logger.getLogger().log(Level.SEVERE, e.getMessage());
+			Constants.logger.getLogger().log(Level.SEVERE, e.getMessage());
 		}
 		// logger.getLogger().log(Level.INFO, "Mathews correlation coefficient: {0}",
 		// eval.matthewsCorrelationCoefficient(classIndex));
-		logger.getLogger().log(Level.INFO, "Coverage of the test cases by the predicted regions: {0}",
+		Constants.logger.getLogger().log(Level.INFO, "Coverage of the test cases by the predicted regions: {0}",
 				eval.coverageOfTestCasesByPredictedRegions());
-		logger.getLogger().log(Level.INFO, "The estimated error rate: {0}", eval.errorRate());
+		Constants.logger.getLogger().log(Level.INFO, "The estimated error rate: {0}", eval.errorRate());
 		// logger.getLogger().log(Level.INFO, "False positive rate: {0}",
 		// eval.falseNegativeRate(classIndex));
 		// logger.getLogger().log(Level.INFO, "False negative rate: {0}",
 		// eval.falsePositiveRate(classIndex));
 		// logger.getLogger().log(Level.INFO, "F-Measure: {0}",
 		// eval.fMeasure(classIndex));
-		logger.getLogger().log(Level.INFO, "The weighted class counts: {0}", eval.getClassPriors());
-		logger.getLogger().log(Level.INFO, "Kappa statistic: {0}", eval.kappa());
-		logger.getLogger().log(Level.INFO, "K&B information score: {0}", eval.KBInformation());
-		logger.getLogger().log(Level.INFO, "K&B mean information score: {0}", eval.KBMeanInformation());
-		logger.getLogger().log(Level.INFO, "K&B relative information score: {0}", eval.KBRelativeInformation());
+		Constants.logger.getLogger().log(Level.INFO, "The weighted class counts: {0}", eval.getClassPriors());
+		Constants.logger.getLogger().log(Level.INFO, "Kappa statistic: {0}", eval.kappa());
+		Constants.logger.getLogger().log(Level.INFO, "K&B information score: {0}", eval.KBInformation());
+		Constants.logger.getLogger().log(Level.INFO, "K&B mean information score: {0}", eval.KBMeanInformation());
+		Constants.logger.getLogger().log(Level.INFO, "K&B relative information score: {0}",
+				eval.KBRelativeInformation());
 		// logger.getLogger().log(Level.INFO, "Area under the precision-recall curve:
 		// {0}", eval.areaUnderPRC(classIndex));
 		// logger.getLogger().log(Level.INFO, "Area under the ROC curve: {0}",
 		// eval.areaUnderROC(classIndex));
-		logger.getLogger().log(Level.INFO, "Average cost: {0}", eval.avgCost());
-		logger.getLogger().log(Level.INFO, "Total cost: {0}", eval.totalCost());
-		logger.getLogger().log(Level.INFO, "Mean absolute error: {0}", eval.meanAbsoluteError());
-		logger.getLogger().log(Level.INFO, "Mean absolute prior error: {0}", eval.meanPriorAbsoluteError());
+		Constants.logger.getLogger().log(Level.INFO, "Average cost: {0}", eval.avgCost());
+		Constants.logger.getLogger().log(Level.INFO, "Total cost: {0}", eval.totalCost());
+		Constants.logger.getLogger().log(Level.INFO, "Mean absolute error: {0}", eval.meanAbsoluteError());
+		Constants.logger.getLogger().log(Level.INFO, "Mean absolute prior error: {0}", eval.meanPriorAbsoluteError());
 		try {
-			logger.getLogger().log(Level.INFO, "Relative absolute error: {0}", eval.relativeAbsoluteError());
+			Constants.logger.getLogger().log(Level.INFO, "Relative absolute error: {0}", eval.relativeAbsoluteError());
 		} catch (Exception e) {
-			logger.getLogger().log(Level.SEVERE, e.getMessage());
+			Constants.logger.getLogger().log(Level.SEVERE, e.getMessage());
 		}
-		logger.getLogger().log(Level.INFO, "Root mean prior squared error: {0}", eval.rootMeanPriorSquaredError());
-		logger.getLogger().log(Level.INFO, "Root mean squared error: {0}", eval.rootMeanSquaredError());
-		logger.getLogger().log(Level.INFO, "Root relative squared error: {0}", eval.rootRelativeSquaredError());
-		logger.getLogger().log(Level.INFO, "Weight of the instances that had missing class values: {0}",
+		Constants.logger.getLogger().log(Level.INFO, "Root mean prior squared error: {0}",
+				eval.rootMeanPriorSquaredError());
+		Constants.logger.getLogger().log(Level.INFO, "Root mean squared error: {0}", eval.rootMeanSquaredError());
+		Constants.logger.getLogger().log(Level.INFO, "Root relative squared error: {0}",
+				eval.rootRelativeSquaredError());
+		Constants.logger.getLogger().log(Level.INFO, "Weight of the instances that had missing class values: {0}",
 				eval.missingClass());
 		// logger.getLogger().log(Level.INFO, "False positive rate: {0}",
 		// eval.numFalseNegatives(classIndex));
@@ -152,26 +154,33 @@ public class ClassifierChooser implements IClassifierSelection {
 		// logger.getLogger().log(Level.INFO, "Recall: {0}", eval.recall(classIndex));
 		// logger.getLogger().log(Level.INFO, "Null model entropy per instance: {0}",
 		// eval.priorEntropy()); // Same as SFMeanPriorEntropy
-		logger.getLogger().log(Level.INFO, "Total SF score: {0}", eval.SFEntropyGain());
-		logger.getLogger().log(Level.INFO, "Mean SF score: {0}", eval.SFMeanEntropyGain());
-		logger.getLogger().log(Level.INFO, "Total null model entropy: {0}", eval.SFPriorEntropy());
-		logger.getLogger().log(Level.INFO, "Null model entropy per instance: {0}", eval.SFMeanPriorEntropy());
-		logger.getLogger().log(Level.INFO, "Total scheme entropy: {0}", eval.SFSchemeEntropy());
-		logger.getLogger().log(Level.INFO, "Scheme entropy per instance: {0}", eval.SFMeanSchemeEntropy());
-		logger.getLogger().log(Level.INFO, "Average size of the predicted regions: {0}", eval.sizeOfPredictedRegions());
-		logger.getLogger().log(Level.INFO, "Unweighted macro-averaged F-measure: {0}", eval.unweightedMacroFmeasure());
-		logger.getLogger().log(Level.INFO, "Unweighted micro-averaged F-measure: {0}", eval.unweightedMicroFmeasure());
-		logger.getLogger().log(Level.INFO, "Weighted AUPRC: {0}", eval.weightedAreaUnderPRC());
-		logger.getLogger().log(Level.INFO, "Weighted AUC: {0}", eval.weightedAreaUnderROC());
-		logger.getLogger().log(Level.INFO, "Weighted false negative rate: {0}", eval.weightedFalseNegativeRate());
-		logger.getLogger().log(Level.INFO, "Weighted false positive rate: {0}", eval.weightedFalsePositiveRate());
-		logger.getLogger().log(Level.INFO, "Weighted F-Measure: {0}", eval.weightedFMeasure());
-		logger.getLogger().log(Level.INFO, "Weighted matthews correlation coefficient: {0}",
+		Constants.logger.getLogger().log(Level.INFO, "Total SF score: {0}", eval.SFEntropyGain());
+		Constants.logger.getLogger().log(Level.INFO, "Mean SF score: {0}", eval.SFMeanEntropyGain());
+		Constants.logger.getLogger().log(Level.INFO, "Total null model entropy: {0}", eval.SFPriorEntropy());
+		Constants.logger.getLogger().log(Level.INFO, "Null model entropy per instance: {0}", eval.SFMeanPriorEntropy());
+		Constants.logger.getLogger().log(Level.INFO, "Total scheme entropy: {0}", eval.SFSchemeEntropy());
+		Constants.logger.getLogger().log(Level.INFO, "Scheme entropy per instance: {0}", eval.SFMeanSchemeEntropy());
+		Constants.logger.getLogger().log(Level.INFO, "Average size of the predicted regions: {0}",
+				eval.sizeOfPredictedRegions());
+		Constants.logger.getLogger().log(Level.INFO, "Unweighted macro-averaged F-measure: {0}",
+				eval.unweightedMacroFmeasure());
+		Constants.logger.getLogger().log(Level.INFO, "Unweighted micro-averaged F-measure: {0}",
+				eval.unweightedMicroFmeasure());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted AUPRC: {0}", eval.weightedAreaUnderPRC());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted AUC: {0}", eval.weightedAreaUnderROC());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted false negative rate: {0}",
+				eval.weightedFalseNegativeRate());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted false positive rate: {0}",
+				eval.weightedFalsePositiveRate());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted F-Measure: {0}", eval.weightedFMeasure());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted matthews correlation coefficient: {0}",
 				eval.weightedMatthewsCorrelation());
-		logger.getLogger().log(Level.INFO, "Weighted precision: {0}", eval.weightedPrecision());
-		logger.getLogger().log(Level.INFO, "Weighted recall: {0}", eval.weightedRecall());
-		logger.getLogger().log(Level.INFO, "Weighted true negative rate: {0}", eval.weightedTrueNegativeRate());
-		logger.getLogger().log(Level.INFO, "Weighted true positive rate: {0}", eval.weightedTruePositiveRate());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted precision: {0}", eval.weightedPrecision());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted recall: {0}", eval.weightedRecall());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted true negative rate: {0}",
+				eval.weightedTrueNegativeRate());
+		Constants.logger.getLogger().log(Level.INFO, "Weighted true positive rate: {0}",
+				eval.weightedTruePositiveRate());
 	}
 
 	/*

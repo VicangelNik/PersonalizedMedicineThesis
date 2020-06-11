@@ -3,7 +3,6 @@
  */
 package test.weka.api;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestLoadCsvTestCase.
  */
@@ -54,7 +53,6 @@ public class TestLoadCsvTestCase {
 //		Assert.assertTrue("The file should exist", file.exists());
 //		Assert.assertTrue("The file should be read", file.canRead());
 //	}
-
 
 //
 //	/**

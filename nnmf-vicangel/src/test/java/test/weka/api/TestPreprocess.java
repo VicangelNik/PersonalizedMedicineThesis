@@ -17,7 +17,6 @@ import org.junit.Test;
 
 import com.opencsv.CSVReader;
 
-import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import helpful_classes.EnumSeparators;
 import utilpackage.LatexUtils;
@@ -32,9 +31,6 @@ import weka.core.Instances;
  * The Class TestPreprocess.
  */
 public class TestPreprocess {
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/** The Constant className. */
 	private static final String className = "SampleStatus";
@@ -169,15 +165,15 @@ public class TestPreprocess {
 	public void showDataInformation() throws IOException {
 		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
 		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-		logger.getLogger().log(Level.INFO, "{0}", "Number of classes: " + originalDataset.numClasses());
-		logger.getLogger().log(Level.INFO, "{0}", "Number of features" + originalDataset.numAttributes());
-		logger.getLogger().log(Level.INFO, "{0}", "Number of instances" + originalDataset.numInstances());
-		logger.getLogger().log(Level.INFO, "{0}", "Class Index: " + originalDataset.classIndex());
-		logger.getLogger().log(Level.INFO, "{0}",
+		Constants.logger.getLogger().log(Level.INFO, "{0}", "Number of classes: " + originalDataset.numClasses());
+		Constants.logger.getLogger().log(Level.INFO, "{0}", "Number of features" + originalDataset.numAttributes());
+		Constants.logger.getLogger().log(Level.INFO, "{0}", "Number of instances" + originalDataset.numInstances());
+		Constants.logger.getLogger().log(Level.INFO, "{0}", "Class Index: " + originalDataset.classIndex());
+		Constants.logger.getLogger().log(Level.INFO, "{0}",
 				"Class name" + originalDataset.attribute(originalDataset.classIndex()).name());
-		logger.getLogger().log(Level.INFO, "{0}",
+		Constants.logger.getLogger().log(Level.INFO, "{0}",
 				"Attribute Class Index: " + originalDataset.attributeStats(originalDataset.classIndex()));
-		logger.getLogger().log(Level.INFO, "{0}", originalDataset.toSummaryString());
+		Constants.logger.getLogger().log(Level.INFO, "{0}", originalDataset.toSummaryString());
 	}
 
 	/**
@@ -299,6 +295,6 @@ public class TestPreprocess {
 		// add the last 3 features which are removed and are not string
 		sbLatex.append("DATA").append(" & ").append("Vital\\_status").append(" & ").append("Days\\_To\\_Death")
 				.append(" & ").append(" & ").append(" \\\\").append(System.lineSeparator());
-		logger.getLogger().log(Level.INFO, "{0}", "Invalid Features: " + sbLatex.toString());
+		Constants.logger.getLogger().log(Level.INFO, "{0}", "Invalid Features: " + sbLatex.toString());
 	}
 }

@@ -3,7 +3,7 @@ package classifiers;
 import java.util.Random;
 import java.util.logging.Level;
 
-import helpful_classes.AppLogger;
+import helpful_classes.Constants;
 import interfaces.IAppClassifier;
 import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.functions.Dl4jMlpClassifier;
@@ -19,9 +19,6 @@ public class Deeplearning4jWeka extends Dl4jMlpClassifier implements IAppClassif
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 4079049290038571519L;
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/** The instances. */
 	private Instances instances;
@@ -64,13 +61,13 @@ public class Deeplearning4jWeka extends Dl4jMlpClassifier implements IAppClassif
 			System.out.println(eval.toSummaryString("Evaluation results:\n", true));
 			System.out.println(eval.toClassDetailsString());
 			System.out.println(eval.toMatrixString());
-			logger.getLogger().log(Level.INFO, "{0}", eval.toSummaryString("Evaluation results:\n", true));
-			logger.getLogger().log(Level.INFO, "{0}", eval.toClassDetailsString());
-			logger.getLogger().log(Level.INFO, "{0}", eval.toMatrixString());
+			Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toSummaryString("Evaluation results:\n", true));
+			Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toClassDetailsString());
+			Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toMatrixString());
 			// printCrossValidationResults(eval, data.classIndex());
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.getLogger().log(Level.SEVERE, "{0}", e);
+			Constants.logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 	}
 

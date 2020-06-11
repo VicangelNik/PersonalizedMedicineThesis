@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
-import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
@@ -21,9 +20,6 @@ import weka.core.Instances;
  * The Class TestJRipTestCase.
  */
 public class TestJRipTestCase {
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/** The class name. */
 	private final String className = Constants.classNameForReducedData;
@@ -48,7 +44,7 @@ public class TestJRipTestCase {
 	 */
 	@BeforeEach
 	void init(TestInfo testInfo) {
-		logger.getLogger().log(Level.INFO, "START TEST");
+		Constants.logger.getLogger().log(Level.INFO, "START TEST");
 		// logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + datasetFileName);
 		// logger.getLogger().log(Level.INFO, "SAVE DISPLAY NAME: " +
 		// testInfo.getDisplayName());
@@ -59,7 +55,7 @@ public class TestJRipTestCase {
 	 */
 	@AfterEach
 	void onEnd() {
-		logger.getLogger().log(Level.INFO, "END TEST");
+		Constants.logger.getLogger().log(Level.INFO, "END TEST");
 	}
 
 	/**
@@ -100,7 +96,7 @@ public class TestJRipTestCase {
 									String options = " -O " + optimization + " -F " + folds + " -N " + mWeight + prune
 											+ errorRate;
 									count++;
-									logger.getLogger().log(Level.INFO,
+									Constants.logger.getLogger().log(Level.INFO,
 											"SAVE TEST INFO NAME: " + "Configuration_" + count);
 									AbstractClassifier classifier = WekaUtils.getClassifier(Constants.JRIP,
 											originalDataset, weka.core.Utils.splitOptions(options));

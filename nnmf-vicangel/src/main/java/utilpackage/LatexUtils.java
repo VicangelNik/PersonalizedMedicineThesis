@@ -3,7 +3,7 @@ package utilpackage;
 import java.util.Enumeration;
 import java.util.logging.Level;
 
-import helpful_classes.AppLogger;
+import helpful_classes.Constants;
 import weka.core.Attribute;
 import weka.core.Instances;
 
@@ -11,9 +11,6 @@ import weka.core.Instances;
  * The Class LatexUtils.
  */
 public final class LatexUtils {
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/**
 	 * Instantiates a new latex utils.
@@ -63,6 +60,6 @@ public final class LatexUtils {
 			sbLatex.append(" & ");
 		}
 		sbLatex.append(data.classAttribute().name()).append(" \\\\").append(System.lineSeparator());
-		logger.getLogger().log(Level.INFO, "{0}", "Valid Features: " + sbLatex.toString());
+		Constants.logger.getLogger().log(Level.INFO, "{0}", "Valid Features: " + sbLatex.toString());
 	}
 }

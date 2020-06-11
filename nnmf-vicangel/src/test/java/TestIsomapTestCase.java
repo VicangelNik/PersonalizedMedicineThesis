@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import dimensionality_reduction_methods.DimensionalityReductionChooser;
-import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import smile.graph.Graph;
 import smile.manifold.IsoMap;
@@ -24,9 +23,6 @@ import weka.core.Instances;
  * The Class TestIsomapTestCase.
  */
 public class TestIsomapTestCase {
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/**
 	 * Test isomap tet case.
@@ -109,9 +105,9 @@ public class TestIsomapTestCase {
 
 					System.out.println(
 							"Execution for:" + nDimensions + " dimensions with" + k + "k nearest neighbours in Isomap");
-					logger.getLogger().log(Level.INFO, "Execution for:" + nDimensions + " dimensions with " + k
-							+ "k nearest neighbours in Isomap\n");
-					logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
+					Constants.logger.getLogger().log(Level.INFO, "Execution for:" + nDimensions + " dimensions with "
+							+ k + "k nearest neighbours in Isomap\n");
+					Constants.logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
 					// here we save the new data in an arff file
 					WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 					wekaFileConverterImpl.arffSaver(dataset,

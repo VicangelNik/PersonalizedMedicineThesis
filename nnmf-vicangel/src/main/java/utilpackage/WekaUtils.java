@@ -34,7 +34,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import com.google.common.base.Strings;
 
 import classifiers.ClassifierChooser;
-import helpful_classes.AppLogger;
+import helpful_classes.Constants;
 import helpful_classes.MultiKey;
 import interfaces.IClassifierSelection;
 import weka.classifiers.AbstractClassifier;
@@ -47,9 +47,6 @@ import weka.core.converters.ArffLoader;
  * The Class WekaUtils.
  */
 public final class WekaUtils {
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/**
 	 * Instantiates a new weka utils.
@@ -346,7 +343,7 @@ public final class WekaUtils {
 	 * @return the classifier
 	 */
 	public static AbstractClassifier getClassifier(String classifierName, Instances instances, String[] options) {
-		logger.getLogger().log(Level.INFO, "OPTIONS: {0}", Arrays.toString(options));
+		Constants.logger.getLogger().log(Level.INFO, "OPTIONS: {0}", Arrays.toString(options));
 		IClassifierSelection classifierSelection = new ClassifierChooser();
 		return classifierSelection.selectClassifier(classifierName, instances, options);
 	}
@@ -362,7 +359,7 @@ public final class WekaUtils {
 	public static Instances getOriginalData(File file, String featureClassName) throws IOException {
 		AbstractFileLoader arffLoader = new ArffLoader();
 		arffLoader.setFile(file);
-		logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + file.getName());
+		Constants.logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + file.getName());
 		Instances originalData = arffLoader.getDataSet();
 		originalData.setClass(originalData.attribute(featureClassName));
 		return originalData;

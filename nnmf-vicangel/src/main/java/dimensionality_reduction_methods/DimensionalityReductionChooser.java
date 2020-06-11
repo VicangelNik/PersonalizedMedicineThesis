@@ -2,7 +2,6 @@ package dimensionality_reduction_methods;
 
 import java.util.logging.Level;
 
-import helpful_classes.AppLogger;
 import helpful_classes.Constants;
 import interfaces.IDimensionalityReductionSelection;
 import weka.core.Instances;
@@ -12,12 +11,9 @@ import weka.core.Instances;
  */
 public class DimensionalityReductionChooser implements IDimensionalityReductionSelection {
 
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
-
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * interfaces.IDimensionalityReductionSelection#dimensionalityReductionSelector(
 	 * java.lang.String, weka.core.Instances, boolean, java.lang.String[])
@@ -58,7 +54,7 @@ public class DimensionalityReductionChooser implements IDimensionalityReductionS
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.getLogger().log(Level.SEVERE, "DimensionalityReductionSelector in in error: {0}", e);
+			Constants.logger.getLogger().log(Level.SEVERE, "DimensionalityReductionSelector in in error: {0}", e);
 		}
 		return null;
 	}

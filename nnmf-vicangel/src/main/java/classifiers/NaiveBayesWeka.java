@@ -3,7 +3,7 @@ package classifiers;
 import java.util.Random;
 import java.util.logging.Level;
 
-import helpful_classes.AppLogger;
+import helpful_classes.Constants;
 import interfaces.IAppClassifier;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.evaluation.Evaluation;
@@ -16,9 +16,6 @@ public class NaiveBayesWeka extends NaiveBayes implements IAppClassifier {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 5425046691121634979L;
-
-	/** The logger. */
-	private static AppLogger logger = AppLogger.getInstance();
 
 	/** The instances. */
 	private Instances instances;
@@ -53,13 +50,13 @@ public class NaiveBayesWeka extends NaiveBayes implements IAppClassifier {
 			System.out.println(eval.toSummaryString("Evaluation results:\n", true));
 			System.out.println(eval.toClassDetailsString());
 			System.out.println(eval.toMatrixString());
-			logger.getLogger().log(Level.INFO, "{0}", eval.toSummaryString("Evaluation results:\n", true));
-			logger.getLogger().log(Level.INFO, "{0}", eval.toClassDetailsString());
-			logger.getLogger().log(Level.INFO, "{0}", eval.toMatrixString());
+			Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toSummaryString("Evaluation results:\n", true));
+			Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toClassDetailsString());
+			Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toMatrixString());
 			// printCrossValidationResults(eval, data.classIndex());
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.getLogger().log(Level.SEVERE, "{0}", e);
+			Constants.logger.getLogger().log(Level.SEVERE, "{0}", e);
 		}
 	}
 }

@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Utils.
  */

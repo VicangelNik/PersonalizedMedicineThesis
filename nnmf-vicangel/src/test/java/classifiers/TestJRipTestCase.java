@@ -2,6 +2,7 @@ package classifiers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.StringJoiner;
 import java.util.logging.Level;
 
 import org.junit.Assert;
@@ -22,7 +23,7 @@ import weka.core.Instances;
 public class TestJRipTestCase {
 
 	/** The class name. */
-	private final String className = Constants.classNameForReducedData;
+	private final String className = Constants.classRealName;
 
 	/** The dataset file name. */
 	private final String datasetFileName = Constants.dataset20EMPCAFileName;
@@ -84,24 +85,25 @@ public class TestJRipTestCase {
 	public void testJripAll() {
 		// Default: "-F 3 -N 2.0 -O 2 -S 1"
 		try {
-			for (String datasetFileName : Constants.datasetEmpcafileNames) {
-				int count = 0;
-				File level2File = new File(datasetFileName);
-				Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-				for (int optimization = 1; optimization <= 10;) {
-					for (int folds = 1; folds <= 20; folds++) {
-						for (double mWeight = 0.5; mWeight <= 10; mWeight += 0.5) {
-							for (String prune : usePruning) {
-								for (String errorRate : checkErrorRate) {
-									String options = " -O " + optimization + " -F " + folds + " -N " + mWeight + prune
-											+ errorRate;
-									count++;
-									Constants.logger.getLogger().log(Level.INFO,
-											"SAVE TEST INFO NAME: " + "Configuration_" + count);
-									AbstractClassifier classifier = WekaUtils.getClassifier(Constants.JRIP,
-											originalDataset, weka.core.Utils.splitOptions(options));
-									WekaUtils.crossValidationAction(Constants.JRIP, classifier, numFolds, random);
-								}
+			String datasetFileName = Constants.completeFileName;
+			int count = 0;
+			File level2File = new File(datasetFileName);
+			Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+			for (int optimization = 1; optimization <= 10;) {
+				for (int folds = 1; folds <= 20; folds++) {
+					for (double mWeight = 0.5; mWeight <= 10; mWeight += 0.5) {
+						for (String prune : usePruning) {
+							for (String errorRate : checkErrorRate) {
+								StringJoiner joiner = new StringJoiner(" ");
+								String options = joiner.add("-O").add(String.valueOf(optimization)).add("-F")
+										.add(String.valueOf(folds)).add("-N").add(String.valueOf(mWeight))
+										.add(String.valueOf(prune)).add(String.valueOf(errorRate)).toString();
+								count++;
+								Constants.logger.getLogger().log(Level.INFO,
+										"SAVE TEST INFO NAME: " + "Configuration_" + count);
+								AbstractClassifier classifier = WekaUtils.getClassifier(Constants.JRIP, originalDataset,
+										weka.core.Utils.splitOptions(options));
+								WekaUtils.crossValidationAction(Constants.JRIP, classifier, numFolds, random);
 							}
 						}
 					}

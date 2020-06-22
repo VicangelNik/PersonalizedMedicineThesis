@@ -23,7 +23,7 @@ import weka.core.Instances;
 public class TestJRipTestCase {
 
 	/** The class name. */
-	private final String className = Constants.classRealName;
+	private final String className = Constants.classNameForReducedData;
 
 	/** The dataset file name. */
 	private final String datasetFileName = Constants.dataset20EMPCAFileName;
@@ -85,7 +85,7 @@ public class TestJRipTestCase {
 	public void testJripAll() {
 		// Default: "-F 3 -N 2.0 -O 2 -S 1"
 		try {
-			String datasetFileName = Constants.completeFileName;
+			String datasetFileName = Constants.dataset10EMPCAFileName;
 			int count = 0;
 			File level2File = new File(datasetFileName);
 			Instances originalDataset = WekaUtils.getOriginalData(level2File, className);

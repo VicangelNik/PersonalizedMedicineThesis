@@ -94,7 +94,7 @@ public class TestPartTestCase {
 				Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
 				int count = 0;
 				// confidenceFactor must be greater than 0 and less than 1
-				for (double confidenceFactor = 0.5; confidenceFactor <= 1.0; confidenceFactor += 0.5) { // -C
+				for (double confidenceFactor = 0.1; confidenceFactor <= 1.0; confidenceFactor += 0.1) { // -C
 					for (int minNumObj = 1; minNumObj <= 20; minNumObj++) { // -M
 						// numFolds must be greater than 1
 						for (int numFolds = 2; numFolds <= 20; numFolds++) { // -N

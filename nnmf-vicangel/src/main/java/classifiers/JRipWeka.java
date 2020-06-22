@@ -50,9 +50,10 @@ public class JRipWeka extends JRip implements IAppClassifier {
 			System.out.println(eval.toSummaryString("Evaluation results:\n", true));
 			System.out.println(eval.toClassDetailsString());
 			System.out.println(eval.toMatrixString());
-			Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toSummaryString("Evaluation results:\n", true));
+			// Constants.logger.getLogger().log(Level.INFO, "{0}",
+			// eval.toSummaryString("Evaluation results:\n", true));
 			Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toClassDetailsString());
-			Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toMatrixString());
+			// Constants.logger.getLogger().log(Level.INFO, "{0}", eval.toMatrixString());
 			// printCrossValidationResults(eval, data.classIndex());
 		} catch (Exception e) {
 			e.printStackTrace();

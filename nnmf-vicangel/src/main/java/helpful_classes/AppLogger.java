@@ -28,7 +28,8 @@ public class AppLogger {
 		if (appLogger != null) {
 			throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
 		}
-		makeLogger("project.log");
+		// makeLogger("project.log");
+		makeLogger("empca10_original_jrip.log");
 	}
 
 	/**

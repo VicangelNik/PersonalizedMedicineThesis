@@ -33,7 +33,8 @@ public class Constants {
 	public static final String WEKA_FILES = "src\\test\\resources\\wekaFiles\\";
 
 	/** The Constant loggerPath. */
-	public static final String loggerPath = "C:\\applications\\thesis\\";
+	// public static final String loggerPath = "C:\\applications\\thesis\\";
+	public static final String loggerPath = "D:\\Bioscience\\results\\Original_EMPCA Dataset\\log\\";
 
 	/** The Constant MORMAL_TISSUE. */
 	public static final String MORMAL_TISSUE = "NormalTissue";

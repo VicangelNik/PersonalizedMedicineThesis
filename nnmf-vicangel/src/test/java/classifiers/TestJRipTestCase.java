@@ -85,11 +85,11 @@ public class TestJRipTestCase {
 	public void testJripAll() {
 		// Default: "-F 3 -N 2.0 -O 2 -S 1"
 		try {
-			String datasetFileName = Constants.dataset10EMPCAFileName;
+			String datasetFileName = Constants.dataset20EMPCAFileName;
 			int count = 0;
 			File level2File = new File(datasetFileName);
 			Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-			for (int optimization = 1; optimization <= 10;) {
+			for (int optimization = 1; optimization <= 10; optimization++) {
 				for (int folds = 1; folds <= 20; folds++) {
 					for (double mWeight = 0.5; mWeight <= 10; mWeight += 0.5) {
 						for (String prune : usePruning) {

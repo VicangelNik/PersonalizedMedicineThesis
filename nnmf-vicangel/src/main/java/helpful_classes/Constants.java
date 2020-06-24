@@ -34,7 +34,7 @@ public class Constants {
 
 	/** The Constant loggerPath. */
 	// public static final String loggerPath = "C:\\applications\\thesis\\";
-	public static final String loggerPath = "D:\\Bioscience\\results\\Original_EMPCA Dataset\\log\\";
+	public static final String loggerPath = "D:\\Bioscience\\results\\Original_EMPCA Dataset\\IBK\\log\\";
 
 	/** The Constant MORMAL_TISSUE. */
 	public static final String MORMAL_TISSUE = "NormalTissue";

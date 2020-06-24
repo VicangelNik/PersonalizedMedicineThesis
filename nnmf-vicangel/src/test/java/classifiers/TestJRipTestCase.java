@@ -85,7 +85,7 @@ public class TestJRipTestCase {
 	public void testJripAll() {
 		// Default: "-F 3 -N 2.0 -O 2 -S 1"
 		try {
-			String datasetFileName = Constants.dataset20EMPCAFileName;
+			String datasetFileName = Constants.dataset100EMPCAFileName;
 			int count = 0;
 			File level2File = new File(datasetFileName);
 			Instances originalDataset = WekaUtils.getOriginalData(level2File, className);

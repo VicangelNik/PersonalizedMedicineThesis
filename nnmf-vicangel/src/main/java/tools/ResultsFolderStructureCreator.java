@@ -20,6 +20,9 @@ public class ResultsFolderStructureCreator {
 	private final static String[] mainFolders = new String[] { "Original", "Methylation", "mRNA", "miRNA",
 			"Original_EMPCA", "Original_Isomap", "Original_AutoEncoder" };
 
+	private final static String[] classifierFolders = new String[] { "IBK", "JRIP", "PART", "NEURAL_CLASSIFIER",
+			"NAIVE_BAYES" };
+
 	/** The result path. */
 	private static String resultPath = "D:\\Bioscience\\results";
 
@@ -37,10 +40,12 @@ public class ResultsFolderStructureCreator {
 		}
 		// create paths
 		for (String folder : mainFolders) {
-			Path path = Paths.get(resultPath, folder + part2FolderName, logFolderName);
-			File file = path.toFile();
-			if (!file.exists() && !file.mkdirs()) {
-				System.out.println("Directory " + path.toString() + " could not be created.");
+			for (String classifierFolder : classifierFolders) {
+				Path path = Paths.get(resultPath, folder + part2FolderName, classifierFolder, logFolderName);
+				File file = path.toFile();
+				if (!file.exists() && !file.mkdirs()) {
+					System.out.println("Directory " + path.toString() + " could not be created.");
+				}
 			}
 		}
 	}

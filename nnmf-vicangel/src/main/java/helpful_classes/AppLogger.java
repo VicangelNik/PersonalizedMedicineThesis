@@ -29,7 +29,7 @@ public class AppLogger {
 			throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
 		}
 		// makeLogger("project.log");
-		makeLogger("empca20_original_ibk.log");
+		makeLogger("empca10_original_part.log");
 	}
 
 	/**

@@ -105,7 +105,7 @@ public class TestIBKTestCase {
 		// weka.classifiers.lazy.IBk -K 1 -W 0 -A
 		// "weka.core.neighboursearch.LinearNNSearch -A \"weka.core.EuclideanDistance -R
 		// first-last\""
-		String datasetFileName = Constants.dataset20EMPCAFileName;
+		String datasetFileName = Constants.dataset100EMPCAFileName;
 		try {
 			File level2File = new File(datasetFileName);
 			Instances originalDataset = WekaUtils.getOriginalData(level2File, className);

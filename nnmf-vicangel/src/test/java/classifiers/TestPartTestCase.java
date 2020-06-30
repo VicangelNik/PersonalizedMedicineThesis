@@ -2,6 +2,7 @@ package classifiers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.StringJoiner;
 import java.util.logging.Level;
 
 import org.junit.Assert;
@@ -88,41 +89,39 @@ public class TestPartTestCase {
 	@DisplayName("Part All")
 	public void testPartAll() {
 		// -M 2 -C 0.25 -Q 1
-		for (String datasetFileName : Constants.datasetEmpcafileNames) {
-			try {
-				File level2File = new File(datasetFileName);
-				Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-				int count = 0;
-				// confidenceFactor must be greater than 0 and less than 1
-				for (double confidenceFactor = 0.1; confidenceFactor <= 1.0; confidenceFactor += 0.1) { // -C
-					for (int minNumObj = 1; minNumObj <= 20; minNumObj++) { // -M
-						// numFolds must be greater than 1
-						for (int numFolds = 2; numFolds <= 20; numFolds++) { // -N
-							for (String noSplitPointValue : doNotMakeSplitPointActualValue) {
-								for (String mdl : useMDLCorrection) {
-									for (String pruningIsPerformed : unpruned) {
-										for (String bSplit : binarySplits) {
-											for (String reducedPrune : reducedErrorPruning) {
-												StringBuilder sb = new StringBuilder();
-												sb.append(reducedPrune).append(bSplit).append(pruningIsPerformed)
-														.append(mdl).append(noSplitPointValue).append(" -M ")
-														.append(minNumObj);
-												// -C cannot be at the same time with -R
-												if (Strings.isStringEmpty(reducedPrune)) {
-													sb.append(" -C ").append(confidenceFactor);
-												} else {
-													// Setting the number of folds does only make sense for reduced
-													// error pruning.
-													sb.append(" -N ").append(numFolds);
-												}
-												Constants.logger.getLogger().log(Level.INFO,
-														"SAVE TEST INFO NAME: " + "Configuration_" + count);
-												String[] options = weka.core.Utils.splitOptions(sb.toString());
-												AbstractClassifier classifier = WekaUtils.getClassifier(Constants.PART,
-														originalDataset, options);
-												WekaUtils.crossValidationAction(Constants.PART, classifier, numFolds,
-														random);
+		String datasetFileName = Constants.dataset10EMPCAFileName;
+		try {
+			File level2File = new File(datasetFileName);
+			Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+			int count = 0;
+			// confidenceFactor must be greater than 0 and less than 1
+			for (double confidenceFactor = 0.1; confidenceFactor <= 0.5; confidenceFactor += 0.05) { // -C
+				for (int minNumObj = 1; minNumObj <= 20; minNumObj++) { // -M
+					// numFolds must be greater than 1
+					for (int numFolds = 2; numFolds <= 20; numFolds++) { // -N
+						for (String noSplitPointValue : doNotMakeSplitPointActualValue) {
+							for (String mdl : useMDLCorrection) {
+								for (String pruningIsPerformed : unpruned) {
+									for (String bSplit : binarySplits) {
+										for (String reducedPrune : reducedErrorPruning) {
+											StringJoiner joiner = new StringJoiner(" ");
+											joiner.add(reducedPrune).add(bSplit).add(pruningIsPerformed).add(mdl)
+													.add(noSplitPointValue).add("-M").add(String.valueOf(minNumObj));
+											// -C cannot be at the same time with -R
+											if (Strings.isStringEmpty(reducedPrune)) {
+												joiner.add("-C").add(String.valueOf(confidenceFactor));
+											} else {
+												// Setting the number of folds does only make sense for reduced
+												// error pruning.
+												joiner.add("-N").add(String.valueOf(numFolds));
 											}
+											Constants.logger.getLogger().log(Level.INFO,
+													"SAVE TEST INFO NAME: " + "Configuration_" + count);
+											String[] options = weka.core.Utils.splitOptions(joiner.toString());
+											AbstractClassifier classifier = WekaUtils.getClassifier(Constants.PART,
+													originalDataset, options);
+											WekaUtils.crossValidationAction(Constants.PART, classifier, numFolds,
+													random);
 										}
 									}
 								}
@@ -130,9 +129,9 @@ public class TestPartTestCase {
 						}
 					}
 				}
-			} catch (Exception e) {
-				Assert.assertFalse(e.getMessage(), true);
 			}
+		} catch (Exception e) {
+			Assert.assertFalse(e.getMessage(), true);
 		}
 	}
 }

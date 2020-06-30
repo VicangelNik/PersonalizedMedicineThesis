@@ -9,7 +9,6 @@ import java.io.IOException;
 import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class LoadCsv.
  */

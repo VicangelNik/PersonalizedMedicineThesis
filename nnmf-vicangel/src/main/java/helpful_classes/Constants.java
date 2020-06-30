@@ -116,6 +116,18 @@ public class Constants {
 	/** The Constant datasetEmpcafileNames. */
 	public static final String[] datasetEmpcafileNames = new String[] { Constants.dataset10EMPCAFileName,
 			Constants.dataset20EMPCAFileName, Constants.dataset50EMPCAFileName, Constants.dataset100EMPCAFileName };
+	
+	/** The Constant dataset10IsomapCsvFileName. */
+	public static final String dataset10IsomapCsvFileName = Constants.SRC_MAIN_RESOURCES_PATH + "Iso10.csv";
+	
+	/** The Constant dataset20IsomapCsvFileName. */
+	public static final String dataset20IsomapCsvFileName = Constants.SRC_MAIN_RESOURCES_PATH + "Iso20.csv";
+	
+	/** The Constant dataset50IsomapCsvFileName. */
+	public static final String dataset50IsomapCsvFileName = Constants.SRC_MAIN_RESOURCES_PATH + "Iso50.csv";
+	
+	/** The Constant dataset100IsomapCsvFileName. */
+	public static final String dataset100IsomapCsvFileName = Constants.SRC_MAIN_RESOURCES_PATH + "Iso100.csv";
 
 	// CLASS NAMES
 	/** The class name for reduced data. */

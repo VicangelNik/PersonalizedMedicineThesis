@@ -83,10 +83,11 @@ public final class WekaUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static Instances getOriginalData(File file, String featureClassName) throws IOException {
-		AbstractFileLoader arffLoader = new ArffLoader();
-		arffLoader.setFile(file);
-		Constants.logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + file.getName());
-		Instances originalData = arffLoader.getDataSet();
+		AbstractFileLoader loader = new ArffLoader();
+		String ext = com.google.common.io.Files.getFileExtension(file.toString());
+		loader.setFile(file);
+		// Constants.logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + file.getName());
+		Instances originalData = loader.getDataSet();
 		originalData.setClass(originalData.attribute(featureClassName));
 		return originalData;
 	}

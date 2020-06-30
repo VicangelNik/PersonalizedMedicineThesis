@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.runner.JUnitCore;
 
-import helpful_classes.RingListener;
+import utiltestpackage.RingListener;
 
 /**
  * The Class MainJunitCore.

@@ -8,11 +8,9 @@ import org.scify.EMPCA.Feature;
 import org.scify.EMPCA.JavaPCAInputToScala;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
-import helpful_classes.Constants;
 import interfaces.IDimensionalityReduction;
 import scala.Tuple2;
 import utilpackage.TransformToFromWeka;
-import utilpackage.Utils;
 import utilpackage.WekaUtils;
 import weka.core.Instances;
 
@@ -37,7 +35,7 @@ public class ExpectationMaximizationPCA extends DimensionalityReduction implemen
 		EMPCA empca = new EMPCA(convertedToScalaList, Integer.parseInt(options[0]));
 		DoubleMatrix2D c = empca.performEM(Integer.parseInt(options[1]));
 		Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors = empca.doEig(c);
-		Utils.writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
+		// Utils.writeEigensToFile(Constants.loggerPath + "output.log", eigenValueAndVectors);
 		// OUTPUT TO WEKA PART
 		return TransformToFromWeka.eigensToWeka(eigenValueAndVectors._2, options[2],
 				WekaUtils.getDatasetClassValues(this.getDataset()), options[3]);

@@ -1,9 +1,8 @@
 package helpful_classes;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -19,6 +18,9 @@ public class AppLogger {
 	/** The logger. */
 	private static Logger logger;
 
+	/** The file handler. */
+	private static FileHandler fileHandler = null;
+
 	/**
 	 * Instantiates a new app logger.
 	 */
@@ -28,8 +30,7 @@ public class AppLogger {
 		if (appLogger != null) {
 			throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
 		}
-		// makeLogger("project.log");
-		makeLogger("empca20_original_ibk.log");
+		makeLogger();
 	}
 
 	/**
@@ -43,11 +44,11 @@ public class AppLogger {
 			synchronized (AppLogger.class) { // Check for the second time.
 				// if there is no instance available... create new one
 				if (appLogger == null) {
-					try {
-						Files.createDirectories(Paths.get(Constants.loggerPath));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+//					try {
+//						Files.createDirectories(Paths.get(Constants.loggerPath));
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
 					appLogger = new AppLogger();
 				}
 			}
@@ -68,11 +69,12 @@ public class AppLogger {
 	 * @param fileToWrite the file to write
 	 * @return
 	 */
-	private static void makeLogger(String title) {
-		logger = Logger.getLogger(title);
+	private static void makeLogger() {
+		logger = Logger.getLogger(Constants.loggerPath);
 		try {
 			// In project.log will be logged everything on the project
-			FileHandler fh = new FileHandler(Constants.loggerPath + title, false);
+			FileHandler fh = new FileHandler(Constants.loggerPath, false);
+			fileHandler = fh;
 			logger.addHandler(fh);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fh.setFormatter(formatter);
@@ -90,5 +92,15 @@ public class AppLogger {
 	 */
 	public Logger getLogger() {
 		return logger;
+	}
+
+	public static void setAppLoggerNull() {
+		if (fileHandler != null) {
+			fileHandler.flush();
+			fileHandler.close();
+			appLogger.getLogger().removeHandler(fileHandler);
+			appLogger.getLogger().setLevel(Level.OFF);
+		}
+		appLogger = null;
 	}
 }

@@ -17,8 +17,8 @@ public class Constants {
 	}
 
 	/** The logger. */
-	public static AppLogger logger = AppLogger.getInstance();
-
+	//public static AppLogger logger = AppLogger.getInstance();
+	public static AppLogger logger = null;
 	// PATHS
 	/** The Constant SRC_TEST_RESOURCES_PATH. */
 	public static final String SRC_TEST_RESOURCES_PATH = "src\\test\\resources\\";
@@ -34,7 +34,7 @@ public class Constants {
 
 	/** The Constant loggerPath. */
 	// public static final String loggerPath = "C:\\applications\\thesis\\";
-	public static final String loggerPath = "D:\\Bioscience\\results\\Original_EMPCA Dataset\\IBK\\log\\";
+	public static String loggerPath = "D:\\Bioscience\\results\\Original Dataset\\JRIP\\log\\";
 
 	/** The Constant MORMAL_TISSUE. */
 	public static final String MORMAL_TISSUE = "NormalTissue";

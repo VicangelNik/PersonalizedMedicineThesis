@@ -143,4 +143,25 @@ public class TestNaiveBayesTestCase {
 			Assert.assertFalse(e.getMessage(), true);
 		}
 	}
+
+	/**
+	 * Test NB All
+	 */
+	@Test
+	@DisplayName("Naive Bayes All")
+	public void testNBAll() {
+		try {
+			File level2File = new File(datasetFileName);
+			Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+			String[] configs = new String[] { "", "-K", "-D" };
+			for (String option : configs) {
+				String[] options = new String[] { option };
+				AbstractClassifier classifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, originalDataset,
+						options);
+				WekaUtils.crossValidationAction(Constants.NAIVE_BAYES, classifier, numFolds, random);
+			}
+		} catch (IOException e) {
+			Assert.assertFalse(e.getMessage(), true);
+		}
+	}
 }

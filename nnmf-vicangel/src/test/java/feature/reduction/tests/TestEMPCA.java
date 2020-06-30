@@ -96,7 +96,7 @@ public class TestEMPCA {
 		// INPUT TO EMPCA PART
 		List<ArrayList<Feature>> empcaInput = TransformToFromWeka.createEMPCAInputFromWekaV2(originalDataset);
 		Assert.assertTrue("The number of lists (features) should be 72121", 72121 == empcaInput.size());
-		// the position 3 is chosen arbitarily.
+		// the position 3 is chosen arbitary.
 		Assert.assertTrue("The number of features of each instance should be 335", 335 == empcaInput.get(3).size());
 		scala.collection.immutable.List<Tuple2<Object, Object>>[] convertedToScalaList = JavaPCAInputToScala
 				.convert((ArrayList<ArrayList<Feature>>) empcaInput);
@@ -123,11 +123,6 @@ public class TestEMPCA {
 		// attribute.
 		Assert.assertTrue(reData.numAttributes() == eigenValueAndVectors._2.columns() + 1);
 		Assert.assertTrue(reData.numInstances() == eigenValueAndVectors._2.rows());
-		// TODO CROSS VALIDATION
-		// AbstractClassifier abstractClassifier =
-		// WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
-		// new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier,
-		// originalDataset, 10, new Random(1));
 	}
 
 	/**
@@ -145,7 +140,7 @@ public class TestEMPCA {
 		// number of principal components, the result due to hack will be minus 10
 		// There is a hack in the source code of EMPCA you can not create more principal
 		// components than the data instances
-		String[] nPCsArray = { "20", "30", "60", "110", "510", "1010" };
+		String[] nPCsArray = { "20", "30", "60", "110" };
 		String className = "class";
 		for (String nPCs : nPCsArray) {
 			String newDatasetName = Integer.parseInt(nPCs) - 10 + "empcaData";
@@ -155,10 +150,10 @@ public class TestEMPCA {
 			DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
 			Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.EMPCA,
 					originalDataset, true, options);
-			System.out.println("Execution for EMPCA with " + nPCs + " principal components\n");
-			Constants.logger.getLogger().log(Level.INFO,
-					"Execution for EMPCA with " + nPCs + " principal components\n");
-			Constants.logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
+//			System.out.println("Execution for EMPCA with " + nPCs + " principal components\n");
+//			Constants.logger.getLogger().log(Level.INFO,
+//					"Execution for EMPCA with " + nPCs + " principal components\n");
+//			Constants.logger.getLogger().log(Level.INFO, Utils.printExecutionTime(start, System.nanoTime()));
 			// here we save the new data in an arff file
 			WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
 			wekaFileConverterImpl.arffSaver(dataset,

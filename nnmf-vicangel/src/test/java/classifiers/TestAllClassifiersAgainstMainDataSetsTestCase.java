@@ -23,7 +23,7 @@ import weka.core.Instances;
 public class TestAllClassifiersAgainstMainDataSetsTestCase {
 
 	/** The class name. */
-	private final String className = Constants.classNameForReducedData;
+	private final String className = Constants.classRealName;
 
 	/** The num folds. */
 	private int numFolds = 10;
@@ -43,10 +43,14 @@ public class TestAllClassifiersAgainstMainDataSetsTestCase {
 //			put(Constants.methFileName, "D:\\Bioscience\\results\\Methylation Dataset\\");
 //			put(Constants.mRNAFileName, "D:\\Bioscience\\results\\mRNA Dataset\\");
 //			put(Constants.miRNAFileName, "D:\\Bioscience\\results\\miRNA Dataset\\");
-			put(Constants.dataset10EMPCAFileName, "D:\\Bioscience\\results\\Original_EMPCA Dataset\\");
-			put(Constants.dataset20EMPCAFileName, "D:\\Bioscience\\results\\Original_EMPCA Dataset\\");
-			put(Constants.dataset50EMPCAFileName, "D:\\Bioscience\\results\\Original_EMPCA Dataset\\");
-			put(Constants.dataset100EMPCAFileName, "D:\\Bioscience\\results\\Original_EMPCA Dataset\\");
+//			put(Constants.dataset10EMPCAFileName, "D:\\Bioscience\\results\\Original_EMPCA Dataset\\");
+//			put(Constants.dataset20EMPCAFileName, "D:\\Bioscience\\results\\Original_EMPCA Dataset\\");
+//			put(Constants.dataset50EMPCAFileName, "D:\\Bioscience\\results\\Original_EMPCA Dataset\\");
+//			put(Constants.dataset100EMPCAFileName, "D:\\Bioscience\\results\\Original_EMPCA Dataset\\");
+			put(Constants.dataset10IsomapCsvFileName, "D:\\Bioscience\\results\\Original_Isomap Dataset\\");
+			put(Constants.dataset20IsomapCsvFileName, "D:\\Bioscience\\results\\Original_Isomap Dataset\\");
+			put(Constants.dataset50IsomapCsvFileName, "D:\\Bioscience\\results\\Original_Isomap Dataset\\");
+			put(Constants.dataset100IsomapCsvFileName, "D:\\Bioscience\\results\\Original_Isomap Dataset\\");
 		}
 	};;
 
@@ -272,6 +276,14 @@ public class TestAllClassifiersAgainstMainDataSetsTestCase {
 			return "50empcaData";
 		case Constants.dataset100EMPCAFileName:
 			return "100empcaData";
+		case Constants.dataset10IsomapCsvFileName:
+			return "10IsoData";
+		case Constants.dataset20IsomapCsvFileName:
+			return "20IsoData";
+		case Constants.dataset50IsomapCsvFileName:
+			return "50IsoData";
+		case Constants.dataset100IsomapCsvFileName:
+			return "100IsoData";
 		default:
 			throw new IllegalArgumentException("File name is not recognized.");
 		}

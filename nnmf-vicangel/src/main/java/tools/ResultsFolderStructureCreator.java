@@ -24,7 +24,7 @@ public class ResultsFolderStructureCreator {
 			"NAIVE_BAYES" };
 
 	/** The result path. */
-	private static String resultPath = "D:\\Bioscience\\results";
+	public static String resultPath = "D:\\Bioscience\\results";
 
 	/**
 	 * The main method.

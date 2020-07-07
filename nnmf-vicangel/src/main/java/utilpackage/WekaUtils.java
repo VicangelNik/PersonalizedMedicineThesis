@@ -21,6 +21,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.AbstractFileLoader;
 import weka.core.converters.ArffLoader;
+import weka.core.converters.CSVLoader;
 
 /**
  * The Class WekaUtils.
@@ -36,10 +37,10 @@ public final class WekaUtils {
 
 	/** The Constant WEKA_SUFFIX. */
 	public static final String WEKA_SUFFIX = ".arff";
-
+	/** The Constant CSV_SUFFIX. */
+	public static final String CSV_SUFFIX = ".csv";
 	/** The Constant NUMERIC_ATTRIBUTE. */
 	public static final String NUMERIC_ATTRIBUTE = "NUMERIC";
-
 	/** The Constant NOT_AVAILABLE. */
 	public static final String NOT_AVAILABLE = "NA";
 
@@ -85,8 +86,13 @@ public final class WekaUtils {
 	public static Instances getOriginalData(File file, String featureClassName) throws IOException {
 		AbstractFileLoader loader = new ArffLoader();
 		String ext = com.google.common.io.Files.getFileExtension(file.toString());
+		// returns the extension (csv) without the dot so we remove the dot from constant
+		if (ext.equals(CSV_SUFFIX.substring(1))) {
+			loader = new CSVLoader();
+		}
 		loader.setFile(file);
-		// Constants.logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + file.getName());
+		// Constants.logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " +
+		// file.getName());
 		Instances originalData = loader.getDataSet();
 		originalData.setClass(originalData.attribute(featureClassName));
 		return originalData;

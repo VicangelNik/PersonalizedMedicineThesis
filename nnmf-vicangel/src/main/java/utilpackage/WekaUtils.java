@@ -70,7 +70,9 @@ public final class WekaUtils {
 	 * @return the classifier
 	 */
 	public static AbstractClassifier getClassifier(String classifierName, Instances instances, String[] options) {
-		Constants.logger.getLogger().log(Level.INFO, "OPTIONS: {0}", Arrays.toString(options));
+		if (Constants.logger != null) {
+			Constants.logger.getLogger().log(Level.INFO, "OPTIONS: {0}", Arrays.toString(options));
+		}
 		IClassifierSelection classifierSelection = new ClassifierChooser();
 		return classifierSelection.selectClassifier(classifierName, instances, options);
 	}
@@ -86,7 +88,8 @@ public final class WekaUtils {
 	public static Instances getOriginalData(File file, String featureClassName) throws IOException {
 		AbstractFileLoader loader = new ArffLoader();
 		String ext = com.google.common.io.Files.getFileExtension(file.toString());
-		// returns the extension (csv) without the dot so we remove the dot from constant
+		// returns the extension (csv) without the dot so we remove the dot from
+		// constant
 		if (ext.equals(CSV_SUFFIX.substring(1))) {
 			loader = new CSVLoader();
 		}

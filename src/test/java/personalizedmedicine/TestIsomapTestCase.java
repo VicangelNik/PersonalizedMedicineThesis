@@ -1,4 +1,4 @@
-package java.personalizedmedicine;
+package personalizedmedicine;
 /*
  *
  */
@@ -9,14 +9,14 @@ import java.util.logging.Level;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.personalizedmedicine.dimensionality_reduction_methods.DimensionalityReductionChooser;
-import java.personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.dimensionality_reduction_methods.DimensionalityReductionChooser;
+import personalizedmedicine.helpful_classes.Constants;
 import smile.graph.Graph;
 import smile.manifold.IsoMap;
-import java.personalizedmedicine.utilpackage.TransformToFromWeka;
-import java.personalizedmedicine.utilpackage.Utils;
-import java.personalizedmedicine.utilpackage.WekaUtils;
-import java.personalizedmedicine.weka.api.library.WekaFileConverter;
+import personalizedmedicine.utilpackage.TransformToFromWeka;
+import personalizedmedicine.utilpackage.Utils;
+import personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.weka.api.library.WekaFileConverter;
 import weka.core.Instances;
 
 /**

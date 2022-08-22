@@ -1,9 +1,9 @@
-package java.personalizedmedicine.utilpackage;
+package personalizedmedicine.utilpackage;
 
 import java.util.Enumeration;
 import java.util.logging.Level;
 
-import java.personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.helpful_classes.Constants;
 import weka.core.Attribute;
 import weka.core.Instances;
 

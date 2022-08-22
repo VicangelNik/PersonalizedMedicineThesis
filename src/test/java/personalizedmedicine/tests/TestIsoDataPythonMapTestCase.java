@@ -1,4 +1,4 @@
-package java.personalizedmedicine.tests;
+package personalizedmedicine.tests;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,8 +9,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.utilpackage.WekaUtils;
 import weka.core.Instances;
 
 /**

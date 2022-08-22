@@ -1,4 +1,4 @@
-package java.personalizedmedicine;
+package personalizedmedicine;
 /*
  *
  */
@@ -15,9 +15,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.personalizedmedicine.dimensionality_reduction_methods.NonNenagativeMatrixFactorization;
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.utilpackage.Utils;
+import personalizedmedicine.dimensionality_reduction_methods.NonNenagativeMatrixFactorization;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.utilpackage.Utils;
 
 // TODO: Auto-generated Javadoc
 /**

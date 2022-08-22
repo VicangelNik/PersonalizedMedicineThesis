@@ -1,4 +1,4 @@
-package java.personalizedmedicine.utiltestpackage;
+package personalizedmedicine.utiltestpackage;
 
 import java.awt.Toolkit;
 

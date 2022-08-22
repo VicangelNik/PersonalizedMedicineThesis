@@ -1,4 +1,4 @@
-package java.personalizedmedicine.tools;
+package personalizedmedicine.tools;
 
 import java.io.FileInputStream;
 import java.io.IOException;

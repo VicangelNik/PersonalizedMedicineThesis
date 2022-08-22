@@ -1,4 +1,4 @@
-package java.personalizedmedicine.classifiers;
+package personalizedmedicine.classifiers;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +11,9 @@ import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.personalizedmedicine.helpful_classes.AppLogger;
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.helpful_classes.AppLogger;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 

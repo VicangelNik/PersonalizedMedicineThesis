@@ -1,4 +1,4 @@
-package java.personalizedmedicine.main;
+package personalizedmedicine.main;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

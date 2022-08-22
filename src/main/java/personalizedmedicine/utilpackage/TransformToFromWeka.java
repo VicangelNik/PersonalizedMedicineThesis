@@ -1,4 +1,4 @@
-package java.personalizedmedicine.utilpackage;
+package personalizedmedicine.utilpackage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import org.scify.EMPCA.Feature;
 
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
-import java.personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.helpful_classes.Constants;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;

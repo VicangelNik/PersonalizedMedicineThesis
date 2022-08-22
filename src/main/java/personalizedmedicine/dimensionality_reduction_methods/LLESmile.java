@@ -1,9 +1,9 @@
-package java.personalizedmedicine.dimensionality_reduction_methods;
+package personalizedmedicine.dimensionality_reduction_methods;
 
-import java.personalizedmedicine.interfaces.IDimensionalityReduction;
+import personalizedmedicine.interfaces.IDimensionalityReduction;
 import smile.manifold.LLE;
-import java.personalizedmedicine.utilpackage.TransformToFromWeka;
-import java.personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.utilpackage.TransformToFromWeka;
+import personalizedmedicine.utilpackage.WekaUtils;
 import weka.core.Instances;
 
 /**

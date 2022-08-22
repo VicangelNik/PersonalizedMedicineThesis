@@ -1,9 +1,9 @@
-package java.personalizedmedicine.weka.api.library;
+package personalizedmedicine.weka.api.library;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.personalizedmedicine.interfaces.IWekaFileConverter;
+import personalizedmedicine.interfaces.IWekaFileConverter;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVSaver;

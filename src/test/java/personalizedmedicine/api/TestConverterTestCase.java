@@ -1,4 +1,4 @@
-package java.personalizedmedicine.api;
+package personalizedmedicine.api;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,11 +6,11 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.helpful_classes.EnumSeparators;
-import java.personalizedmedicine.utilpackage.WekaUtils;
-import java.personalizedmedicine.weka.api.library.LoadCsv;
-import java.personalizedmedicine.weka.api.library.WekaFileConverter;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.helpful_classes.EnumSeparators;
+import personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.weka.api.library.LoadCsv;
+import personalizedmedicine.weka.api.library.WekaFileConverter;
 import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 

@@ -1,7 +1,7 @@
 /*
  *
  */
-package java.personalizedmedicine.api;
+package personalizedmedicine.api;
 
 /**
  * The Class TestLoadCsvTestCase.

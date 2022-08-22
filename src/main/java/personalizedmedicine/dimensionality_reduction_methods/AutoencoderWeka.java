@@ -1,6 +1,6 @@
-package java.personalizedmedicine.dimensionality_reduction_methods;
+package personalizedmedicine.dimensionality_reduction_methods;
 
-import java.personalizedmedicine.interfaces.IDimensionalityReduction;
+import personalizedmedicine.interfaces.IDimensionalityReduction;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.MLPAutoencoder;

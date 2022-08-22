@@ -1,4 +1,4 @@
-package java.personalizedmedicine.tests;
+package personalizedmedicine.tests;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,13 +16,13 @@ import org.scify.EMPCA.Feature;
 import org.scify.EMPCA.JavaPCAInputToScala;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
-import java.personalizedmedicine.dimensionality_reduction_methods.DimensionalityReductionChooser;
-import java.personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.dimensionality_reduction_methods.DimensionalityReductionChooser;
+import personalizedmedicine.helpful_classes.Constants;
 import scala.Tuple2;
-import java.personalizedmedicine.utilpackage.TransformToFromWeka;
-import java.personalizedmedicine.utilpackage.Utils;
-import java.personalizedmedicine.utilpackage.WekaUtils;
-import java.personalizedmedicine.weka.api.library.WekaFileConverter;
+import personalizedmedicine.utilpackage.TransformToFromWeka;
+import personalizedmedicine.utilpackage.Utils;
+import personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.weka.api.library.WekaFileConverter;
 import weka.core.Attribute;
 import weka.core.Instances;
 

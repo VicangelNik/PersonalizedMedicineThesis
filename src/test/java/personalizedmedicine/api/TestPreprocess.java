@@ -1,4 +1,4 @@
-package java.personalizedmedicine.api;
+package personalizedmedicine.api;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,12 +17,12 @@ import org.junit.Test;
 
 import com.opencsv.CSVReader;
 
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.helpful_classes.EnumSeparators;
-import java.personalizedmedicine.utilpackage.LatexUtils;
-import java.personalizedmedicine.utilpackage.WekaUtils;
-import java.personalizedmedicine.weka.api.library.PreprocessData;
-import java.personalizedmedicine.weka.api.library.WekaFileConverter;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.helpful_classes.EnumSeparators;
+import personalizedmedicine.utilpackage.LatexUtils;
+import personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.weka.api.library.PreprocessData;
+import personalizedmedicine.weka.api.library.WekaFileConverter;
 import weka.core.Attribute;
 import weka.core.AttributeStats;
 import weka.core.Instances;

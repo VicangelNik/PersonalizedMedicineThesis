@@ -1,6 +1,6 @@
-package java.personalizedmedicine.weka.api.library;
+package personalizedmedicine.weka.api.library;
 
-import java.personalizedmedicine.interfaces.ΙPreprocessData;
+import personalizedmedicine.interfaces.ΙPreprocessData;
 import weka.core.Instances;
 import weka.core.SelectedTag;
 import weka.filters.Filter;

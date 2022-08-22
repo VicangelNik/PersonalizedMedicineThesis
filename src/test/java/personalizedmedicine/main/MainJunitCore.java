@@ -1,11 +1,11 @@
-package java.personalizedmedicine.main;
+package personalizedmedicine.main;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.runner.JUnitCore;
 
-import java.personalizedmedicine.utiltestpackage.RingListener;
+import personalizedmedicine.utiltestpackage.RingListener;
 
 /**
  * The Class MainJunitCore.

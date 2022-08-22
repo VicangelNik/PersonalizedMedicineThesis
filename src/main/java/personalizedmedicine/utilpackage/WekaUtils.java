@@ -1,7 +1,7 @@
 /*
  *
  */
-package java.personalizedmedicine.utilpackage;
+package personalizedmedicine.utilpackage;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,9 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
-import java.personalizedmedicine.classifiers.ClassifierChooser;
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.interfaces.IClassifierSelection;
+import personalizedmedicine.classifiers.ClassifierChooser;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.interfaces.IClassifierSelection;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instance;
 import weka.core.Instances;

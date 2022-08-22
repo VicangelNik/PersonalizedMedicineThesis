@@ -1,7 +1,7 @@
 /*
  *
  */
-package java.personalizedmedicine.utiltestpackage;
+package personalizedmedicine.utiltestpackage;
 
 import java.io.IOException;
 import java.nio.file.Files;

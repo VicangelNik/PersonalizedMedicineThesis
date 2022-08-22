@@ -1,4 +1,4 @@
-package java.personalizedmedicine.helpful_classes;
+package personalizedmedicine.helpful_classes;
 
 /**
  * The Class Constants.

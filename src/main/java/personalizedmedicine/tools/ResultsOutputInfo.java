@@ -1,4 +1,4 @@
-package java.personalizedmedicine.tools;
+package personalizedmedicine.tools;
 
 /**
  * The Class ResultsOutputInfo.

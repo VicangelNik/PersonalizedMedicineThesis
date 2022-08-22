@@ -1,4 +1,4 @@
-package java.personalizedmedicine.classifiers;
+package personalizedmedicine.classifiers;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,9 +6,9 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.personalizedmedicine.dimensionality_reduction_methods.DimensionalityReductionChooser;
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.dimensionality_reduction_methods.DimensionalityReductionChooser;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instances;
 

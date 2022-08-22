@@ -1,4 +1,4 @@
-package java.personalizedmedicine.dimensionality_reduction_methods;
+package personalizedmedicine.dimensionality_reduction_methods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,10 @@ import org.scify.EMPCA.Feature;
 import org.scify.EMPCA.JavaPCAInputToScala;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
-import java.personalizedmedicine.interfaces.IDimensionalityReduction;
+import personalizedmedicine.interfaces.IDimensionalityReduction;
 import scala.Tuple2;
-import java.personalizedmedicine.utilpackage.TransformToFromWeka;
-import java.personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.utilpackage.TransformToFromWeka;
+import personalizedmedicine.utilpackage.WekaUtils;
 import weka.core.Instances;
 
 /**

@@ -1,4 +1,4 @@
-package java.personalizedmedicine.weka.options;
+package personalizedmedicine.weka.options;
 
 /**
  * The Enum OptionsParamtersEnum.

@@ -1,9 +1,9 @@
-package java.personalizedmedicine.dimensionality_reduction_methods;
+package personalizedmedicine.dimensionality_reduction_methods;
 
 import java.util.logging.Level;
 
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.interfaces.IDimensionalityReductionSelection;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.interfaces.IDimensionalityReductionSelection;
 import weka.core.Instances;
 
 /**

@@ -1,4 +1,4 @@
-package java.personalizedmedicine.dimensionality_reduction_methods;
+package personalizedmedicine.dimensionality_reduction_methods;
 
 /*
  * Class for Non Nenagative Matrix Factorization implementation.

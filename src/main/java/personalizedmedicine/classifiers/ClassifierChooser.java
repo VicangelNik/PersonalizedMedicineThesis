@@ -1,10 +1,10 @@
-package java.personalizedmedicine.classifiers;
+package personalizedmedicine.classifiers;
 
-import java.personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.helpful_classes.Constants;
 import java.util.Random;
 import java.util.logging.Level;
 
-import java.personalizedmedicine.interfaces.IClassifierSelection;
+import personalizedmedicine.interfaces.IClassifierSelection;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.evaluation.Evaluation;
 import weka.core.Instances;

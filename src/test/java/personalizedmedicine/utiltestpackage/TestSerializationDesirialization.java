@@ -1,4 +1,4 @@
-package java.personalizedmedicine.utiltestpackage;
+package personalizedmedicine.utiltestpackage;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -7,9 +7,9 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.utilpackage.Utils;
-import java.personalizedmedicine.utilpackage.WekaUtils;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.utilpackage.Utils;
+import personalizedmedicine.utilpackage.WekaUtils;
 
 /**
  * The Class TestSerializationDesirialization.

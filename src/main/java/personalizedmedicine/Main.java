@@ -1,6 +1,6 @@
-package java.personalizedmedicine;
+package personalizedmedicine;
 
-import java.personalizedmedicine.weka.options.OptionsGeneralBuilder;
+import personalizedmedicine.weka.options.OptionsGeneralBuilder;
 
 /*
  *

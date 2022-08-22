@@ -1,7 +1,7 @@
 /*
  *
  */
-package java.personalizedmedicine.weka.api.library;
+package personalizedmedicine.weka.api.library;
 
 import java.io.File;
 import java.io.IOException;

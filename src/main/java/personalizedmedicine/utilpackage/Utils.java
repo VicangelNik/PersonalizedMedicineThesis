@@ -1,7 +1,7 @@
 /*
  *
  */
-package java.personalizedmedicine.utilpackage;
+package personalizedmedicine.utilpackage;
 
 /*
  *
@@ -25,8 +25,8 @@ import java.util.logging.Logger;
 import org.jblas.DoubleMatrix;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
-import java.personalizedmedicine.helpful_classes.Constants;
-import java.personalizedmedicine.helpful_classes.EnumSeparators;
+import personalizedmedicine.helpful_classes.Constants;
+import personalizedmedicine.helpful_classes.EnumSeparators;
 import scala.Tuple2;
 
 /**

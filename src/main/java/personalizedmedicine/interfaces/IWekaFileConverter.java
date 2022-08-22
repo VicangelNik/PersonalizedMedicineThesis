@@ -1,4 +1,4 @@
-package java.personalizedmedicine.interfaces;
+package personalizedmedicine.interfaces;
 
 import java.io.IOException;
 

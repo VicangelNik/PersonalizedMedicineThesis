@@ -1,4 +1,4 @@
-package java.personalizedmedicine;
+package personalizedmedicine;
 
 import org.python.util.PythonInterpreter;
 

@@ -1,4 +1,4 @@
-package java.personalizedmedicine.tools;
+package personalizedmedicine.tools;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import java.personalizedmedicine.utilpackage.Utils;
+import personalizedmedicine.utilpackage.Utils;
 
 /**
  * The Class InformationResultExtractor.

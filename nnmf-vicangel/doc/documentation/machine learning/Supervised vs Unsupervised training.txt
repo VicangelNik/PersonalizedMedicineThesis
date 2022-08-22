@@ -1,2 +1,0 @@
-Supervised training is when we know what class the data are and is useful to classify the data. In contrast unsupervised training is when we don't know the class of the data. 
-Unsupervised training is convenient for dimensionality reduction and exploratory analysis because it can automatically identify structure in data. 

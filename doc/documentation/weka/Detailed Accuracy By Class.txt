@@ -1,0 +1,20 @@
+https://www.quora.com/What-are-TP-rate-FP-rate-precision-recall-F-measure-MCC-ROC-area-and-PRC-areas-in-the-Weka-tool
+
+
+TP Rate: rate of true positives (instances correctly classified as a given class)
+
+FP Rate: rate of false positives (instances falsely classified as a given class)
+
+Precision: proportion of instances that are truly of a class divided by the total instances classified as that class
+
+Recall: proportion of instances classified as a given class divided by the actual total in that class (equivalent to TP rate)
+
+F-Measure: A combined measure for precision and recall calculated as 2 * Precision * Recall / (Precision + Recall)
+
+MCC is used in machine learning as a measure of the quality of binary (two-class) classifications. It takes into account true and false positives and negatives and is generally regarded as a balanced measure which can be used even if the classes are of very different sizes
+
+ROC( Receiver Operating Characteristics) area measurement: One of the most important values output by Weka. They give you an idea of how the classifiers are performing in general
+
+PRC( Precision Recall) area :
+
+The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets

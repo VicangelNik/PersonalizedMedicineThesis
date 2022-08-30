@@ -1,17 +1,11 @@
 package personalizedmedicine.classifiers;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
-
+import lombok.extern.slf4j.Slf4j;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
-
 import personalizedmedicine.helpful_classes.Constants;
 import personalizedmedicine.utilpackage.WekaUtils;
 import weka.classifiers.AbstractClassifier;
@@ -26,111 +20,74 @@ import weka.dl4j.layers.OutputLayer;
 import weka.dl4j.lossfunctions.LossMSE;
 import weka.dl4j.updater.Adam;
 
-/**
- * The Class TestPartTestCase.
- */
-public class TestMLPDeepLearning4jTestCase {
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 
-	/** The class name. */
-	private final String className = Constants.classRealName;
+@Slf4j
+@Disabled("java.lang.NoClassDefFoundError: Could not initialize class org.nd4j.linalg.factory.Nd4j")
+class TestMLPDeepLearning4jTestCase extends ClassifierTest {
 
-	/** The dataset file name. */
-	private final String datasetFileName = Constants.completeFileName;
+    @Test
+    @DisplayName("Multilayer Perceptron Default")
+    void testNeuralDefault() {
+        // for (String datasetFileName : fileNames) {
+        try {
+            File level2File = new File(datasetFileName);
+            Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+            AbstractClassifier classifier = WekaUtils.getClassifier(Constants.DEEPLEARNING4J, originalDataset,
+                                                                    new String[]{"1", "true", "10"});
+            WekaUtils.crossValidationAction(Constants.DEEPLEARNING4J, classifier, numFolds, random);
+        } catch (IOException e) {
+            Assertions.fail(e.getMessage());
+        }
+        // }
+    }
+    
+    @Test
+    @DisplayName("Multilayer Perceptron")
+    void testNeuralClassifier() {
+        try {
+            File level2File = new File(datasetFileName);
+            Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
 
-	/** The num folds. */
-	private int numFolds = 10;
+            // Create a new Multi-Layer-Perceptron classifier
+            Dl4jMlpClassifier clf = new Dl4jMlpClassifier();
+            clf.setNumEpochs(50);
 
-	/** The random. */
-	private int random = 1;
+            DenseLayer denseLayer = new DenseLayer();
+            denseLayer.setNOut(256);
+            denseLayer.setActivationFunction(new ActivationReLU());
 
-	/**
-	 * Inits the.
-	 *
-	 * @param testInfo the test info
-	 */
-	@BeforeEach
-	void init(TestInfo testInfo) {
-//		Constants.logger.getLogger().log(Level.INFO, "START TEST");
-//		Constants.logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " + datasetFileName);
-//		Constants.logger.getLogger().log(Level.INFO, "SAVE DISPLAY NAME: " + testInfo.getDisplayName());
-	}
+            DenseLayer denseLayer1 = new DenseLayer();
+            denseLayer1.setNOut(256);
+            denseLayer1.setActivationFunction(new ActivationReLU());
 
-	/**
-	 * On End.
-	 */
-	@AfterEach
-	void onEnd() {
-		// Constants.logger.getLogger().log(Level.INFO, "END TEST");
-	}
+            DenseLayer denseLayer2 = new DenseLayer();
+            denseLayer2.setNOut(256);
+            denseLayer2.setActivationFunction(new ActivationReLU());
 
-	/**
-	 * Test part default.
-	 */
-	@Test
-	@DisplayName("Multilayer Perceptron Default")
-	public void testNeuralDefault() {
-		// for (String datasetFileName : fileNames) {
-		System.out.println(datasetFileName.toUpperCase());
-		try {
-			File level2File = new File(datasetFileName);
-			Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-			AbstractClassifier classifier = WekaUtils.getClassifier(Constants.DEEPLEARNING4J, originalDataset,
-					new String[] { "1", "true", "10" });
-			WekaUtils.crossValidationAction(Constants.DEEPLEARNING4J, classifier, numFolds, random);
-		} catch (IOException e) {
-			Assert.assertFalse(e.getMessage(), true);
-		}
-		// }
-	}
+            // Define the output layer
+            OutputLayer outputLayer = new OutputLayer();
+            outputLayer.setActivationFunction(new ActivationSoftmax());
+            outputLayer.setLossFn(new LossMSE());
 
-	/**
-	 * Test part default.
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	@DisplayName("Multilayer Perceptron")
-	public void testNeuralClassifier() throws Exception {
+            NeuralNetConfiguration nnc = new NeuralNetConfiguration();
+            nnc.setUpdater(new Adam());
+            nnc.setOptimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
+            clf.setNeuralNetConfiguration(nnc);
+            // Add the layers to the classifier
+            clf.setLayers(denseLayer, denseLayer1, outputLayer);
 
-		File level2File = new File(datasetFileName);
-		Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+            clf.buildClassifier(originalDataset);
 
-		// Create a new Multi-Layer-Perceptron classifier
-		Dl4jMlpClassifier clf = new Dl4jMlpClassifier();
-		clf.setNumEpochs(50);
-
-		DenseLayer denseLayer = new DenseLayer();
-		denseLayer.setNOut(256);
-		denseLayer.setActivationFunction(new ActivationReLU());
-
-		DenseLayer denseLayer1 = new DenseLayer();
-		denseLayer1.setNOut(256);
-		denseLayer1.setActivationFunction(new ActivationReLU());
-
-		DenseLayer denseLayer2 = new DenseLayer();
-		denseLayer2.setNOut(256);
-		denseLayer2.setActivationFunction(new ActivationReLU());
-
-		// Define the output layer
-		OutputLayer outputLayer = new OutputLayer();
-		outputLayer.setActivationFunction(new ActivationSoftmax());
-		outputLayer.setLossFn(new LossMSE());
-
-		NeuralNetConfiguration nnc = new NeuralNetConfiguration();
-		nnc.setUpdater(new Adam());
-		nnc.setOptimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
-		clf.setNeuralNetConfiguration(nnc);
-		// Add the layers to the classifier
-		clf.setLayers(denseLayer, denseLayer1, outputLayer);
-
-		clf.buildClassifier(originalDataset);
-		
-		Evaluation eval = new Evaluation(originalDataset);
-		eval.crossValidateModel(clf, originalDataset, numFolds, new Random(random));
-		System.out.println(eval.toSummaryString("Evaluation results:\n", true));
-		System.out.println(eval.toClassDetailsString());
-		System.out.println(eval.toMatrixString());
-
-	}
-
+            Evaluation eval = new Evaluation(originalDataset);
+            eval.crossValidateModel(clf, originalDataset, numFolds, new Random(random));
+            log.info(eval.toSummaryString("Evaluation results:\n", true));
+            log.info(eval.toClassDetailsString());
+            log.info(eval.toMatrixString());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
 }

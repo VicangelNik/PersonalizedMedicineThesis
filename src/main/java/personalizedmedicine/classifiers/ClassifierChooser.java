@@ -13,8 +13,8 @@ import weka.dl4j.layers.OutputLayer;
 import weka.dl4j.lossfunctions.LossMCXENT;
 import weka.dl4j.updater.Adam;
 
+import java.util.Arrays;
 import java.util.Random;
-import java.util.logging.Level;
 
 @Slf4j
 public class ClassifierChooser implements IClassifierSelection {
@@ -84,88 +84,86 @@ public class ClassifierChooser implements IClassifierSelection {
      */
 
     public static void printCrossValidationResults(Evaluation eval, int classIndex) throws Exception {
-        log.info("Number of instances correctly classified: {0}", eval.correct());
-        log.info("Number of incorrectly classified instances: {0}, ", eval.incorrect());
-        log.info("Number of unclassified instances: {0}", eval.unclassified());
-        log.info("Percent of correctly classified instances: {0}", eval.pctCorrect());
-        log.info("Percent of incorrectly classified instances: {0}", eval.pctIncorrect());
-        log.info("Percent of unclassified instances: {0} ", eval.pctUnclassified());
+        log.info("Number of instances correctly classified: " + eval.correct());
+        log.info("Number of incorrectly classified instances: " + eval.incorrect());
+        log.info("Number of unclassified instances: " + eval.unclassified());
+        log.info("Percent of correctly classified instances: " + eval.pctCorrect());
+        log.info("Percent of incorrectly classified instances: " + eval.pctIncorrect());
+        log.info("Percent of unclassified instances:  " + eval.pctUnclassified());
         try {
-            Constants.logger.getLogger()
-                            .log(Level.INFO, "Correlation coefficient if the class is numeric: {0}",
-                                 eval.correlationCoefficient());
+            log.info("Correlation coefficient if the class is numeric: " + eval.correlationCoefficient());
         } catch (Exception e) {
-            Constants.logger.getLogger().log(Level.SEVERE, e.getMessage());
+            log.error(e.getMessage());
         }
-        // logger.getLogger().log(Level.INFO, "Mathews correlation coefficient: {0}",
+        // logger.getLogger().log(Level.INFO, "Mathews correlation coefficient: ",
         // eval.matthewsCorrelationCoefficient(classIndex));
-        log.info("Coverage of the test cases by the predicted regions: {0}",
-                 eval.coverageOfTestCasesByPredictedRegions());
-        log.info("The estimated error rate: {0}", eval.errorRate());
-        // logger.getLogger().log(Level.INFO, "False positive rate: {0}",
+        log.info(
+                "Coverage of the test cases by the predicted regions: " + eval.coverageOfTestCasesByPredictedRegions());
+        log.info("The estimated error rate: " + eval.errorRate());
+        // logger.getLogger().log(Level.INFO, "False positive rate: ",
         // eval.falseNegativeRate(classIndex));
-        // logger.getLogger().log(Level.INFO, "False negative rate: {0}",
+        // logger.getLogger().log(Level.INFO, "False negative rate: ",
         // eval.falsePositiveRate(classIndex));
-        // logger.getLogger().log(Level.INFO, "F-Measure: {0}",
+        // logger.getLogger().log(Level.INFO, "F-Measure: ",
         // eval.fMeasure(classIndex));
-        log.info("The weighted class counts: {0}", eval.getClassPriors());
-        log.info("Kappa statistic: {0}", eval.kappa());
-        log.info("K&B information score: {0}", eval.KBInformation());
-        log.info("K&B mean information score: {0}", eval.KBMeanInformation());
-        log.info("K&B relative information score: {0}", eval.KBRelativeInformation());
+        log.info("The weighted class counts: " + Arrays.toString(eval.getClassPriors()));
+        log.info("Kappa statistic: " + eval.kappa());
+        log.info("K&B information score: " + eval.KBInformation());
+        log.info("K&B mean information score: " + eval.KBMeanInformation());
+        log.info("K&B relative information score: " + eval.KBRelativeInformation());
         // logger.getLogger().log(Level.INFO, "Area under the precision-recall curve:
-        // {0}", eval.areaUnderPRC(classIndex));
-        // logger.getLogger().log(Level.INFO, "Area under the ROC curve: {0}",
+        // ", eval.areaUnderPRC(classIndex));
+        // logger.getLogger().log(Level.INFO, "Area under the ROC curve: ",
         // eval.areaUnderROC(classIndex));
-        log.info("Average cost: {0}", eval.avgCost());
-        log.info("Total cost: {0}", eval.totalCost());
-        log.info("Mean absolute error: {0}", eval.meanAbsoluteError());
-        log.info("Mean absolute prior error: {0}", eval.meanPriorAbsoluteError());
+        log.info("Average cost: " + eval.avgCost());
+        log.info("Total cost: " + eval.totalCost());
+        log.info("Mean absolute error: " + eval.meanAbsoluteError());
+        log.info("Mean absolute prior error: " + eval.meanPriorAbsoluteError());
         try {
-            log.info("Relative absolute error: {0}", eval.relativeAbsoluteError());
+            log.info("Relative absolute error: " + eval.relativeAbsoluteError());
         } catch (Exception e) {
-            Constants.logger.getLogger().log(Level.SEVERE, e.getMessage());
+            log.error(e.getMessage());
         }
-        log.info("Root mean prior squared error: {0}", eval.rootMeanPriorSquaredError());
-        log.info("Root mean squared error: {0}", eval.rootMeanSquaredError());
-        log.info("Root relative squared error: {0}", eval.rootRelativeSquaredError());
-        log.info("Weight of the instances that had missing class values: {0}", eval.missingClass());
-        // logger.getLogger().log(Level.INFO, "False positive rate: {0}",
+        log.info("Root mean prior squared error: " + eval.rootMeanPriorSquaredError());
+        log.info("Root mean squared error: " + eval.rootMeanSquaredError());
+        log.info("Root relative squared error: " + eval.rootRelativeSquaredError());
+        log.info("Weight of the instances that had missing class values: " + eval.missingClass());
+        // logger.getLogger().log(Level.INFO, "False positive rate: ",
         // eval.numFalseNegatives(classIndex));
-        // logger.getLogger().log(Level.INFO, "False negative rate: {0}",
+        // logger.getLogger().log(Level.INFO, "False negative rate: ",
         // eval.numFalsePositives(classIndex));
-        // logger.getLogger().log(Level.INFO, "True negative rate: {0}",
+        // logger.getLogger().log(Level.INFO, "True negative rate: ",
         // eval.numTrueNegatives(classIndex));
-        // logger.getLogger().log(Level.INFO, "True positive rate: {0}",
+        // logger.getLogger().log(Level.INFO, "True positive rate: ",
         // eval.numTruePositives(classIndex));
-        // logger.getLogger().log(Level.INFO, "True negative rate: {0}",
+        // logger.getLogger().log(Level.INFO, "True negative rate: ",
         // eval.trueNegativeRate(classIndex));
-        // logger.getLogger().log(Level.INFO, "True positive rate: {0}",
+        // logger.getLogger().log(Level.INFO, "True positive rate: ",
         // eval.truePositiveRate(classIndex));
-        // logger.getLogger().log(Level.INFO, "Precision: {0}",
+        // logger.getLogger().log(Level.INFO, "Precision: ",
         // eval.precision(classIndex));
-        // logger.getLogger().log(Level.INFO, "Recall: {0}", eval.recall(classIndex));
-        // logger.getLogger().log(Level.INFO, "Null model entropy per instance: {0}",
+        // logger.getLogger().log(Level.INFO, "Recall: ", eval.recall(classIndex));
+        // logger.getLogger().log(Level.INFO, "Null model entropy per instance: ",
         // eval.priorEntropy()); // Same as SFMeanPriorEntropy
-        log.info("Total SF score: {0}", eval.SFEntropyGain());
-        log.info("Mean SF score: {0}", eval.SFMeanEntropyGain());
-        log.info("Total null model entropy: {0}", eval.SFPriorEntropy());
-        log.info("Null model entropy per instance: {0}", eval.SFMeanPriorEntropy());
-        log.info("Total scheme entropy: {0}", eval.SFSchemeEntropy());
-        log.info("Scheme entropy per instance: {0}", eval.SFMeanSchemeEntropy());
-        log.info("Average size of the predicted regions: {0}", eval.sizeOfPredictedRegions());
-        log.info("Unweighted macro-averaged F-measure: {0}", eval.unweightedMacroFmeasure());
-        log.info("Unweighted micro-averaged F-measure: {0}", eval.unweightedMicroFmeasure());
-        log.info("Weighted AUPRC: {0}", eval.weightedAreaUnderPRC());
-        log.info("Weighted AUC: {0}", eval.weightedAreaUnderROC());
-        log.info("Weighted false negative rate: {0}", eval.weightedFalseNegativeRate());
-        log.info("Weighted false positive rate: {0}", eval.weightedFalsePositiveRate());
-        log.info("Weighted F-Measure: {0}", eval.weightedFMeasure());
-        log.info("Weighted matthews correlation coefficient: {0}", eval.weightedMatthewsCorrelation());
-        log.info("Weighted precision: {0}", eval.weightedPrecision());
-        log.info("Weighted recall: {0}", eval.weightedRecall());
-        log.info("Weighted true negative rate: {0}", eval.weightedTrueNegativeRate());
-        log.info("Weighted true positive rate: {0}", eval.weightedTruePositiveRate());
+        log.info("Total SF score: " + eval.SFEntropyGain());
+        log.info("Mean SF score: " + eval.SFMeanEntropyGain());
+        log.info("Total null model entropy: " + eval.SFPriorEntropy());
+        log.info("Null model entropy per instance: " + eval.SFMeanPriorEntropy());
+        log.info("Total scheme entropy: " + eval.SFSchemeEntropy());
+        log.info("Scheme entropy per instance: " + eval.SFMeanSchemeEntropy());
+        log.info("Average size of the predicted regions: " + eval.sizeOfPredictedRegions());
+        log.info("Unweighted macro-averaged F-measure: " + eval.unweightedMacroFmeasure());
+        log.info("Unweighted micro-averaged F-measure: " + eval.unweightedMicroFmeasure());
+        log.info("Weighted AUPRC: " + eval.weightedAreaUnderPRC());
+        log.info("Weighted AUC: " + eval.weightedAreaUnderROC());
+        log.info("Weighted false negative rate: " + eval.weightedFalseNegativeRate());
+        log.info("Weighted false positive rate: " + eval.weightedFalsePositiveRate());
+        log.info("Weighted F-Measure: " + eval.weightedFMeasure());
+        log.info("Weighted matthews correlation coefficient: " + eval.weightedMatthewsCorrelation());
+        log.info("Weighted precision: " + eval.weightedPrecision());
+        log.info("Weighted recall: " + eval.weightedRecall());
+        log.info("Weighted true negative rate: " + eval.weightedTrueNegativeRate());
+        log.info("Weighted true positive rate: " + eval.weightedTruePositiveRate());
     }
 
     /*

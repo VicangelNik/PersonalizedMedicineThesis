@@ -16,14 +16,9 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 @Slf4j
-class TestAllClassifiersAgainstMainDataSetsTestCase {
-
-    private static final String CLASS_NAME = Constants.classRealName;
-    private final int numFolds = 10;
-    private final int random = 1;
+class TestAllClassifiersAgainstMainDataSetsTestCase extends ClassifierTest {
 
     private final Map<String, String> fileLogMap = new HashMap<String, String>() {
-        private static final long serialVersionUID = 1226004314628974778L;
 
         {
 //			put(Constants.completeFileName, "D:\\Bioscience\\results\\Original Dataset\\");
@@ -41,18 +36,15 @@ class TestAllClassifiersAgainstMainDataSetsTestCase {
 //			put(Constants.dataset100IsomapCsvFileName, "D:\\Bioscience\\results\\Original_Isomap Dataset\\");
         }
     };
-    ;
 
-    /**
-     * Test NB All.
-     */
+
     @Test
     @DisplayName("Naive Bayes All")
     void testNaiveBayesAll() {
         fileLogMap.forEach((fileName, logMapPath) -> {
             try {
                 File level2File = new File(fileName);
-                Instances originalDataset = WekaUtils.getOriginalData(level2File, CLASS_NAME);
+                Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
                 String[] configs = new String[]{"", "-K", "-D"};
                 int count = 0;
                 for (String option : configs) {
@@ -70,9 +62,6 @@ class TestAllClassifiersAgainstMainDataSetsTestCase {
         });
     }
 
-    /**
-     * Test part all.
-     */
     @Test
     @DisplayName("Part All")
     void testPartAll() {
@@ -83,7 +72,7 @@ class TestAllClassifiersAgainstMainDataSetsTestCase {
         fileLogMap.forEach((fileName, logMapPath) -> {
             try {
                 File level2File = new File(fileName);
-                Instances originalDataset = WekaUtils.getOriginalData(level2File, CLASS_NAME);
+                Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
                 int count = 0;
                 // confidenceFactor must be greater than 0 and less than 1
                 for (double confidenceFactor = 0.1; confidenceFactor <= 0.5; confidenceFactor += 0.1) { // -C
@@ -116,9 +105,6 @@ class TestAllClassifiersAgainstMainDataSetsTestCase {
         });
     }
 
-    /**
-     * Test jrip all.
-     */
     @Test
     @DisplayName("Jrip All")
     void testJripAll() {
@@ -128,7 +114,7 @@ class TestAllClassifiersAgainstMainDataSetsTestCase {
         fileLogMap.forEach((fileName, logMapPath) -> {
             try {
                 File level2File = new File(fileName);
-                Instances originalDataset = WekaUtils.getOriginalData(level2File, CLASS_NAME);
+                Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
                 int count = 0;
                 for (int optimization = 1; optimization <= 5; optimization++) {
                     for (int folds = 1; folds <= 10; folds++) {
@@ -156,9 +142,6 @@ class TestAllClassifiersAgainstMainDataSetsTestCase {
         });
     }
 
-    /**
-     * Test ibk all.
-     */
     @Test
     void testIbkAll() {
         // this test has only important configurations that have meaning to use.
@@ -171,7 +154,7 @@ class TestAllClassifiersAgainstMainDataSetsTestCase {
         fileLogMap.forEach((fileName, logMapPath) -> {
             try {
                 File level2File = new File(fileName);
-                Instances originalDataset = WekaUtils.getOriginalData(level2File, CLASS_NAME);
+                Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
                 int count = 0;
                 for (String nNAlgorithm : nearestNeighbourSearchAlgorithm) {
                     for (String dFunction : distanceFunction) {
@@ -225,12 +208,6 @@ class TestAllClassifiersAgainstMainDataSetsTestCase {
 //		}
 //	}
 
-    /**
-     * Log file name.
-     *
-     * @param fileName the file name
-     * @return the string
-     */
     private String logFileName(String fileName) {
         switch (fileName) {
             case Constants.completeFileName:

@@ -291,8 +291,6 @@ public final class Utils {
 			bw.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			// nothing to do
 		}
 	}
 

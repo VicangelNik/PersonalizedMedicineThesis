@@ -1,5 +1,6 @@
 package personalizedmedicine.classifiers;
 
+import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,8 @@ class TestClassificationTestCase extends ClassifierTest {
         File level2File = new File(datasetFileName);
         Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
         AbstractClassifier classifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, originalDataset, new String[]{});
-        WekaUtils.crossValidationAction(Constants.NAIVE_BAYES, classifier, numFolds, random);
+        Assertions.assertDoesNotThrow(
+                () -> WekaUtils.crossValidationAction(Constants.NAIVE_BAYES, classifier, numFolds, random));
     }
 
     @Test
@@ -28,7 +30,8 @@ class TestClassificationTestCase extends ClassifierTest {
         Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
         AbstractClassifier classifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES_UPDATABLE, originalDataset,
                                                                 new String[]{});
-        WekaUtils.crossValidationAction(Constants.NAIVE_BAYES_UPDATABLE, classifier, numFolds, random);
+        Assertions.assertDoesNotThrow(
+                () -> WekaUtils.crossValidationAction(Constants.NAIVE_BAYES_UPDATABLE, classifier, numFolds, random));
     }
 
     @Test
@@ -36,7 +39,8 @@ class TestClassificationTestCase extends ClassifierTest {
         File level2File = new File(datasetFileName);
         Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
         AbstractClassifier classifier = WekaUtils.getClassifier(Constants.ZERO_R, originalDataset, new String[]{});
-        WekaUtils.crossValidationAction(Constants.ZERO_R, classifier, numFolds, random);
+        Assertions.assertDoesNotThrow(
+                () -> WekaUtils.crossValidationAction(Constants.ZERO_R, classifier, numFolds, random));
     }
 
     @Test
@@ -44,7 +48,8 @@ class TestClassificationTestCase extends ClassifierTest {
         File level2File = new File(datasetFileName);
         Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
         AbstractClassifier classifier = WekaUtils.getClassifier(Constants.JRIP, originalDataset, new String[]{});
-        WekaUtils.crossValidationAction(Constants.JRIP, classifier, numFolds, random);
+        Assertions.assertDoesNotThrow(
+                () -> WekaUtils.crossValidationAction(Constants.JRIP, classifier, numFolds, random));
     }
 
     @Test
@@ -52,7 +57,8 @@ class TestClassificationTestCase extends ClassifierTest {
         File level2File = new File(datasetFileName);
         Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
         AbstractClassifier classifier = WekaUtils.getClassifier(Constants.PART, originalDataset, new String[]{});
-        WekaUtils.crossValidationAction(Constants.PART, classifier, numFolds, random);
+        Assertions.assertDoesNotThrow(
+                () -> WekaUtils.crossValidationAction(Constants.PART, classifier, numFolds, random));
     }
 
     @Test
@@ -60,7 +66,8 @@ class TestClassificationTestCase extends ClassifierTest {
         File level2File = new File(datasetFileName);
         Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
         AbstractClassifier classifier = WekaUtils.getClassifier(Constants.IBK, originalDataset, new String[]{});
-        WekaUtils.crossValidationAction(Constants.IBK, classifier, numFolds, random);
+        Assertions.assertDoesNotThrow(
+                () -> WekaUtils.crossValidationAction(Constants.IBK, classifier, numFolds, random));
     }
 
     @Test
@@ -70,16 +77,17 @@ class TestClassificationTestCase extends ClassifierTest {
         Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
         AbstractClassifier classifier = WekaUtils.getClassifier(Constants.DEEPLEARNING4J, originalDataset,
                                                                 new String[]{"1", "true", "5"});
-        WekaUtils.crossValidationAction(Constants.DEEPLEARNING4J, classifier, numFolds, random);
+        Assertions.assertDoesNotThrow(
+                () -> WekaUtils.crossValidationAction(Constants.DEEPLEARNING4J, classifier, numFolds, random));
     }
 
     @Test
-    void testNaiveBayesCrossValidationEvaluationWithDimensionalityReduction() throws IOException {
-        File level2File = new File(datasetFileName);
-        Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
-        // DIMENSIONALITY REDUCTION
-        DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
+    void testNaiveBayesCrossValidationEvaluationWithDimensionalityReduction() {
         try {
+            val level2File = new File(datasetFileName);
+            Instances originalDataset = WekaUtils.getOriginalData(level2File, className);
+            // DIMENSIONALITY REDUCTION
+            DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
             // http://weka.sourceforge.net/doc.dev/weka/filters/unsupervised/attribute/PrincipalComponents.html
             String[] options = weka.core.Utils.splitOptions("-R 0.95 -A 5 -M -1");
             Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector("pca", originalDataset,

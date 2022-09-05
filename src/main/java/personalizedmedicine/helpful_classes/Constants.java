@@ -19,8 +19,8 @@ public class Constants {
 
     public static final String WEKA_FILES = "src\\test\\resources\\wekaFiles\\";
 
-    // public static final String loggerPath = "C:\\applications\\thesis\\";
     public static String loggerPath = "D:\\Bioscience\\results\\Original Dataset\\JRIP\\log\\";
+    public static final String TESTS_RESULTS_FOLDER_PATH = "src\\test\\resources\\testResults\\";
 
     public static final String MORMAL_TISSUE = "NormalTissue";
 
@@ -74,10 +74,14 @@ public class Constants {
 
     public static final String[] datasetEmpcafileNames = new String[]{dataset10EMPCAFileName, dataset20EMPCAFileName, dataset50EMPCAFileName, dataset100EMPCAFileName};
 
-    public static final String dataset10IsomapCsvFileName = SRC_MAIN_RESOURCES_PATH + "Iso10.csv";
-    public static final String dataset20IsomapCsvFileName = SRC_MAIN_RESOURCES_PATH + "Iso20.csv";
-    public static final String dataset50IsomapCsvFileName = SRC_MAIN_RESOURCES_PATH + "Iso50.csv";
-    public static final String dataset100IsomapCsvFileName = SRC_MAIN_RESOURCES_PATH + "Iso100.csv";
+    public static final String dataset10IsomapCsvFileName =
+            SRC_TEST_RESOURCES_PATH + SRC_TEST_DATABASES_PATH + ISOMAP + "\\" + "Iso10.csv";
+    public static final String dataset20IsomapCsvFileName =
+            SRC_TEST_RESOURCES_PATH + SRC_TEST_DATABASES_PATH + ISOMAP + "\\" + "Iso20.csv";
+    public static final String dataset50IsomapCsvFileName =
+            SRC_TEST_RESOURCES_PATH + SRC_TEST_DATABASES_PATH + ISOMAP + "\\" + "Iso50.csv";
+    public static final String dataset100IsomapCsvFileName =
+            SRC_TEST_RESOURCES_PATH + SRC_TEST_DATABASES_PATH + ISOMAP + "\\" + "Iso100.csv";
 
     // CLASS NAMES
 

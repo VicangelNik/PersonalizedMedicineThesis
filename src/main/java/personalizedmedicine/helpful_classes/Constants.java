@@ -6,9 +6,6 @@ public class Constants {
         throw new IllegalArgumentException("Utility class should not be initialized");
     }
 
-    //public static AppLogger logger = AppLogger.getInstance();
-    public static AppLogger logger = null;
-
     // PATHS
     public static final String SRC_TEST_RESOURCES_PATH = "src\\test\\resources\\";
     public static final String SRC_TEST_DATABASES_PATH = "databases\\";

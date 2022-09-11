@@ -1,103 +1,89 @@
 package personalizedmedicine;
-/*
- *
- */
-import java.io.File;
-import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import personalizedmedicine.dimensionality_reduction_methods.DimensionalityReductionChooser;
 import personalizedmedicine.helpful_classes.Constants;
-import smile.graph.Graph;
-import smile.manifold.LLE;
 import personalizedmedicine.utilpackage.TransformToFromWeka;
 import personalizedmedicine.utilpackage.WekaUtils;
 import personalizedmedicine.weka.api.library.WekaFileConverter;
+import smile.graph.Graph;
+import smile.manifold.LLE;
 import weka.core.Instances;
 
-/**
- * The Class TestLLETestCase.
- */
-public class TestLLE {
+import java.io.File;
+import java.io.IOException;
 
-	// IS NOT WORKING
-	/**
-	 * Test lle tet case.
-	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	@Test
-	public void TestLLETetCase() throws IOException {
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
-		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
-		double data[][] = TransformToFromWeka.transformWekaToManifolds(originalDataset);
-		Assert.assertTrue("Data should not be null or empty", data != null && data.length > 0);
-		for (int dimensions = 10; dimensions < 201; dimensions += 10) {
-			for (int kNearest = 5; kNearest < 500; kNearest += 5) {
-				try {
-					LLE lle = new LLE(data, dimensions, kNearest);
-					double[][] coordinates = lle.getCoordinates();
-					Assert.assertTrue("LLE results should not be null or empty",
-							coordinates != null && coordinates.length > 0);
-					Instances reData = TransformToFromWeka.manifoldsToWeka(coordinates, "lleDataset",
-							WekaUtils.getDatasetClassValues(originalDataset), "class");
-					// here we save the new data in an arff file
-					WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
-					wekaFileConverterImpl.arffSaver(reData, Constants.SRC_MAIN_RESOURCES_PATH + "lle\\" + "k_"
-							+ kNearest + "d_" + dimensions + "lleData.arff");
-					// CROSS VALIDATION
-//					AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
-//					new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, reData, 10,
-//							new Random(1));
-					// new NaiveBayesImplementation().classify(abstractClassifier, originalDataset);
-					Graph graph = lle.getNearestNeighborGraph();
-					int[] indexes = lle.getIndex();
-					Assert.assertTrue("Graph should not be empty", !graph.getEdges().isEmpty());
-					Assert.assertTrue("Original indices should exist.", indexes.length > 0);
-				} catch (Exception e) {
-					// e.printStackTrace();
-				}
-			}
-		}
-	}
+import static personalizedmedicine.helpful_classes.Constants.*;
 
-	/**
-	 * Test lle data. TestLLETetCase should have been run first to create arff file.
-	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	@Test
-	public void testLLEData() throws IOException {
-		// GET DATA
-		File lleDataFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "lleData.arff");
-		Instances lleDataset = WekaUtils.getOriginalData(lleDataFile, "class");
-		// TODO CROSS VALIDATION
-//		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, lleDataset,
-//				new String[] {});
-//		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, lleDataset, 10, new Random(1));
-	}
+@Slf4j
+class TestLLE {
 
-	/**
-	 * Do lle. Same as TestLLETetCase but it is called from
-	 * DimensionalityReductionSelector
-	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	@Test
-	public void doLLE() throws IOException {
-		// first option should be the number of expected dimensions
-		// second option should be the k nearest neighbors
-		File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
-		Instances originalDataset = WekaUtils.getOriginalData(level2File, "SampleStatus");
-		String[] options = { "10", "5" };
-		DimensionalityReductionChooser dimensionalityReductionSelection = new DimensionalityReductionChooser();
-		Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.LLE,
-				originalDataset, true, options);
-		// TODO CROSS VALIDATION
-//		AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset,
-//				new String[] {});
-//		new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
-	}
+    // IS NOT WORKING
+
+    /**
+     * Test lle tet case.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    @Test
+    void TestLLECase() throws IOException {
+        val level2File = new File(completeFileName);
+        final Instances originalDataset = WekaUtils.getOriginalData(level2File, classRealName);
+        final double[][] data = TransformToFromWeka.transformWekaToManifolds(originalDataset);
+        Assertions.assertTrue(data.length > 0, "Data should not be null or empty");
+        for (int dimensions = 10; dimensions < 201; dimensions += 10) {
+            for (int kNearest = 5; kNearest < 500; kNearest += 5) {
+                try {
+                    val lle = new LLE(data, dimensions, kNearest);
+                    final double[][] coordinates = lle.getCoordinates();
+                    Assertions.assertTrue(coordinates != null && coordinates.length > 0,
+                                          "LLE results should not be null or empty");
+                    final Instances reData = TransformToFromWeka.manifoldsToWeka(coordinates, "lleDataset",
+                                                                                 WekaUtils.getDatasetClassValues(
+                                                                                         originalDataset),
+                                                                                 classNameForReducedData);
+                    // here we save the new data in an arff file
+                    val wekaFileConverterImpl = new WekaFileConverter();
+                    wekaFileConverterImpl.arffSaver(reData,
+                                                    SRC_MAIN_RESOURCES_PATH + LLE + "\\" + "k_" + kNearest + "d_" +
+                                                    dimensions + "lleData.arff");
+                    // CROSS VALIDATION
+                    //	AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData);
+                    //	new NaiveBayesImplementation().crossValidationEvaluation(abstractClassifier, reData, 10, new Random(1));
+                    // new NaiveBayesImplementation().classify(abstractClassifier, originalDataset);
+                    final Graph graph = lle.getNearestNeighborGraph();
+                    final int[] indexes = lle.getIndex();
+                    Assertions.assertFalse(graph.getEdges().isEmpty(), "Graph should not be empty");
+                    Assertions.assertTrue(indexes.length > 0, "Original indices should exist.");
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                }
+            }
+        }
+    }
+
+    /**
+     * Do lle. Same as TestLLECase but it is called from
+     * DimensionalityReductionSelector
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    @Test
+    void doLLE() throws IOException {
+        // first option should be the number of expected dimensions
+        // second option should be the k nearest neighbors
+        val level2File = new File(completeFileName);
+        final Instances originalDataset = WekaUtils.getOriginalData(level2File, classRealName);
+        final String[] options = {"10", "5"};
+        val dimensionalityReductionSelection = new DimensionalityReductionChooser();
+        final Instances dataset = dimensionalityReductionSelection.dimensionalityReductionSelector(Constants.LLE,
+                                                                                                   originalDataset,
+                                                                                                   true, options);
+        // TODO CROSS VALIDATION
+        //	AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, dataset, new String[] {});
+        //	new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, dataset, 10, new Random(1));
+    }
 }

@@ -51,8 +51,8 @@ public class DimensionalityReductionChooser implements IDimensionalityReductionS
             }
         } catch (Exception e) {
             log.error("DimensionalityReductionSelector in in error: {0}", e);
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     /**

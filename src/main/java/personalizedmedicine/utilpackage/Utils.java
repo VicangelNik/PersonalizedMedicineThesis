@@ -1,21 +1,12 @@
-/*
- *
- */
 package personalizedmedicine.utilpackage;
-
-/*
- *
- */
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import lombok.extern.slf4j.Slf4j;
 import org.jblas.DoubleMatrix;
-import personalizedmedicine.helpful_classes.Constants;
 import personalizedmedicine.helpful_classes.EnumSeparators;
 import scala.Tuple2;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,14 +15,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import static personalizedmedicine.helpful_classes.Constants.SRC_TEST_RESOURCES_PATH;
+
 @Slf4j
 public final class Utils {
-
     public static final Random rand = new Random();
-
     public static final String TXT_SUFFIX = ".txt";
-
-    public static final String FILE_DATA_PATH = Constants.SRC_TEST_RESOURCES_PATH + "data" + TXT_SUFFIX;
+    public static final String FILE_DATA_PATH = SRC_TEST_RESOURCES_PATH + "data" + TXT_SUFFIX;
 
     private Utils() {
         throw new IllegalArgumentException("utility class");
@@ -50,16 +40,11 @@ public final class Utils {
      * @param isPositive        the is positive
      */
     public static void feedDoubleArray(long seed, int fromRow, int toRow, int dimension, double desiredMean,
-                                       double standardDeviation, double doubleArray[][], boolean isPositive) {
-        // We generate the same "random" numbers, seed variable is a number of
-        // my
-        // choice.
+                                       double standardDeviation, double[][] doubleArray, boolean isPositive) {
+        // We generate the same "random" numbers, seed variable is a number of my choice.
         Utils.rand.setSeed(seed);
-        // Returns the next pseudorandom, Gaussian ("normally") distributed
-        // double value
-        // with mean 0.0 and standarddeviation 1.0 from this random number
-        // generator's
-        // sequence. r.nextGaussian()*desiredStandardDeviation+desiredMean;
+        // Returns the next pseudorandom, Gaussian ("normally") distributed double value with mean 0.0 and standarddeviation 1.0 from this random number
+        // generator's sequence. r.nextGaussian()*desiredStandardDeviation+desiredMean;
         for (int i = fromRow; i < toRow; i++) {
             for (int j = dimension; j <= dimension; j++) {
                 doubleArray[i][j] = Utils.rand.nextGaussian() * desiredMean + standardDeviation;
@@ -70,30 +55,11 @@ public final class Utils {
         }
     }
 
-    /**
-     * Make file path. Construct the path which the file will be written
-     *
-     * @param matrixName   the matrix name
-     * @param nameOfMethod the name of method
-     * @param suffix       the suffix
-     * @return the string
-     */
-
     private static String makeFilePath(String matrixName, String nameOfMethod, String suffix) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Constants.SRC_TEST_RESOURCES_PATH);
-        sb.append(nameOfMethod);
-        sb.append(matrixName);
-        sb.append(suffix);
-        return sb.toString();
+        return SRC_TEST_RESOURCES_PATH + nameOfMethod + matrixName + suffix;
     }
 
-    /**
-     * Sets the parameters to array.
-     *
-     * @param doubleArray the new parameters to array
-     */
-    public static void setParametersToArray(double doubleArray[][]) {
+    public static void setParametersToArray(double[][] doubleArray) {
         // chinese
         Utils.feedDoubleArray(4, 0, 200, 0, 1.6f, 0.6f, doubleArray, true); // height
         Utils.feedDoubleArray(4, 0, 200, 1, 90f, 5, doubleArray, true); // death estimation
@@ -106,25 +72,12 @@ public final class Utils {
         Utils.feedDoubleArray(4, 200, 400, 3, 60f, 30, doubleArray, true); // weight
     }
 
-    /**
-     * Simple text.
-     *
-     * @param text     the text
-     * @param fileName the file name
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
     private static void simpleText(String text, String fileName) throws IOException {
         try (FileWriter fileWriter = new FileWriter(fileName); PrintWriter printWriter = new PrintWriter(fileWriter)) {
             printWriter.print(text);
         }
     }
 
-    /**
-     * Write to file.
-     *
-     * @param filename the filename
-     * @param matrix   the matrix
-     */
     public static void writeMatrixToFile(String filename, DoubleMatrix matrix) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
             for (int i = 0; i < matrix.rows; i++) {
@@ -148,8 +101,6 @@ public final class Utils {
             }
             bw.flush();
         } catch (IOException e) {
-            // nothing to do
-        } finally {
             // nothing to do
         }
     }
@@ -199,8 +150,8 @@ public final class Utils {
                 simpleText(measureDistance.toString(),
                            Utils.makeFilePath(measureName.toUpperCase(), nameOfMethod, fileSuffix));
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                log.error(e.getMessage());
+                throw new RuntimeException(e);
             }
         }
     }
@@ -235,29 +186,17 @@ public final class Utils {
                 }
             } catch (IOException e) {
                 log.error(e.getMessage());
+                throw new RuntimeException(e);
             }
         }
     }
 
-    /**
-     * Checks whether directory is empty.
-     *
-     * @param directory
-     * @return
-     * @throws IOException
-     */
     public static boolean isDirEmpty(final Path directory) throws IOException {
         try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory)) {
             return !dirStream.iterator().hasNext();
         }
     }
 
-    /**
-     * Write eigens to file.
-     *
-     * @param fileName             the file name
-     * @param eigenValueAndVectors the eigen value and vectors
-     */
     public static void writeEigensToFile(String fileName, Tuple2<double[], DoubleMatrix2D> eigenValueAndVectors) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
             bw.write("Number of eigenValues: " + eigenValueAndVectors._1.length + System.lineSeparator());
@@ -277,34 +216,6 @@ public final class Utils {
         }
     }
 
-    /**
-     * Adds temporarily an additional path to java.library.path. It may be useful in
-     * the future.
-     *
-     * @param tmpDirName
-     */
-    @SuppressWarnings("unused")
-    private static void addLibsToJavaLibraryPath(final String tmpDirName) {
-        try {
-            String JAVA_LIBRARY_PATH = "java.library.path";
-            String SYS_PATHS = "sys_paths";
-            String paths = System.getProperty(JAVA_LIBRARY_PATH);
-            System.setProperty(JAVA_LIBRARY_PATH, paths + ";" + tmpDirName);
-            /* Optionally add these two lines */
-            System.setProperty("jna.library.path", tmpDirName);
-            System.setProperty("jni.library.path", tmpDirName);
-            final Field fieldSysPath = ClassLoader.class.getDeclaredField(SYS_PATHS);
-            fieldSysPath.setAccessible(true);
-            fieldSysPath.set(null, null);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @param startTime
-     * @param endTime
-     */
     public static String printExecutionTime(long startTime, long endTime) {
         long timeNanoSecs = endTime - startTime;
         long timeMilliSecs = TimeUnit.NANOSECONDS.toMillis(timeNanoSecs);
@@ -312,26 +223,26 @@ public final class Utils {
         long timeMin = TimeUnit.NANOSECONDS.toMinutes(timeNanoSecs);
         long timeHour = TimeUnit.NANOSECONDS.toHours(timeNanoSecs);
         StringBuilder sb = new StringBuilder("\nExecution Time: ");
-        System.out.print("\nExecution Time: ");
+        log.info("Execution Time: ");
         if (timeHour > 0) {
-            System.out.print(timeHour + " Hours, ");
-            sb.append(timeHour + " Hours, ");
+            log.info(timeHour + " Hours, ");
+            sb.append(timeHour).append(" Hours, ");
         }
         if (timeMin > 0) {
-            System.out.print(timeMin % 60 + " Minutes, ");
-            sb.append(timeMin % 60 + " Minutes, ");
+            log.info(timeMin % 60 + " Minutes, ");
+            sb.append(timeMin % 60).append(" Minutes, ");
         }
         if (timeSecs > 0) {
-            System.out.print(timeSecs % 60 + " Seconds, ");
-            sb.append(timeSecs % 60 + " Seconds, ");
+            log.info(timeSecs % 60 + " Seconds, ");
+            sb.append(timeSecs % 60).append(" Seconds, ");
         }
         if (timeMilliSecs > 0) {
-            System.out.print(timeMilliSecs % 1E+3 + " MicroSeconds, ");
-            sb.append(timeMilliSecs % 1E+3 + " MicroSeconds, ");
+            log.info(timeMilliSecs % 1E+3 + " MicroSeconds, ");
+            sb.append(timeMilliSecs % 1E+3).append(" MicroSeconds, ");
         }
         if (timeNanoSecs > 0) {
-            System.out.print(timeNanoSecs % 1E+6 + " NanoSeconds");
-            sb.append(timeNanoSecs % 1E+6 + " NanoSeconds");
+            log.info(timeNanoSecs % 1E+6 + " NanoSeconds");
+            sb.append(timeNanoSecs % 1E+6).append(" NanoSeconds");
         }
         sb.append(System.lineSeparator());
         return sb.toString();

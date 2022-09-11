@@ -1,6 +1,3 @@
-/*
- *
- */
 package personalizedmedicine.utilpackage;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +28,6 @@ public final class WekaUtils {
 
     public static final String WEKA_SUFFIX = ".arff";
     public static final String CSV_SUFFIX = ".csv";
-    public static final String NUMERIC_ATTRIBUTE = "NUMERIC";
     public static final String NOT_AVAILABLE = "NA";
 
     /**
@@ -44,14 +40,15 @@ public final class WekaUtils {
     @SuppressWarnings("unused")
     private static boolean dimensionIsNA(List<String> featureDataList) {
         for (String datum : featureDataList) {
-            if (!WekaUtils.NOT_AVAILABLE.equals(datum)) {
+            if (!NOT_AVAILABLE.equals(datum)) {
                 return false;
             }
         }
         return true;
     }
 
-    public static AbstractClassifier getClassifier(String classifierName, Instances instances, String[] options) {
+    public static AbstractClassifier getClassifier(final String classifierName, final Instances instances,
+                                                   final String[] options) {
         log.info("OPTIONS: " + Arrays.toString(options));
         IClassifierSelection classifierSelection = new ClassifierChooser();
         return classifierSelection.selectClassifier(classifierName, instances, options);
@@ -60,20 +57,17 @@ public final class WekaUtils {
     public static Instances getOriginalData(File file, String featureClassName) throws IOException {
         AbstractFileLoader loader = new ArffLoader();
         String ext = com.google.common.io.Files.getFileExtension(file.toString());
-        // returns the extension (csv) without the dot so we remove the dot from
-        // constant
+        // returns the extension (csv) without the dot, so we remove the dot from constant.
         if (ext.equals(CSV_SUFFIX.substring(1))) {
             loader = new CSVLoader();
         }
         loader.setFile(file);
-        // Constants.logger.getLogger().log(Level.INFO, "SAVE FILE NAME: " +
-        // file.getName());
-        Instances originalData = loader.getDataSet();
+        final Instances originalData = loader.getDataSet();
         originalData.setClass(originalData.attribute(featureClassName));
         return originalData;
     }
 
-    public static void serializeObject(String filePath, Object[] object, boolean writeAll) {
+    public static void serializeObject(final String filePath, final Object[] object, final boolean writeAll) {
         Path path = Paths.get(filePath);
         // create the directory to which the object will be written
         try {
@@ -85,16 +79,16 @@ public final class WekaUtils {
                 weka.core.SerializationHelper.write(path.toString(), object);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
             try {
                 Files.delete(path);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
     }
 
-    public static Object[] desirializeObject(String filePath, boolean readAll) throws Exception {
+    public static Object[] desirializeObject(final String filePath, final boolean readAll) throws Exception {
         Path path = Paths.get(filePath);
         if (readAll) {
             return weka.core.SerializationHelper.readAll(path.toString());
@@ -104,7 +98,7 @@ public final class WekaUtils {
         }
     }
 
-    public static List<Double> getDatasetClassValues(Instances originalDataset) {
+    public static List<Double> getDatasetClassValues(final Instances originalDataset) {
         List<Double> classValues = new ArrayList<>();
         for (int i = 0; i < originalDataset.numInstances(); i++) {
             Instance current = originalDataset.get(i);

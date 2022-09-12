@@ -7,11 +7,23 @@
 	<name>personalized-medicine</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
-		<!-- For junit test -->
+		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13</version>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<version>5.9.0</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- For non negative matrix factorization -->
@@ -94,12 +106,6 @@
 			<groupId>org.deeplearning4j</groupId>
 			<artifactId>deeplearning4j-nn</artifactId>
 			<version>1.0.0-beta5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.7.0-M1</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

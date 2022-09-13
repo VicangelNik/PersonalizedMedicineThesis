@@ -20,7 +20,7 @@ public class TestSerializationDesirialization {
         try {
             String[] obj = {"test"};
             WekaUtils.serializeObject(filePath, obj, true);
-            Object[] obj1 = WekaUtils.desirializeObject(filePath, true);
+            Object[] obj1 = WekaUtils.deserializeObject(filePath, true);
             Assertions.assertEquals(obj[0], obj1[0]);
         } catch (Exception e) {
             Assertions.fail(e);

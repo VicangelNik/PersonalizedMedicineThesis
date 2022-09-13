@@ -88,7 +88,7 @@ public final class WekaUtils {
         }
     }
 
-    public static Object[] desirializeObject(final String filePath, final boolean readAll) throws Exception {
+    public static Object[] deserializeObject(final String filePath, final boolean readAll) throws Exception {
         Path path = Paths.get(filePath);
         if (readAll) {
             return weka.core.SerializationHelper.readAll(path.toString());

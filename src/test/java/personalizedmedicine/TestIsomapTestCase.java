@@ -9,7 +9,6 @@ import personalizedmedicine.utilpackage.TransformToFromWeka;
 import personalizedmedicine.utilpackage.Utils;
 import personalizedmedicine.utilpackage.WekaUtils;
 import personalizedmedicine.weka.api.library.WekaFileConverter;
-import smile.graph.Graph;
 import smile.manifold.IsoMap;
 import weka.core.Instances;
 
@@ -30,11 +29,10 @@ class TestIsomapTestCase {
         final boolean cIsomap = false;
         final double[][] data = TransformToFromWeka.transformWekaToManifolds(originalDataset);
         Assertions.assertTrue(data.length > 0, "Data should not be null or empty");
-        val myIsomap = new IsoMap(data, dimensions, kNearest, cIsomap);
-        final double[][] coordinates = myIsomap.getCoordinates();
-        Assertions.assertTrue(coordinates != null && coordinates.length > 0,
+        val myIsomap = IsoMap.of(data, dimensions, kNearest, cIsomap);
+        Assertions.assertTrue(myIsomap.coordinates != null && myIsomap.coordinates.length > 0,
                               "Isomap results should not be null or empty");
-        final Instances reData = TransformToFromWeka.manifoldsToWeka(coordinates, "isomapDataset",
+        final Instances reData = TransformToFromWeka.manifoldsToWeka(myIsomap.coordinates, "isomapDataset",
                                                                      WekaUtils.getDatasetClassValues(originalDataset),
                                                                      classNameForReducedData);
         // here we save the new data in an arff file
@@ -44,10 +42,8 @@ class TestIsomapTestCase {
         //  AbstractClassifier abstractClassifier = WekaUtils.getClassifier(Constants.NAIVE_BAYES, reData, new String[] {});
         //  new NaiveBayesWeka().crossValidationEvaluation(abstractClassifier, reData, 10, new Random(1));
         // new NaiveBayesImplementation().classify(abstractClassifier, originalDataset);
-        Graph graph = myIsomap.getNearestNeighborGraph();
-        int[] indexes = myIsomap.getIndex();
-        Assertions.assertFalse(graph.getEdges().isEmpty(), "Graph should not be empty");
-        Assertions.assertTrue(indexes.length > 0, "Original indices should exist.");
+        Assertions.assertFalse(myIsomap.graph.getEdges().isEmpty(), "Graph should not be empty");
+        Assertions.assertTrue(myIsomap.index.length > 0, "Original indices should exist.");
     }
 
     /**

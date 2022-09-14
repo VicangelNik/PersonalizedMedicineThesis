@@ -2,7 +2,7 @@ package personalizedmedicine.utilpackage;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import lombok.extern.slf4j.Slf4j;
-import org.jblas.DoubleMatrix;
+import org.ejml.data.DMatrixRMaj;
 import personalizedmedicine.helpful_classes.EnumSeparators;
 import scala.Tuple2;
 
@@ -78,16 +78,15 @@ public final class Utils {
         }
     }
 
-    public static void writeMatrixToFile(String filename, DoubleMatrix matrix) {
+    public static void writeMatrixToFile(String filename, DMatrixRMaj matrix) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-            for (int i = 0; i < matrix.rows; i++) {
-                // write the line number bw.write(i + "\t");
-                for (int j = 0; j < matrix.getRow(i).columns; j++) {
+            for (int i = 0; i < matrix.numRows; i++) {
+                for (int j = 0; j < matrix.numCols; j++) {
                     // write the data
                     bw.write(Double.toString(matrix.get(i, j)) + EnumSeparators.TAB.getSeparator());
                     // write the class in the end of the row
                     if ((filename.contains("MATRIXX") || filename.contains("data") || filename.contains("Data")) &&
-                        j == matrix.getRow(i).columns - 1) {
+                        j == matrix.numCols - 1) {
                         if (i < 200) {
                             bw.write("chinese");
                         }
@@ -120,20 +119,20 @@ public final class Utils {
                 switch (i) {
                     case 0:
                         Utils.writeMatrixToFile(Utils.makeFilePath("matrixX".toUpperCase(), nameOfMethod, fileSuffix),
-                                                (DoubleMatrix) matrices[i]);
+                                                (DMatrixRMaj) matrices[i]);
                         break;
                     case 1:
                         Utils.writeMatrixToFile(Utils.makeFilePath("matrixW".toUpperCase(), nameOfMethod, fileSuffix),
-                                                (DoubleMatrix) matrices[i]);
+                                                (DMatrixRMaj) matrices[i]);
                         break;
                     case 2:
                         Utils.writeMatrixToFile(Utils.makeFilePath("matrixH".toUpperCase(), nameOfMethod, fileSuffix),
-                                                (DoubleMatrix) matrices[i]);
+                                                (DMatrixRMaj) matrices[i]);
                         break;
                     case 3:
                         Utils.writeMatrixToFile(
                                 Utils.makeFilePath("matrixRegressionH".toUpperCase(), nameOfMethod, fileSuffix),
-                                (DoubleMatrix) matrices[i]);
+                                (DMatrixRMaj) matrices[i]);
                         break;
                     default:
                         // nothing to do

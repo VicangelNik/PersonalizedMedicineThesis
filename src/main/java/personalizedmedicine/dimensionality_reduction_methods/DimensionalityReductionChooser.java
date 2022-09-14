@@ -1,6 +1,7 @@
 package personalizedmedicine.dimensionality_reduction_methods;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import personalizedmedicine.helpful_classes.Constants;
 import personalizedmedicine.interfaces.IDimensionalityReductionSelection;
 import weka.core.Instances;
@@ -21,29 +22,29 @@ public class DimensionalityReductionChooser implements IDimensionalityReductionS
         try {
             switch (selection) {
                 case Constants.PCA: {
-                    DimensionalityReduction reductionMethod = new PCAWeka();
+                    val reductionMethod = new PCAWeka();
                     setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
-                    return ((PCAWeka) reductionMethod).dimReductionMethod(options);
+                    return reductionMethod.dimReductionMethod(options);
                 }
                 case Constants.EMPCA: {
-                    DimensionalityReduction reductionMethod = new ExpectationMaximizationPCA();
+                    val reductionMethod = new ExpectationMaximizationPCA();
                     setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
-                    return ((ExpectationMaximizationPCA) reductionMethod).dimReductionMethod(options);
+                    return reductionMethod.dimReductionMethod(options);
                 }
                 case Constants.ISOMAP: {
-                    DimensionalityReduction reductionMethod = new IsomapSmile();
+                    val reductionMethod = new IsomapSmile();
                     setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
-                    return ((IsomapSmile) reductionMethod).dimReductionMethod(options);
+                    return reductionMethod.dimReductionMethod(options);
                 }
                 case Constants.LLE: {
-                    DimensionalityReduction reductionMethod = new LLESmile();
+                    val reductionMethod = new LLESmile();
                     setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
-                    return ((LLESmile) reductionMethod).dimReductionMethod(options);
+                    return reductionMethod.dimReductionMethod(options);
                 }
                 case Constants.AUTOENCODER_WEKA: {
-                    DimensionalityReduction reductionMethod = new AutoencoderWeka();
+                    val reductionMethod = new AutoencoderWeka();
                     setValuesToDimensionalityReduction(reductionMethod, dataset, debug);
-                    return ((AutoencoderWeka) reductionMethod).dimReductionMethod(options);
+                    return reductionMethod.dimReductionMethod(options);
                 }
                 default: {
                     throw new IllegalArgumentException("Invalid selection");
@@ -55,15 +56,8 @@ public class DimensionalityReductionChooser implements IDimensionalityReductionS
         }
     }
 
-    /**
-     * Sets the values to dimensionality reduction.
-     *
-     * @param reductionMethod the reduction method
-     * @param dataset         the dataset
-     * @param debug           the debug
-     */
-    private static void setValuesToDimensionalityReduction(DimensionalityReduction reductionMethod, Instances dataset,
-                                                           boolean debug) {
+    private static void setValuesToDimensionalityReduction(final DimensionalityReduction reductionMethod,
+                                                           final Instances dataset, final boolean debug) {
         reductionMethod.setDataset(dataset);
         reductionMethod.setDebug(debug);
     }

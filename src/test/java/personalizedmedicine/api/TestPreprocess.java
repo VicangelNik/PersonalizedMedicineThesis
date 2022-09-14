@@ -1,9 +1,10 @@
 package personalizedmedicine.api;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import personalizedmedicine.helpful_classes.Constants;
 import personalizedmedicine.helpful_classes.EnumSeparators;
 import personalizedmedicine.utilpackage.LatexUtils;
@@ -25,16 +26,13 @@ import static personalizedmedicine.helpful_classes.Constants.classRealName;
 
 
 @Slf4j
-public class TestPreprocess {
+class TestPreprocess {
 
-    /**
-     * Test preprocess level one.
-     */
     @Test
-    public void testPreprocessLevelOne() {
+    void testPreprocessLevelOne() {
         // MAKE CSV VALID
         String newCsvName = Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelOne.csv";
-        try (CSVReader csvReader = new CSVReader(new FileReader(Constants.C_WORK_CSV_FILE));) {
+        try (CSVReader csvReader = new CSVReader(new FileReader(Constants.C_WORK_CSV_FILE))) {
             String[] values = null;
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(newCsvName))) {
                 String line1 = Arrays.toString(csvReader.readNext()).replaceAll("[\\[\\]]", "");
@@ -52,32 +50,26 @@ public class TestPreprocess {
                     bw.write(System.lineSeparator());
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
+        } catch (IOException | CsvValidationException e) {
+            Assertions.fail(e);
         }
         // ASSERT
         File file = new File(newCsvName);
-        Assert.assertTrue("The file should exist", file.exists());
-        Assert.assertTrue("The file should be read", file.canRead());
+        Assertions.assertTrue(file.exists(), "The file should exist");
+        Assertions.assertTrue(file.canRead(), "The file should be read");
     }
 
-    /**
-     * Test preprocess level 2.
-     *
-     * @throws Exception the exception
-     */
     @Test
-    public void testPreprocessLevel2() throws Exception {
+    void testPreprocessLevel2() throws Exception {
         // TEST CONVERTER TEST CASE MUST BE RAN BEFORE THIS TO RUN.
         // REMOVE INVALID ATTRIBUTES
         File arffFile = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelOne.arff");
         File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
-        Assert.assertTrue("The file should exists", arffFile.exists());
-        Assert.assertTrue("The file should be readable.", arffFile.canRead());
+        Assertions.assertTrue(arffFile.exists(), "The file should exists");
+        Assertions.assertTrue(arffFile.canRead(), "The file should be readable.");
         Instances originalDataset = WekaUtils.getOriginalData(arffFile, classRealName);
-        Assert.assertEquals("The excpected class should be: ", 73664, originalDataset.classIndex());
-        Assert.assertTrue("The arf file should have string attributes", originalDataset.checkForStringAttributes());
+        Assertions.assertEquals(73664, originalDataset.classIndex(), "The expected class should be: ");
+        Assertions.assertTrue(originalDataset.checkForStringAttributes(), "The arf file should have string attributes");
         PreprocessData preprocessData = new PreprocessData(originalDataset);
         Instances data = originalDataset;
         // Attributes of String Type contain only NA. Also, they are not accepted by
@@ -91,9 +83,9 @@ public class TestPreprocess {
         // Days_To_Death attribute are very connected with SampleStatus attribute so are
         // no informative. We could do classification with each of the two.
         // ASSERTS
-        Assert.assertTrue("Attribute Vital_status should exist in dataset", data.attribute("Vital_status") != null);
-        Assert.assertTrue("Attribute Days_To_Death should exist in dataset", data.attribute("Days_To_Death") != null);
-        Assert.assertTrue("Attribute DATA should exist in dataset", data.attribute("DATA") != null);
+        Assertions.assertNotNull(data.attribute("Vital_status"), "Attribute Vital_status should exist in dataset");
+        Assertions.assertNotNull(data.attribute("Days_To_Death"), "Attribute Days_To_Death should exist in dataset");
+        Assertions.assertNotNull(data.attribute("DATA"), "Attribute DATA should exist in dataset");
         // CODE
         int vitalStatusIndex = data.attribute("Vital_status").index() + 1;
         int daysToDeathIndex = data.attribute("Days_To_Death").index() + 1;
@@ -106,57 +98,39 @@ public class TestPreprocess {
         preprocessData.setDataset(data);
         data = preprocessData.removeMissingValues();
         // ASSERTS
-        Assert.assertFalse("Attribute DATA should not exist in dataset", data.attribute("DATA") != null);
-        Assert.assertFalse("Attribute Vital_status should not exist in dataset",
-                           data.attribute("Vital_status") != null);
-        Assert.assertFalse("Attribute Days_To_Death should not exist in dataset",
-                           data.attribute("Days_To_Death") != null);
+        Assertions.assertNull(data.attribute("DATA"), "Attribute DATA should not exist in dataset");
+        Assertions.assertNull(data.attribute("Vital_status"), "Attribute Vital_status should not exist in dataset");
+        Assertions.assertNull(data.attribute("Days_To_Death"), "Attribute Days_To_Death should not exist in dataset");
         // ArffSaver
         WekaFileConverter wekaFileConverterImpl = new WekaFileConverter();
         wekaFileConverterImpl.arffSaver(data, level2File.getAbsolutePath());
         // ASSERTS
-        Assert.assertEquals("Number of attributes should be 72122", 72122, data.numAttributes());
-        Assert.assertEquals("Number of instances should be 335", 335, data.numInstances());
-        Assert.assertEquals("Class index should be 72121", 72121, data.classIndex());
-        Assert.assertEquals("Class name should be SampleStatus", classRealName,
-                            data.attribute(data.classIndex()).name());
-        Assert.assertEquals("Number of classes should be 2", 2, data.numClasses());
+        Assertions.assertEquals(72122, data.numAttributes(), "Number of attributes should be 72122");
+        Assertions.assertEquals(335, data.numInstances(), "Number of instances should be 335");
+        Assertions.assertEquals(72121, data.classIndex(), "Class index should be 72121");
+        Assertions.assertEquals(classRealName, data.attribute(data.classIndex()).name(),
+                                "Class name should be SampleStatus");
+        Assertions.assertEquals(2, data.numClasses(), "Number of classes should be 2");
         // there is no need to call always this method
         // LatexUtils.createDataInLatexFormat(data);
     }
 
-    /**
-     * Modify values.
-     *
-     * @param list the list
-     * @return the string
-     */
     private static String modifyValues(List<String> list) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < list.size() - 1; i++) {
             String value = list.get(i);
-            builder.append(value.trim() + EnumSeparators.TAB.getSeparator());
+            builder.append(value.trim()).append(EnumSeparators.TAB.getSeparator());
         }
         String lastValue = list.get(list.size() - 1);
         builder.append(lastValue.trim());
         return builder.toString();
     }
 
-    /**
-     * Test show data information.
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
     @Test
-    public void testShowDataInformation() throws IOException {
+    void testShowDataInformation() throws IOException {
         showDataInformation();
     }
 
-    /**
-     * Show data information.
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
     public void showDataInformation() throws IOException {
         File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
         Instances originalDataset = WekaUtils.getOriginalData(level2File, classRealName);
@@ -175,19 +149,19 @@ public class TestPreprocess {
      * @throws Exception the exception
      */
     @Test
-    public void testSeparateMolecularLevels() throws Exception {
+    void testSeparateMolecularLevels() throws Exception {
         String mRnaPath = Constants.SRC_MAIN_RESOURCES_PATH + "mRNAdataset" + WekaUtils.WEKA_SUFFIX;
         String miRnaPath = Constants.SRC_MAIN_RESOURCES_PATH + "miRNAdataset" + WekaUtils.WEKA_SUFFIX;
         String methPath = Constants.SRC_MAIN_RESOURCES_PATH + "methDataset" + WekaUtils.WEKA_SUFFIX;
         File level2File = new File(Constants.SRC_MAIN_RESOURCES_PATH + "PatientAndControlProcessedLevelTwo.arff");
         Instances originalDataset = WekaUtils.getOriginalData(level2File, classRealName);
         // ASSERTS
-        Assert.assertEquals("Number of attributes should be 72122", 72122, originalDataset.numAttributes());
-        Assert.assertEquals("Number of instances should be 335", 335, originalDataset.numInstances());
-        Assert.assertEquals("Class index should be 72121", 72121, originalDataset.classIndex());
-        Assert.assertEquals("Class name should be SampleStatus", classRealName,
-                            originalDataset.attribute(originalDataset.classIndex()).name());
-        Assert.assertEquals("Number of classes should be 2", 2, originalDataset.numClasses());
+        Assertions.assertEquals(72122, originalDataset.numAttributes(), "Number of attributes should be 72122");
+        Assertions.assertEquals(335, originalDataset.numInstances(), "Number of instances should be 335");
+        Assertions.assertEquals(72121, originalDataset.classIndex(), "Class index should be 72121");
+        Assertions.assertEquals(classRealName, originalDataset.attribute(originalDataset.classIndex()).name(),
+                                "Class name should be SampleStatus");
+        Assertions.assertEquals(2, originalDataset.numClasses(), "Number of classes should be 2");
         List<Integer> mRNAs = new ArrayList<>();
         List<Integer> miRNAs = new ArrayList<>();
         List<Integer> meth = new ArrayList<>();
@@ -219,12 +193,11 @@ public class TestPreprocess {
         Instances miRNADataset = WekaUtils.getOriginalData(miRNAFile, classRealName);
         Instances methDataset = WekaUtils.getOriginalData(methFile, classRealName);
         // -2 because we add the class in each sub data set
-        Assert.assertEquals("The sum of the 3 datasets should be equal to the original",
-                            mRNADataset.numAttributes() + miRNADataset.numAttributes() + methDataset.numAttributes() -
-                            2, originalDataset.numAttributes());
-        Assert.assertEquals("Number of instances should be the same",
-                            mRNADataset.numInstances() + miRNADataset.numInstances() + methDataset.numInstances(),
-                            originalDataset.numInstances() * 3);
+        Assertions.assertEquals(
+                mRNADataset.numAttributes() + miRNADataset.numAttributes() + methDataset.numAttributes() - 2,
+                originalDataset.numAttributes(), "The sum of the 3 datasets should be equal to the original");
+        Assertions.assertEquals(mRNADataset.numInstances() + miRNADataset.numInstances() + methDataset.numInstances(),
+                                originalDataset.numInstances() * 3, "Number of instances should be the same");
     }
 
     /**
@@ -236,7 +209,6 @@ public class TestPreprocess {
      * @param miRNAs          the mi RN as
      * @param meth            the meth
      * @param classIndex      the class index
-     * @return the molecular lists
      */
     private void getMolecularLists(Instances originalDataset, List<Integer> mRNAs, List<Integer> miRNAs,
                                    List<Integer> meth, int classIndex) {
@@ -263,15 +235,10 @@ public class TestPreprocess {
         meth.add(classIndex);
     }
 
-    /**
-     * String attributes info.
-     *
-     * @param data the data
-     */
     @SuppressWarnings("unused")
     private static void stringAttributesInfo(Instances data) {
-        Assert.assertEquals("Number of instances", 335, data.numInstances());
-        Assert.assertEquals("Number of attributes", 73665, data.numAttributes());
+        Assertions.assertEquals(335, data.numInstances(), "Number of instances");
+        Assertions.assertEquals(73665, data.numAttributes(), "Number of attributes");
         int count = 0;
         Enumeration<Attribute> attEnumeration = data.enumerateAttributes();
         StringBuilder sbLatex = new StringBuilder();
@@ -281,12 +248,12 @@ public class TestPreprocess {
                 count++;
                 LatexUtils.latexTableForFeatures(sbLatex, attribute.name(), count);
                 AttributeStats stats = data.attributeStats(attribute.index());
-                Assert.assertEquals("The distinct values", 0, stats.distinctCount);
-                Assert.assertEquals("The missing values", 335, stats.missingCount);
-                Assert.assertEquals("The unique values", 0, stats.uniqueCount);
+                Assertions.assertEquals(0, stats.distinctCount, "The distinct values");
+                Assertions.assertEquals(335, stats.missingCount, "The missing values");
+                Assertions.assertEquals(0, stats.uniqueCount, "The unique values");
             }
         }
-        Assert.assertEquals("Number of string attributes", 1540, count);
+        Assertions.assertEquals(1540, count, "Number of string attributes");
         // add the last 3 features which are removed and are not string
         sbLatex.append("DATA")
                .append(" & ")

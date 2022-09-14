@@ -30,25 +30,47 @@
 		<dependency>
 			<groupId>org.du-lab.javanmf</groupId>
 			<artifactId>javanmf</artifactId>
-			<version>0.1.4</version>
+			<version>0.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jblas</groupId>
+			<artifactId>jblas</artifactId>
+			<version>1.2.5</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.6</version>
+			<version>2.11.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.ejml</groupId>
+			<artifactId>core</artifactId>
+			<version>0.30</version>
+		</dependency>
+
 		<!-- library with many algorithms like isomap -->
 		<dependency>
 			<groupId>com.github.haifengl</groupId>
 			<artifactId>smile-core</artifactId>
-			<version>1.5.3</version>
+			<version>2.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>openblas</artifactId>
+			<version>0.3.19-1.5.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>arpack-ng</artifactId>
+			<version>3.8.0-1.5.7</version>
+		</dependency>
+
 		<!-- SLF4J: Failed to load class “org.slf4j.impl.StaticLoggerBinder” the 
 			site: https://www.slf4j.org/ -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>2.0.0-alpha0</version>
+			<version>2.0.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -61,20 +83,20 @@
 			<!-- OpenCSV library site: https://mvnrepository.com/artifact/com.opencsv/opencsv/4.6 -->
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
-			<version>4.6</version>
+			<version>5.7.0</version>
 		</dependency>
 		<dependency>
 			<!-- google library -->
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>28.1-jre</version>
+			<version>31.1-jre</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-stable -->
 		<dependency>
 			<!-- weka library -->
 			<groupId>nz.ac.waikato.cms.weka</groupId>
 			<artifactId>weka-stable</artifactId>
-			<version>3.8.3</version>
+			<version>3.8.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.scify</groupId>
@@ -91,12 +113,6 @@
 			<groupId>nz.ac.waikato.cms.weka</groupId>
 			<artifactId>wekaDeeplearning4j</artifactId>
 			<version>1.7.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.python/jython -->
-		<dependency>
-			<groupId>org.python</groupId>
-			<artifactId>jython-standalone</artifactId>
-			<version>2.7.2</version>
 		</dependency>
 		<!-- The type org.deeplearning4j.nn.conf.layers.OutputLayer cannot be resolved. 
 			It is indirectly referenced from required .class files -->
